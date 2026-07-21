@@ -615,3 +615,54 @@ url("vanguard-station.jpg") center/cover no-repeat;border-bottom:1px solid var(-
     transform:scale(1.035);
   }
 }
+
+
+/* Version 2.4 — Awards medal and ribbon gallery */
+.visual-awards{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:stretch;
+}
+
+.award-card{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  padding:0 !important;
+}
+
+.award-card img{
+  display:block;
+  width:100%;
+  aspect-ratio:4/5.2;
+  object-fit:cover;
+  background:#07131f;
+  border-bottom:1px solid var(--line);
+}
+
+.award-card-copy{
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  padding:22px;
+}
+
+.award-card-copy h3{
+  margin-top:4px;
+}
+
+.award-card-copy p:not(.system-label){
+  flex:1;
+}
+
+.award-card-copy .btn{
+  align-self:flex-start;
+  margin-top:8px;
+}
+
+@media(max-width:900px){
+  .visual-awards{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:560px){
+  .visual-awards{grid-template-columns:1fr}
+}

@@ -54,3 +54,16 @@ Changes included:
 - Updated every page to use the PNG
 - Removed CSS nudging and restored true horizontal and vertical centering
 - Retained a JPG fallback
+
+
+## Version 2.4 Awards Gallery
+
+Adds original medal and ribbon artwork for:
+- Star of Vanguard
+- Vanguard Cross
+- Distinguished Service Medal
+- Explorer's Star
+- Medical Excellence Medal
+- Engineering Excellence Medal
+
+Artwork is stored in `awards-assets/` as responsive SVG files.
