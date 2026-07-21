@@ -1,0 +1,34 @@
+VANGUARD FLEET VICS — SINGLE-FILE VERSION
+
+UPLOAD ONLY:
+  vics.html
+
+This file contains its JavaScript inside the HTML. No separate .js file is required.
+
+TEST:
+  https://x0SOULREAVER0x.github.io/vanguardfleet/vics.html
+
+PROTOTYPE LOGINS
+
+Guest
+  Username: guest
+  Password: vanguard
+
+Member / Sovak
+  Username: sovak
+  Password: discovery
+
+Fleet Command
+  Username: admin
+  Password: vanguard
+
+IMPORTANT:
+The existing Enter VICS buttons on other pages will not automatically redirect until those pages are edited.
+
+For now, visitors can open vics.html directly.
+
+Later, replace each existing VICS button with:
+
+<a class="btn btn-blue vics-button" href="vics.html">Enter VICS</a>
+
+This uses a normal HTML link and requires no JavaScript.

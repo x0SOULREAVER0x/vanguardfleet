@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050a10">
+<title>VICS | Vanguard Fleet</title>
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050a10;--panel:#091522;--panel2:#0d1d2d;--gold:#d6aa43;--blue:#5bc6ff;--text:#eef5fb;--muted:#aab7c4;--line:rgba(214,170,67,.52);--green:#5dd694;--red:#ff7575}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,rgba(40,117,171,.2),transparent 34%),linear-gradient(#03070c,#07101a 55%,#03070c);color:var(--text);font-family:Inter,Arial,sans-serif}
+button,input{font:inherit}.hidden{display:none!important}.system-label{font-family:Rajdhani,sans-serif;text-transform:uppercase;letter-spacing:.18em;color:var(--blue);font-weight:700;font-size:.73rem}
+.top{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;width:min(1400px,96vw);margin:auto;padding:18px;border:1px solid var(--line);border-top:0;background:rgba(5,10,16,.92)}
+.logo{width:76px;height:76px;object-fit:contain}.top h1{font:700 clamp(1.8rem,4vw,3.3rem)/.9 Rajdhani,sans-serif;text-transform:uppercase;color:var(--gold);margin:3px 0}.top p{margin:0}.home{color:var(--text);text-decoration:none;border:1px solid var(--line);padding:10px 14px;font-family:Rajdhani,sans-serif;text-transform:uppercase;letter-spacing:.08em}
+.login{min-height:calc(100vh - 114px);display:grid;place-items:center;padding:28px}.login-box{width:min(1040px,96vw);display:grid;grid-template-columns:1.1fr .9fr;border:1px solid var(--line);background:rgba(5,13,21,.94);box-shadow:0 30px 90px #0008}
+.login-info{padding:clamp(30px,6vw,70px);background:linear-gradient(135deg,rgba(56,139,199,.2),transparent 50%),linear-gradient(315deg,rgba(214,170,67,.12),transparent 50%)}.login-info h2{font:700 clamp(2.7rem,7vw,6rem)/.9 Rajdhani,sans-serif;text-transform:uppercase;margin:15px 0}.login-info p{color:var(--muted);line-height:1.7;max-width:640px}
+.access-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:28px}.access-card{padding:13px;border:1px solid #ffffff18;background:#ffffff05}.access-card strong{display:block;color:var(--gold);font-family:Rajdhani,sans-serif;text-transform:uppercase}.access-card span{font-size:.8rem;color:var(--muted)}
+.login-form{padding:clamp(28px,5vw,56px);display:flex;flex-direction:column;justify-content:center}.login-form h2{font:700 2rem Rajdhani,sans-serif;text-transform:uppercase;margin:5px 0}.login-form>p{color:var(--muted);line-height:1.55}
+.mode-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:16px 0}.mode-tabs button{padding:10px 5px;border:1px solid #ffffff20;background:#0b1826;color:var(--muted);font-family:Rajdhani,sans-serif;text-transform:uppercase;font-weight:700}.mode-tabs button.active{color:#05101a;background:var(--gold);border-color:#f1cd70}
+label{font-size:.78rem;color:var(--muted);margin:12px 0 6px}input{width:100%;padding:12px;border:1px solid #ffffff26;border-radius:4px;background:#030910;color:#fff;outline:none}input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #5bc6ff18}
+.btn{margin-top:17px;padding:12px;border:1px solid #70d1ff;background:linear-gradient(#2687bd,#155276);color:#fff;font-family:Rajdhani,sans-serif;text-transform:uppercase;letter-spacing:.09em;font-weight:700}.notice{margin-top:15px;padding:12px;border:1px solid var(--line);color:#d7c38e;background:#d6aa4310;font-size:.82rem;line-height:1.5}.error{color:#ffc1c1;margin-top:10px;font-size:.83rem;min-height:1.2em}
+.portal{width:min(1500px,98vw);margin:auto;min-height:100vh;display:grid;grid-template-columns:250px 1fr}.side{position:sticky;top:0;height:100vh;border-right:1px solid var(--line);background:#040a11;padding:18px}.side-brand{display:flex;gap:10px;align-items:center;padding-bottom:16px;border-bottom:1px solid #ffffff13}.side-brand img{width:48px;height:48px;object-fit:contain}.side-brand strong{display:block;color:var(--gold);font:700 1.2rem Rajdhani,sans-serif}.side-brand small{color:var(--muted)}.nav{display:grid;gap:5px;margin-top:17px}.nav button{border:0;background:transparent;color:var(--muted);text-align:left;padding:11px;border-radius:4px}.nav button.active,.nav button:hover{color:#fff;background:linear-gradient(90deg,#247bae40,transparent);box-shadow:inset 3px 0 var(--blue)}.side-status{position:absolute;bottom:18px;left:18px;right:18px;border:1px solid #ffffff16;padding:12px;color:var(--muted);font-size:.8rem}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);margin-right:7px}
+.content{padding:22px}.portal-top{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:20px}.portal-top h1{font:700 clamp(1.9rem,4vw,3.4rem)/1 Rajdhani,sans-serif;text-transform:uppercase;margin:4px 0}.logout{border:1px solid #ff757570;color:#ffd0d0;background:#ff757510;padding:9px 12px}
+.view{display:none}.view.active{display:block}.hero{padding:25px;border:1px solid var(--line);background:linear-gradient(135deg,#267eaf25,transparent 52%),#081521;margin-bottom:16px}.hero h2{font:700 2rem Rajdhani,sans-serif;text-transform:uppercase;margin:0 0 8px}.hero p{color:var(--muted);line-height:1.6;margin:0}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.metric,.panel,.card{border:1px solid #ffffff14;background:linear-gradient(#ffffff05,transparent),var(--panel);box-shadow:0 15px 35px #0005}.metric{padding:16px}.metric small{color:var(--muted)}.metric strong{display:block;font:700 2rem Rajdhani,sans-serif;color:var(--gold);margin-top:5px}.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:14px}.panel h3{margin:0;padding:14px 16px;border-bottom:1px solid #ffffff13;font:700 1.1rem Rajdhani,sans-serif;text-transform:uppercase}.panel-body{padding:16px}.list{display:grid;gap:9px}.item{padding:12px;border:1px solid #ffffff12;background:var(--panel2)}.item strong{display:block}.item small,.item p{color:var(--muted)}.item p{margin:5px 0 0;line-height:1.5}
+.profile{display:grid;grid-template-columns:140px 1fr;gap:20px}.portrait{height:170px;display:grid;place-items:center;border:1px solid var(--line);background:linear-gradient(145deg,#244b69,#07101a);font:700 2.5rem Rajdhani,sans-serif}.profile h2{font:700 2.4rem Rajdhani,sans-serif;margin:3px 0}.profile-data{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:16px}.data{padding:11px;background:var(--panel2);border:1px solid #ffffff11}.data small{display:block;color:var(--muted);margin-bottom:4px}.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}.card{padding:16px}.card h3{padding:0;border:0;color:var(--gold)}.badge{display:inline-block;padding:4px 8px;border:1px solid #5bc6ff55;color:#bfeaff;background:#5bc6ff12;font-size:.72rem;margin:3px}.guest-lock{opacity:.55;position:relative}.guest-lock:after{content:"Clearance required";position:absolute;inset:0;display:grid;place-items:center;background:#02060bb8;color:#e6c66d;font:700 1rem Rajdhani,sans-serif;text-transform:uppercase}
+.mobile-menu{display:none}
+@media(max-width:850px){.top{grid-template-columns:auto 1fr}.top .home{grid-column:1/-1;text-align:center}.login-box{grid-template-columns:1fr}.access-grid{grid-template-columns:1fr}.portal{grid-template-columns:1fr}.side{position:fixed;z-index:10;left:-270px;width:250px;transition:.2s}.side.open{left:0}.content{padding:15px}.mobile-menu{display:inline-block}.metrics{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.profile{grid-template-columns:1fr}.portrait{height:140px}.profile-data{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.metrics,.profile-data{grid-template-columns:1fr}.mode-tabs{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top" id="publicHeader">
+<img class="logo" src="vanguard-logo.png" alt="Vanguard Fleet emblem">
+<div><p class="system-label">Vanguard Integrated Computer System</p><h1>VICS Access Terminal</h1><p style="color:var(--muted)">Vanguard Station • Asteria Expanse</p></div>
+<a class="home" href="index.html">Return to Fleet Site</a>
+</header>
+
+<section class="login" id="loginScreen">
+<div class="login-box">
+<div class="login-info">
+<p class="system-label">System Status • Online</p>
+<h2>Enter<br>VICS</h2>
+<p>Access personnel records, fleet orders, current missions, Academy records and your Vanguard career portfolio through the Vanguard Integrated Computer System.</p>
+<div class="access-grid">
+<div class="access-card"><strong>Guest</strong><span>Public fleet records and briefings</span></div>
+<div class="access-card"><strong>Member</strong><span>Personal VPIN and assignments</span></div>
+<div class="access-card"><strong>Command</strong><span>Fleet administration preview</span></div>
+</div>
+</div>
+<form class="login-form" id="loginForm">
+<p class="system-label">Authentication Node 01</p>
+<h2>Identify Yourself</h2>
+<p>Select a clearance mode. This phase uses local prototype credentials until the shared backend is connected.</p>
+<div class="mode-tabs">
+<button type="button" data-mode="guest" class="active">Guest</button>
+<button type="button" data-mode="member">Member</button>
+<button type="button" data-mode="command">Command</button>
+</div>
+<input type="hidden" id="mode" value="guest">
+<label for="username">Username or service number</label>
+<input id="username" autocomplete="username" value="guest">
+<label for="password">Access code</label>
+<input id="password" type="password" autocomplete="current-password" value="vanguard">
+<button class="btn" type="submit">Authenticate</button>
+<div class="error" id="error"></div>
+<div class="notice" id="credentialNote"><strong>Guest access:</strong> guest / vanguard</div>
+</form>
+</div>
+</section>
+
+<section class="portal hidden" id="portal">
+<aside class="side" id="sidebar">
+<div class="side-brand"><img src="vanguard-logo.png" alt=""><div><strong>VICS</strong><small id="clearanceText">Guest Clearance</small></div></div>
+<nav class="nav">
+<button class="active" data-view="dashboard">⌂ Dashboard</button>
+<button data-view="vpin">▣ My VPIN</button>
+<button data-view="missions">✧ Missions</button>
+<button data-view="orders">▤ Fleet Orders</button>
+<button data-view="academy">△ Academy</button>
+<button data-view="awards">✪ Awards</button>
+<button data-view="directory">◈ Fleet Directory</button>
+<button data-view="command" id="commandNav">⚙ Command Access</button>
+</nav>
+<div class="side-status"><span class="dot"></span>VICS node online</div>
+</aside>
+<main class="content">
+<header class="portal-top">
+<div style="display:flex;gap:9px"><button class="logout mobile-menu" id="menuButton">☰</button><div><p class="system-label">Authenticated Session</p><h1 id="viewTitle">VICS Dashboard</h1></div></div>
+<button class="logout" id="logout">Sign Out</button>
+</header>
+
+<section class="view active" id="dashboard">
+<div class="hero"><h2 id="welcome">Welcome to VICS</h2><p>Your unified access point for personnel, missions, ships, Academy records and fleet administration.</p></div>
+<div class="metrics"><div class="metric"><small>Duty Status</small><strong id="dutyMetric">Public</strong></div><div class="metric"><small>Current Assignment</small><strong style="font-size:1.35rem" id="shipMetric">Vanguard Fleet</strong></div><div class="metric"><small>Active Missions</small><strong>1</strong></div><div class="metric"><small>Unread Orders</small><strong>3</strong></div></div>
+<div class="grid2">
+<div class="panel"><h3>Priority Records</h3><div class="panel-body list"><div class="item"><strong>Operation Silent Horizon</strong><small>Current mission briefing</small><p>Investigate anomalous subspace activity beyond established patrol routes.</p></div><div class="item"><strong>VF-ORD-2405-104</strong><small>Quarterly readiness review</small><p>All commands will verify roster and readiness information.</p></div></div></div>
+<div class="panel"><h3>System Notices</h3><div class="panel-body list"><div class="item"><strong>VPIN services operational</strong><small>Personnel database available</small></div><div class="item"><strong>Academy catalog updated</strong><small>New training records available</small></div></div></div>
+</div>
+</section>
+
+<section class="view" id="vpin"><div class="panel"><h3>Vanguard Personnel Information Network</h3><div class="panel-body" id="vpinBody"></div></div></section>
+<section class="view" id="missions"><div class="cards"><article class="card"><p class="system-label">Active Mission</p><h3>Operation Silent Horizon</h3><p style="color:var(--muted)">USS Discovery • Stardate 2406.202</p><p>Investigate anomalous subspace activity beyond charted patrol routes.</p><span class="badge">Active</span></article></div></section>
+<section class="view" id="orders"><div class="panel"><h3>Fleet Orders</h3><div class="panel-body list"><div class="item"><strong>VF-ORD-2405-104</strong><p>Quarterly readiness review.</p></div><div class="item"><strong>VF-ORD-2405-103</strong><p>Frontier Initiative deployment instructions.</p></div><div class="item"><strong>VF-ORD-2405-102</strong><p>Academy graduation ceremony.</p></div></div></div></section>
+<section class="view" id="academy"><div class="cards"><article class="card"><h3>Academy Graduate</h3><p>Core Vanguard Fleet orientation completed.</p><span class="badge">Recorded</span></article><article class="card"><h3>Bridge Officer</h3><p>Bridge watchstanding qualification.</p><span class="badge">Qualified</span></article><article class="card"><h3>Medical Officer</h3><p>Commissioned medical service qualification.</p><span class="badge">Qualified</span></article></div></section>
+<section class="view" id="awards"><div class="panel"><h3>Decorations & Ribbon Rack</h3><div class="panel-body"><div id="awardBody"></div><p><a class="home" href="awards.html">Open Official Awards Board</a></p></div></div></section>
+<section class="view" id="directory"><div class="cards"><article class="card"><h3>USS Discovery</h3><p>NCC-78393-B • Prometheus tactical cruiser</p><span class="badge">Operational</span></article><article class="card"><h3>Vanguard Station</h3><p>Fleet Headquarters • Asteria Expanse</p><span class="badge">Condition Green</span></article></div></section>
+<section class="view" id="command"><div class="panel" id="commandPanel"><h3>Fleet Command Access</h3><div class="panel-body"><div class="cards"><article class="card"><h3>Personnel Management</h3><p>Promotions, transfers and duty status.</p></article><article class="card"><h3>Award Authority</h3><p>Issue official decorations and citations.</p></article><article class="card"><h3>Fleet Orders</h3><p>Publish and archive command directives.</p></article><article class="card"><h3>Mission Control</h3><p>Create missions and assign participating units.</p></article></div><p style="color:var(--muted)">Administrative actions remain a visual prototype until secure database authentication is connected.</p></div></div></section>
+</main>
+</section>
+
+<script>
+const modes={
+ guest:{user:"guest",pass:"vanguard",label:"Guest Clearance • Level 0",note:"Guest access: guest / vanguard"},
+ member:{user:"sovak",pass:"discovery",label:"Member Clearance • Level 3",note:"Member access: sovak / discovery"},
+ command:{user:"admin",pass:"vanguard",label:"Command Clearance • Level 8",note:"Command access: admin / vanguard"}
+};
+let currentMode="guest";
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+$$("[data-mode]").forEach(b=>b.onclick=()=>{currentMode=b.dataset.mode;$("#mode").value=currentMode;$$("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));$("#username").value=modes[currentMode].user;$("#password").value=modes[currentMode].pass;$("#credentialNote").innerHTML="<strong>"+modes[currentMode].note.split(":")[0]+":</strong>"+modes[currentMode].note.split(":").slice(1).join(":")});
+$("#loginForm").onsubmit=e=>{e.preventDefault();const m=modes[currentMode];if($("#username").value.toLowerCase()===m.user&&$("#password").value===m.pass){sessionStorage.setItem("vicsMode",currentMode);enter(currentMode)}else $("#error").textContent="Authentication rejected. Verify credentials and clearance mode."};
+function enter(mode){currentMode=mode;$("#publicHeader").classList.add("hidden");$("#loginScreen").classList.add("hidden");$("#portal").classList.remove("hidden");$("#clearanceText").textContent=modes[mode].label;$("#welcome").textContent=mode==="member"?"Welcome, Lieutenant Junior Grade Sovak":mode==="command"?"Welcome, Fleet Command":"Welcome, Guest User";$("#dutyMetric").textContent=mode==="guest"?"Public":mode==="member"?"Active":"Command";$("#shipMetric").textContent=mode==="member"?"USS Discovery":mode==="command"?"Fleet Command":"Vanguard Fleet";renderProfile(mode);$("#commandPanel").classList.toggle("guest-lock",mode!=="command")}
+function renderProfile(mode){if(mode==="guest"){$("#vpinBody").innerHTML='<div class="guest-lock"><div class="profile"><div class="portrait">VF</div><div><p class="system-label">Restricted Personnel Record</p><h2>Member Authentication Required</h2><p style="color:var(--muted)">Public access does not include private VPIN personnel jackets.</p></div></div></div>';$("#awardBody").innerHTML='<p style="color:var(--muted)">Authenticate as a member to view a personal ribbon rack.</p>';return}$("#vpinBody").innerHTML='<div class="profile"><div class="portrait">SO</div><div><p class="system-label">VF-2403-001</p><h2>Lieutenant Junior Grade Sovak</h2><p style="color:var(--muted)">Vulcan • Active Duty</p><div class="profile-data"><div class="data"><small>Assignment</small>USS Discovery</div><div class="data"><small>Division</small>Medical</div><div class="data"><small>Billet</small>Medical Officer</div><div class="data"><small>Department</small>Medical</div><div class="data"><small>Status</small>Active</div><div class="data"><small>Homeworld</small>Vulcan</div></div></div></div><div class="panel" style="margin-top:16px"><h3>Qualifications</h3><div class="panel-body"><span class="badge">Academy Graduate</span><span class="badge">Medical Officer</span><span class="badge">Xenomedicine</span><span class="badge">Trauma Specialist</span><span class="badge">Bridge Officer</span></div></div>';$("#awardBody").innerHTML='<p style="color:var(--muted)">No personal decorations recorded.</p>'}
+$$("[data-view]").forEach(b=>b.onclick=()=>{$$(".view").forEach(v=>v.classList.toggle("active",v.id===b.dataset.view));$$("[data-view]").forEach(x=>x.classList.toggle("active",x===b));$("#viewTitle").textContent=b.textContent.replace(/^[^A-Za-z]+/,"").trim();$("#sidebar").classList.remove("open")});
+$("#logout").onclick=()=>{sessionStorage.removeItem("vicsMode");location.reload()};$("#menuButton").onclick=()=>$("#sidebar").classList.toggle("open");
+const saved=sessionStorage.getItem("vicsMode");if(saved&&modes[saved])enter(saved);
+</script>
+</body>
+</html>
