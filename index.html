@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Vanguard Fleet — a Star Trek-inspired roleplaying community.">
+  <title>Vanguard Fleet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="masthead">
+      <a class="brand-mark" href="#home" aria-label="Vanguard Fleet home">
+        <img src="assets/vanguard-logo.jpg" alt="Vanguard Fleet compass-delta emblem">
+      </a>
+
+      <section class="brand-copy">
+        <p class="eyebrow">United Federation of Planets • Starfleet Command</p>
+        <h1>Vanguard Fleet</h1>
+        <p class="motto">Beyond the Frontier, We Endure.</p>
+      </section>
+
+      <section class="vics-card" aria-label="VICS access">
+        <div>
+          <strong>VICS</strong>
+          <span>Vanguard Integrated Computer System</span>
+        </div>
+        <button class="button button-blue" data-action="login">Log in to VICS</button>
+        <a href="#join">New user? Apply for clearance</a>
+      </section>
+    </header>
+
+    <nav class="main-nav" aria-label="Primary navigation">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links">Menu</button>
+      <div id="nav-links" class="nav-links">
+        <a class="active" href="#home">Home</a>
+        <a href="#fleet">The Fleet</a>
+        <a href="#ships">Ships</a>
+        <a href="#academy">Academy</a>
+        <a href="#operations">Operations</a>
+        <a href="#personnel">Personnel</a>
+        <a href="#community">Community</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main id="home">
+      <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <p class="eyebrow">Welcome to</p>
+          <h2>Vanguard Fleet</h2>
+          <p class="hero-subtitle">A Star Trek-inspired roleplaying community</p>
+          <p class="hero-copy">Build your legacy. Serve with honor.<br>Explore the galaxy. Defend the Federation.</p>
+          <div class="hero-actions">
+            <a class="button button-gold" href="#join">Apply now</a>
+            <a class="button button-ghost" href="#fleet">Learn more</a>
+          </div>
+        </div>
+
+        <aside class="station-card">
+          <div class="station-seal">✦</div>
+          <h3>Vanguard Station</h3>
+          <p>Fleet Headquarters</p>
+          <span>Stardate 2405.183</span>
+        </aside>
+      </section>
+
+      <section class="dashboard-grid" aria-label="Fleet dashboard">
+        <article class="panel">
+          <div class="panel-heading">
+            <h3>Fleet Status</h3>
+          </div>
+          <dl class="status-list">
+            <div><dt>Members Online</dt><dd>142</dd></div>
+            <div><dt>Active Ships</dt><dd>28</dd></div>
+            <div><dt>Missions Active</dt><dd>7</dd></div>
+            <div><dt>Fleet Operations</dt><dd class="nominal">Nominal</dd></div>
+          </dl>
+        </article>
+
+        <article class="panel panel-wide">
+          <div class="panel-heading">
+            <h3>Latest Fleet News</h3>
+            <a href="#news">View all</a>
+          </div>
+          <div class="news-list">
+            <button class="news-item" data-modal-title="Operation Silent Horizon">
+              <span class="news-icon">✦</span>
+              <span><strong>Operation Silent Horizon concludes</strong><small>Fleet Command commends all participating officers.</small></span>
+              <time>2405.180</time>
+            </button>
+            <button class="news-item" data-modal-title="Academy Courses">
+              <span class="news-icon">⌁</span>
+              <span><strong>New Academy courses now available</strong><small>Advanced tactical leadership and diplomatic negotiations.</small></span>
+              <time>2405.178</time>
+            </button>
+            <button class="news-item" data-modal-title="Frontier Initiative">
+              <span class="news-icon">✧</span>
+              <span><strong>Fleet-wide event: Frontier Initiative</strong><small>A galaxy of opportunity awaits.</small></span>
+              <time>2405.175</time>
+            </button>
+          </div>
+        </article>
+
+        <article id="ships" class="panel featured-ship">
+          <div class="panel-heading"><h3>Featured Ship</h3></div>
+          <div class="ship-art" aria-hidden="true">USS</div>
+          <h4>USS Discovery</h4>
+          <p>NCC-78393-B</p>
+          <span>Prometheus-class tactical cruiser</span>
+          <button class="button button-blue" data-modal-title="USS Discovery">View ship profile</button>
+        </article>
+
+        <article id="operations" class="panel">
+          <div class="panel-heading">
+            <h3>Fleet Orders</h3>
+            <a href="#orders">View all</a>
+          </div>
+          <div class="orders">
+            <button data-modal-title="Fleet Order 2405-104"><strong>Fleet Order 2405-104</strong><span>Quarterly readiness review</span></button>
+            <button data-modal-title="Fleet Order 2405-103"><strong>Fleet Order 2405-103</strong><span>Frontier Initiative deployments</span></button>
+            <button data-modal-title="Fleet Order 2405-102"><strong>Fleet Order 2405-102</strong><span>Academy graduation ceremony</span></button>
+          </div>
+        </article>
+      </section>
+
+      <section class="quick-access" aria-label="Quick access">
+        <h3>Quick Access</h3>
+        <div class="quick-grid">
+          <button data-modal-title="VICS Terminal"><span>△</span><strong>VICS Terminal</strong><small>Secure access portal</small></button>
+          <button data-modal-title="VPIN Lookup"><span>▣</span><strong>VPIN Lookup</strong><small>Personnel records</small></button>
+          <button data-modal-title="Mission Board"><span>✥</span><strong>Mission Board</strong><small>Active operations</small></button>
+          <button data-modal-title="Academy"><span>▤</span><strong>Academy</strong><small>Training and courses</small></button>
+          <button data-modal-title="Awards"><span>✪</span><strong>Awards</strong><small>Earn your legacy</small></button>
+          <button data-modal-title="Ship Directory"><span>⌁</span><strong>Ship Directory</strong><small>Fleet roster</small></button>
+          <button data-modal-title="Community Hub"><span>♟</span><strong>Community Hub</strong><small>Forums and events</small></button>
+          <button data-modal-title="Help Desk"><span>◉</span><strong>Help Desk</strong><small>Support center</small></button>
+        </div>
+      </section>
+
+      <section id="join" class="join-panel">
+        <p class="eyebrow">Begin your service</p>
+        <h2>Your career starts at Vanguard Station.</h2>
+        <p>Create a character, complete orientation and receive your first assignment through the Vanguard Personnel Information Network.</p>
+        <button class="button button-gold" data-modal-title="Application Portal">Join Vanguard Fleet</button>
+      </section>
+    </main>
+
+    <footer>
+      <strong>Vanguard Fleet Command</strong>
+      <p>Vanguard Fleet is an unofficial, non-commercial Star Trek-inspired roleplaying community. Star Trek and all related marks remain the property of their respective rights holders. Vanguard Fleet is not endorsed by, sponsored by, licensed by or affiliated with CBS Studios Inc., Paramount Pictures Corporation or any Star Trek rights holder.</p>
+    </footer>
+  </div>
+
+  <dialog id="terminal-modal">
+    <form method="dialog">
+      <button class="modal-close" aria-label="Close">×</button>
+      <p class="eyebrow">VICS Online</p>
+      <h2 id="modal-title">System Access</h2>
+      <p>This prototype interaction is ready to be connected to the final Invision Community databases and authentication system.</p>
+      <button class="button button-blue">Acknowledge</button>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
