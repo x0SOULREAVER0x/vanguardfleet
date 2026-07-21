@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Vanguard Fleet Management System — self-contained command dashboard and VPIN prototype.">
+<title>Vanguard Fleet Management System</title>
+<style>
+:root{
+  --bg:#060a11;
+  --bg2:#0b121e;
+  --panel:#101827;
+  --panel2:#162235;
+  --line:#29415d;
+  --text:#eef4ff;
+  --muted:#9fb0c5;
+  --gold:#d7ae52;
+  --gold2:#8f6824;
+  --blue:#4aa8ff;
+  --teal:#39c4bb;
+  --green:#5fd38d;
+  --red:#ff6a6a;
+  --purple:#aa8cff;
+  --orange:#ff9a55;
+  --shadow:0 22px 55px rgba(0,0,0,.34);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 88% 2%,rgba(74,168,255,.16),transparent 28%),
+    radial-gradient(circle at 2% 100%,rgba(215,174,82,.10),transparent 24%),
+    linear-gradient(180deg,#05080d,#08101a 48%,#060a11);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.app{min-height:100vh}
+.login-screen{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:20px;
+}
+.login-shell{
+  width:min(980px,96vw);
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:28px;
+  background:rgba(11,18,30,.94);
+  box-shadow:0 30px 90px rgba(0,0,0,.55);
+}
+.login-hero{
+  min-height:610px;
+  padding:48px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(140deg,rgba(74,168,255,.23),transparent 46%),
+    linear-gradient(330deg,rgba(215,174,82,.16),transparent 46%),
+    #0d1726;
+}
+.login-hero:before,.login-hero:after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.08);
+}
+.login-hero:before{width:410px;height:410px;right:-150px;top:-110px;box-shadow:0 0 0 32px rgba(255,255,255,.02),0 0 0 64px rgba(255,255,255,.015)}
+.login-hero:after{width:220px;height:220px;left:-90px;bottom:-60px}
+.brand-mark{
+  width:74px;height:74px;border-radius:22px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#e1bf6c,#77551d);
+  color:#08101a;font-weight:950;font-size:1.35rem;letter-spacing:-.06em;
+  box-shadow:0 0 34px rgba(215,174,82,.28);
+}
+.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:.18em;font-weight:800;font-size:.72rem}
+.login-hero h1{font-size:clamp(2.2rem,5vw,4.6rem);line-height:.98;margin:24px 0 18px;max-width:600px}
+.login-hero p{color:var(--muted);max-width:590px;line-height:1.7;font-size:1.03rem}
+.feature-list{display:grid;gap:12px;margin-top:30px}
+.feature{display:flex;gap:10px;align-items:center;color:#dfeaff}
+.feature span{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:rgba(74,168,255,.14);color:#bfe3ff}
+.login-panel{padding:42px;display:flex;flex-direction:column;justify-content:center}
+.login-panel h2{margin:8px 0 6px}
+.login-panel p{color:var(--muted);margin-top:0;line-height:1.55}
+.form-field{display:grid;gap:7px;margin-top:14px}
+.form-field label{font-size:.82rem;color:var(--muted)}
+input,select,textarea{
+  width:100%;
+  color:var(--text);
+  background:#090f19;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:11px;
+  padding:11px 12px;
+  outline:none;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,168,255,.11)}
+textarea{min-height:100px;resize:vertical}
+.btn{
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:11px;
+  background:var(--panel2);
+  color:var(--text);
+  padding:10px 14px;
+  transition:.2s ease;
+}
+.btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.25)}
+.btn.primary{background:linear-gradient(135deg,#2f8de6,#17589e);border-color:#4aa8ff}
+.btn.gold{background:linear-gradient(135deg,#e2be68,#8e6724);color:#0b1018;border-color:#f1d48d;font-weight:850}
+.btn.danger{background:#30171b;border-color:#6d2c34;color:#ffd0d7}
+.btn.block{width:100%;margin-top:18px}
+.demo-note{margin-top:16px;padding:12px;border-radius:12px;border:1px solid rgba(215,174,82,.25);background:rgba(215,174,82,.08);color:#ead49e;font-size:.83rem;line-height:1.5}
+.shell{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:276px 1fr;
+}
+.sidebar{
+  position:sticky;top:0;height:100vh;padding:20px 15px;
+  background:rgba(6,10,17,.92);backdrop-filter:blur(16px);
+  border-right:1px solid rgba(255,255,255,.08);
+  z-index:30;
+}
+.brand{
+  display:flex;align-items:center;gap:12px;padding:7px 10px 20px;
+  border-bottom:1px solid rgba(255,255,255,.08)
+}
+.brand .brand-mark{width:49px;height:49px;border-radius:15px;font-size:.9rem}
+.brand strong{display:block;letter-spacing:.08em}
+.brand small{display:block;color:var(--muted);margin-top:3px}
+.nav{display:grid;gap:5px;margin-top:17px}
+.nav button{
+  width:100%;border:0;background:transparent;color:var(--muted);
+  padding:11px 13px;border-radius:12px;text-align:left;
+  display:flex;align-items:center;gap:10px;
+}
+.nav button:hover,.nav button.active{
+  color:var(--text);
+  background:linear-gradient(90deg,rgba(74,168,255,.18),rgba(74,168,255,.03));
+  box-shadow:inset 3px 0 0 var(--blue);
+}
+.icon{width:24px;text-align:center}
+.sidebar-footer{
+  position:absolute;left:15px;right:15px;bottom:16px;
+  padding:12px;border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;background:var(--panel)
+}
+.status{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:.84rem}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 12px rgba(95,211,141,.8)}
+main{min-width:0;padding:21px 25px 42px}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:22px}
+.topbar h1{margin:4px 0 0;font-size:clamp(1.6rem,3vw,2.45rem)}
+.top-actions{display:flex;gap:9px;align-items:center}
+.mobile-toggle{display:none}
+.view{display:none;animation:fade .2s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:.45;transform:translateY(4px)}to{opacity:1;transform:none}}
+.hero{
+  position:relative;overflow:hidden;padding:24px;border:1px solid rgba(255,255,255,.09);
+  border-radius:23px;background:
+    linear-gradient(130deg,rgba(74,168,255,.18),transparent 46%),
+    linear-gradient(315deg,rgba(215,174,82,.11),transparent 45%),var(--panel);
+  box-shadow:var(--shadow);margin-bottom:18px
+}
+.hero:after{content:"";position:absolute;width:270px;height:270px;right:-85px;top:-145px;border:1px solid rgba(255,255,255,.08);border-radius:50%;box-shadow:0 0 0 25px rgba(255,255,255,.02),0 0 0 53px rgba(255,255,255,.015)}
+.hero h2{margin:0 0 8px}
+.hero p{margin:0;color:var(--muted);line-height:1.65;max-width:850px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}
+.metric,.panel,.entity{
+  border:1px solid rgba(255,255,255,.09);
+  background:linear-gradient(180deg,rgba(255,255,255,.025),transparent),var(--panel);
+  box-shadow:var(--shadow)
+}
+.metric{border-radius:17px;padding:16px}
+.metric small{color:var(--muted)}
+.metric strong{display:block;font-size:1.8rem;margin:7px 0 3px}
+.trend{font-size:.77rem;color:var(--green)}
+.grid2{display:grid;grid-template-columns:1.25fr .75fr;gap:17px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.panel{border-radius:var(--radius);overflow:hidden}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:15px 17px;border-bottom:1px solid rgba(255,255,255,.08)}
+.panel-head h3{margin:0;font-size:1rem}
+.panel-body{padding:16px 17px}
+.quick-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.quick{
+  border:1px solid rgba(255,255,255,.08);background:var(--panel2);color:var(--text);
+  border-radius:14px;padding:14px;text-align:left;min-height:98px
+}
+.quick:hover{transform:translateY(-2px);border-color:var(--blue)}
+.quick strong{display:block;margin:8px 0 4px}
+.quick span{font-size:.77rem;color:var(--muted);line-height:1.45}
+.list{display:grid;gap:10px}
+.item{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:12px;border-radius:13px;border:1px solid rgba(255,255,255,.07);background:var(--panel2)
+}
+.item strong{display:block;font-size:.9rem}
+.item small{color:var(--muted)}
+.badge{
+  display:inline-flex;align-items:center;white-space:nowrap;
+  border-radius:999px;padding:5px 9px;font-size:.72rem;
+  color:#bfe3ff;background:rgba(74,168,255,.13);border:1px solid rgba(74,168,255,.30)
+}
+.badge.gold{color:#f3d896;background:rgba(215,174,82,.13);border-color:rgba(215,174,82,.33)}
+.badge.green{color:#c2f4d2;background:rgba(95,211,141,.12);border-color:rgba(95,211,141,.31)}
+.badge.red{color:#ffc3c3;background:rgba(255,106,106,.11);border-color:rgba(255,106,106,.28)}
+.badge.purple{color:#d9ceff;background:rgba(170,140,255,.12);border-color:rgba(170,140,255,.29)}
+.toolbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:13px}
+.search-group{display:flex;gap:9px;flex-wrap:wrap}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.07);text-align:left;font-size:.85rem}
+th{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+tr:hover td{background:rgba(255,255,255,.02)}
+.avatar{
+  width:34px;height:34px;border-radius:50%;display:inline-grid;place-items:center;margin-right:8px;
+  background:linear-gradient(145deg,#25476c,#101a29);border:1px solid rgba(255,255,255,.13);
+  font-size:.72rem;font-weight:850
+}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:13px}
+.entity{border-radius:16px;padding:16px}
+.entity h3{margin:0 0 6px}
+.entity p{margin:0;color:var(--muted);line-height:1.5;font-size:.83rem}
+.meta{display:flex;gap:7px;flex-wrap:wrap;margin:13px 0}
+.progress{height:9px;border-radius:999px;background:#070d15;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--teal));border-radius:999px}
+.progress-label{display:flex;justify-content:space-between;color:var(--muted);font-size:.79rem;margin:8px 0 6px}
+.empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed rgba(255,255,255,.13);border-radius:14px}
+.profile-hero{
+  display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:center
+}
+.portrait{
+  width:120px;height:145px;border-radius:17px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#203b58,#0c1623);
+  border:1px solid rgba(255,255,255,.13);font-size:2rem;font-weight:900
+}
+.profile-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.statbox{padding:12px;border-radius:12px;background:var(--panel2);border:1px solid rgba(255,255,255,.06)}
+.statbox small{display:block;color:var(--muted);margin-bottom:4px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:17px 0}
+.tab{padding:9px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:var(--panel2);color:var(--muted)}
+.tab.active{color:#fff;border-color:var(--blue);background:rgba(74,168,255,.15)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.ribbon-rack{display:flex;gap:7px;flex-wrap:wrap}
+.ribbon{
+  width:84px;height:28px;border:1px solid rgba(255,255,255,.22);border-radius:4px;
+  background:linear-gradient(90deg,#d5af52 0 20%,#f1f1f1 20% 35%,#243f69 35% 65%,#f1f1f1 65% 80%,#d5af52 80%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35)
+}
+dialog{
+  width:min(650px,calc(100% - 28px));padding:0;
+  border:1px solid rgba(255,255,255,.12);border-radius:20px;
+  background:var(--panel);color:var(--text);box-shadow:0 30px 90px rgba(0,0,0,.65)
+}
+dialog::backdrop{background:rgba(0,0,0,.73);backdrop-filter:blur(5px)}
+.modal-head,.modal-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 17px}
+.modal-head{border-bottom:1px solid rgba(255,255,255,.08)}
+.modal-foot{border-top:1px solid rgba(255,255,255,.08);justify-content:flex-end}
+.modal-head h3{margin:0}
+.modal-body{padding:17px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-field.full{grid-column:1/-1}
+.toast{
+  position:fixed;right:18px;bottom:18px;z-index:100;
+  max-width:360px;padding:12px 14px;border-radius:12px;
+  background:#11261a;border:1px solid #2b7748;color:#d8ffe4;
+  box-shadow:var(--shadow);opacity:0;transform:translateY(10px);pointer-events:none;transition:.22s ease
+}
+.toast.show{opacity:1;transform:none}
+@media(max-width:1040px){
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .grid2{grid-template-columns:1fr}
+  .quick-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:780px){
+  .login-shell{grid-template-columns:1fr}.login-hero{min-height:auto;padding:34px}.login-panel{padding:30px}
+  .shell{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:-295px;width:276px;transition:.22s ease}
+  .sidebar.open{left:0}
+  .mobile-toggle{display:inline-flex}
+  main{padding:17px 13px 36px}
+  .top-actions .btn:not(.keep){display:none}
+  .profile-hero{grid-template-columns:1fr}
+  .portrait{width:100%;height:180px}
+  .profile-stats{grid-template-columns:1fr 1fr}
+  .grid3{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}.form-field.full{grid-column:auto}
+}
+@media(max-width:520px){
+  .metrics,.grid3,.profile-stats{grid-template-columns:1fr}
+  .quick-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<section class="login-screen" id="loginScreen">
+  <div class="login-shell">
+    <div class="login-hero">
+      <div class="brand-mark">VF</div>
+      <div class="eyebrow" style="margin-top:30px">Vanguard Fleet Management System</div>
+      <h1>Command the fleet. Build the career.</h1>
+      <p>A single self-contained personnel, awards, qualifications, missions and command management system designed for Vanguard Fleet.</p>
+      <div class="feature-list">
+        <div class="feature"><span>✓</span> Persistent personnel jackets</div>
+        <div class="feature"><span>✓</span> Promotions, awards and qualifications</div>
+        <div class="feature"><span>✓</span> Ship rosters, missions and fleet orders</div>
+        <div class="feature"><span>✓</span> Works as one HTML file</div>
+      </div>
+    </div>
+    <div class="login-panel">
+      <div class="eyebrow">Secure Prototype Access</div>
+      <h2>Sign in to VFMS</h2>
+      <p>This prototype uses a local account and browser storage. It is not yet a live shared database.</p>
+      <div class="form-field"><label>Username</label><input id="loginUser" value="admin"></div>
+      <div class="form-field"><label>Password</label><input id="loginPass" type="password" value="vanguard"></div>
+      <button class="btn primary block" id="loginBtn">Enter VFMS</button>
+      <div class="demo-note"><strong>Prototype login:</strong><br>Username: admin<br>Password: vanguard</div>
+    </div>
+  </div>
+</section>
+
+<div class="shell hidden" id="systemShell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">VF</div>
+      <div><strong>VANGUARD FLEET</strong><small>Management System</small></div>
+    </div>
+    <nav class="nav">
+      <button class="active" data-view="dashboard"><span class="icon">⌂</span>Dashboard</button>
+      <button data-view="personnel"><span class="icon">👤</span>Personnel</button>
+      <button data-view="vpin"><span class="icon">🪪</span>VPIN</button>
+      <button data-view="applications"><span class="icon">📥</span>Applications</button>
+      <button data-view="ships"><span class="icon">🚀</span>Ships</button>
+      <button data-view="academy"><span class="icon">🎓</span>Academy</button>
+      <button data-view="awards"><span class="icon">🏅</span>Awards</button>
+      <button data-view="qualifications"><span class="icon">◈</span>Qualifications</button>
+      <button data-view="missions"><span class="icon">🪐</span>Missions</button>
+      <button data-view="orders"><span class="icon">📜</span>Fleet Orders</button>
+      <button data-view="settings"><span class="icon">⚙</span>Settings</button>
+    </nav>
+    <div class="sidebar-footer">
+      <small style="color:var(--muted)">System status</small>
+      <div class="status"><span class="dot"></span>Local prototype operational</div>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <button class="btn mobile-toggle keep" id="menuToggle">☰</button>
+        <div><div class="eyebrow">Fleet Command Access</div><h1 id="pageTitle">Command Dashboard</h1></div>
+      </div>
+      <div class="top-actions">
+        <button class="btn" id="exportBtn">Export</button>
+        <button class="btn primary" data-action="quick">New Action</button>
+        <button class="btn danger keep" id="logoutBtn">Sign Out</button>
+      </div>
+    </header>
+
+    <section class="view active" id="dashboard">
+      <div class="hero">
+        <h2>Welcome to Fleet Command</h2>
+        <p>Manage personnel, assignments, qualifications, decorations, missions and fleet records from one unified command interface.</p>
+      </div>
+      <div class="metrics">
+        <div class="metric"><small>Active Personnel</small><strong id="mPersonnel">0</strong><span class="trend">Current active roster</span></div>
+        <div class="metric"><small>Commissioned Ships</small><strong id="mShips">0</strong><span class="trend">Fleet registry</span></div>
+        <div class="metric"><small>Pending Applications</small><strong id="mApps">0</strong><span class="trend">Requires review</span></div>
+        <div class="metric"><small>Active Missions</small><strong id="mMissions">0</strong><span class="trend">Current operations</span></div>
+      </div>
+      <div class="grid2">
+        <div class="panel">
+          <div class="panel-head"><h3>Command Actions</h3><span class="badge">Interactive</span></div>
+          <div class="panel-body">
+            <div class="quick-grid">
+              <button class="quick" data-action="promote">⭐<strong>Promote Officer</strong><span>Advance rank and record service history.</span></button>
+              <button class="quick" data-action="award">🏅<strong>Issue Decoration</strong><span>Add medal, ribbon and citation.</span></button>
+              <button class="quick" data-action="qualify">◈<strong>Add Qualification</strong><span>Assign training credentials.</span></button>
+              <button class="quick" data-action="transfer">↔<strong>Transfer Personnel</strong><span>Change ship, billet or division.</span></button>
+              <button class="quick" data-action="mission">🪐<strong>Create Mission</strong><span>Open a fleet or ship operation.</span></button>
+              <button class="quick" data-action="order">📜<strong>Publish Fleet Order</strong><span>Issue an official directive.</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Recent Activity</h3><button class="btn" data-view-jump="settings">Audit</button></div>
+          <div class="panel-body"><div class="list" id="recentActivity"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="personnel">
+      <div class="toolbar">
+        <div class="search-group">
+          <input id="personnelSearch" placeholder="Search personnel...">
+          <select id="divisionFilter"><option value="">All divisions</option><option>Command</option><option>Medical</option><option>Science</option><option>Operations</option><option>Security</option><option>Flight</option></select>
+        </div>
+        <button class="btn primary" data-action="personnel">Add Personnel</button>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Fleet Personnel Roster</h3><span class="badge" id="personnelCount">0 records</span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Officer</th><th>Rank</th><th>Ship</th><th>Division</th><th>Billet</th><th>Status</th><th></th></tr></thead>
+            <tbody id="personnelTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="vpin">
+      <div class="panel">
+        <div class="panel-head"><h3>Vanguard Personnel Information Network</h3><select id="vpinSelector"></select></div>
+        <div class="panel-body" id="vpinContent"></div>
+      </div>
+    </section>
+
+    <section class="view" id="applications">
+      <div class="cards" id="applicationsGrid"></div>
+    </section>
+
+    <section class="view" id="ships">
+      <div class="toolbar"><div></div><button class="btn primary" data-action="ship">Commission Ship</button></div>
+      <div class="cards" id="shipsGrid"></div>
+    </section>
+
+    <section class="view" id="academy">
+      <div class="grid3">
+        <div class="metric"><small>Cadets Enrolled</small><strong>2</strong><span class="trend">Across current courses</span></div>
+        <div class="metric"><small>Courses Available</small><strong>6</strong><span class="trend">Core curriculum</span></div>
+        <div class="metric"><small>Graduation Rate</small><strong>85%</strong><span class="trend">Prototype estimate</span></div>
+      </div>
+      <div class="cards" style="margin-top:16px" id="academyGrid"></div>
+    </section>
+
+    <section class="view" id="awards">
+      <div class="toolbar"><div></div><button class="btn gold" data-action="award">Issue Decoration</button></div>
+      <div class="cards" id="awardsGrid"></div>
+    </section>
+
+    <section class="view" id="qualifications">
+      <div class="toolbar"><div></div><button class="btn primary" data-action="qualify">Add Qualification</button></div>
+      <div class="cards" id="qualificationsGrid"></div>
+    </section>
+
+    <section class="view" id="missions">
+      <div class="toolbar"><div></div><button class="btn primary" data-action="mission">Create Mission</button></div>
+      <div class="cards" id="missionsGrid"></div>
+    </section>
+
+    <section class="view" id="orders">
+      <div class="toolbar"><div></div><button class="btn gold" data-action="order">Publish Fleet Order</button></div>
+      <div class="list" id="ordersList"></div>
+    </section>
+
+    <section class="view" id="settings">
+      <div class="grid2">
+        <div class="panel">
+          <div class="panel-head"><h3>Prototype Settings</h3></div>
+          <div class="panel-body">
+            <div class="form-field"><label>Fleet Name</label><input id="fleetName" value="Vanguard Fleet"></div>
+            <div class="form-field"><label>Fleet Motto</label><input id="fleetMotto" value="More Than a Star Trek RPG"></div>
+            <button class="btn primary" id="saveSettings" style="margin-top:14px">Save Settings</button>
+            <button class="btn danger" id="resetData" style="margin-top:14px">Reset Prototype Data</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Audit Log</h3></div>
+          <div class="panel-body"><div class="list" id="auditList"></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<dialog id="actionModal">
+  <form method="dialog" id="actionForm">
+    <div class="modal-head"><h3 id="modalTitle">New Action</h3><button class="btn" value="cancel">✕</button></div>
+    <div class="modal-body"><input type="hidden" id="actionType"><div class="form-grid" id="modalFields"></div></div>
+    <div class="modal-foot"><button class="btn" value="cancel">Cancel</button><button class="btn primary" type="submit">Save Record</button></div>
+  </form>
+</dialog>
+
+<dialog id="quickModal">
+  <div class="modal-head"><h3>Select Command Action</h3><button class="btn" onclick="document.getElementById('quickModal').close()">✕</button></div>
+  <div class="modal-body">
+    <div class="quick-grid">
+      <button class="quick" data-action="promote"><strong>Promote Officer</strong><span>Advance rank.</span></button>
+      <button class="quick" data-action="award"><strong>Issue Decoration</strong><span>Add a medal and citation.</span></button>
+      <button class="quick" data-action="qualify"><strong>Add Qualification</strong><span>Record a credential.</span></button>
+      <button class="quick" data-action="mission"><strong>Create Mission</strong><span>Open an operation.</span></button>
+    </div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const seed={
+ personnel:[
+  {id:"p1",name:"Sovak",service:"VF-2403-001",rank:"Lieutenant Junior Grade",ship:"USS Discovery",division:"Medical",department:"Medical",billet:"Medical Officer",status:"Active",species:"Vulcan",homeworld:"Vulcan",bio:"Vulcan medical officer specializing in xenomedicine, battlefield trauma and neurological diagnostics.",qualifications:["Academy Graduate","Medical Officer","Xenomedicine","Trauma Specialist","Bridge Officer"],awards:[],timeline:[{date:"2403.06",title:"Assigned to USS Discovery",details:"Reported aboard as Medical Officer."}]}
+ ],
+ ships:[
+  {id:"s1",name:"USS Discovery",registry:"NCC-78393-B",className:"Prometheus Tactical Cruiser",status:"Operational",crew:1,openBillets:8,description:"A multivector tactical cruiser assigned to Vanguard Fleet operations."}
+ ],
+ applications:[
+  {id:"a1",name:"T'Vel",division:"Science",billet:"Science Officer",status:"Pending"},
+  {id:"a2",name:"Marcus Vale",division:"Operations",billet:"Engineering Officer",status:"Pending"}
+ ],
+ awards:[
+  {code:"VF-AWD-001",name:"Star of Vanguard",category:"Fleet Decoration",criteria:"Exceptional service of the highest order."},
+  {code:"VF-AWD-002",name:"Vanguard Cross",category:"Fleet Decoration",criteria:"Extraordinary courage and leadership."},
+  {code:"VF-AWD-003",name:"Medal of Valor",category:"Valor",criteria:"Heroism under extreme conditions."},
+  {code:"VF-AWD-004",name:"Distinguished Service Medal",category:"Service",criteria:"Sustained distinguished service."},
+  {code:"VF-AWD-005",name:"Fleet Commendation Medal",category:"Commendation",criteria:"Meritorious contribution to Vanguard Fleet."}
+ ],
+ qualifications:[
+  {code:"VF-ACA-001",name:"Academy Graduate",division:"Academy",description:"Completed the core Vanguard Fleet Academy curriculum."},
+  {code:"VF-CMD-001",name:"Bridge Officer",division:"Command",description:"Qualified for bridge watchstanding duties."},
+  {code:"VF-MED-001",name:"Medical Officer",division:"Medical",description:"Qualified to serve as a commissioned medical officer."},
+  {code:"VF-MED-002",name:"Trauma Specialist",division:"Medical",description:"Advanced trauma and emergency medicine qualification."},
+  {code:"VF-MED-003",name:"Xenomedicine",division:"Medical",description:"Advanced multispecies medical qualification."},
+  {code:"VF-OPS-001",name:"Engineering",division:"Operations",description:"Qualified in starship engineering operations."},
+  {code:"VF-SCI-001",name:"Science Officer",division:"Science",description:"Qualified for commissioned science duties."}
+ ],
+ missions:[
+  {id:"m1",title:"Operation Silent Horizon",ship:"USS Discovery",status:"Active",stardate:"2406.202",summary:"Investigate anomalous subspace activity beyond charted patrol routes."}
+ ],
+ orders:[
+  {id:"o1",number:"VFCO-001",title:"Establishment of the Vanguard Personnel Information Network",date:new Date().toLocaleDateString(),status:"Active"}
+ ],
+ audit:[
+  {time:new Date().toLocaleString(),text:"VFMS self-contained prototype initialized."},
+  {time:new Date().toLocaleString(),text:"Lt. JG Sovak personnel record loaded."}
+ ],
+ settings:{fleetName:"Vanguard Fleet",motto:"More Than a Star Trek RPG"}
+};
+const KEY="vfms-onefile-v1";
+let data=JSON.parse(localStorage.getItem(KEY)||"null")||seed;
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const titles={dashboard:"Command Dashboard",personnel:"Personnel Management",vpin:"VPIN Personnel Jackets",applications:"Application Review",ships:"Fleet Registry",academy:"Vanguard Academy",awards:"Decorations & Awards",qualifications:"Qualification Database",missions:"Mission Operations",orders:"Fleet Orders",settings:"System Settings"};
+function save(){localStorage.setItem(KEY,JSON.stringify(data));renderAll()}
+function log(text){data.audit.unshift({time:new Date().toLocaleString(),text})}
+function notify(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(window._t);window._t=setTimeout(()=>t.classList.remove("show"),2600)}
+function showView(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===id));$("#pageTitle").textContent=titles[id]||"VFMS";$("#sidebar").classList.remove("open");scrollTo({top:0,behavior:"smooth"})}
+function badge(div){const m={Medical:"green",Command:"gold",Science:"",Operations:"red",Security:"red",Flight:"purple",Academy:""};return `<span class="badge ${m[div]||""}">${div}</span>`}
+function renderMetrics(){$("#mPersonnel").textContent=data.personnel.filter(p=>p.status==="Active").length;$("#mShips").textContent=data.ships.length;$("#mApps").textContent=data.applications.length;$("#mMissions").textContent=data.missions.filter(m=>m.status==="Active").length}
+function renderPersonnel(){
+ const q=$("#personnelSearch").value.toLowerCase(),d=$("#divisionFilter").value;
+ const rows=data.personnel.filter(p=>(!q||[p.name,p.rank,p.ship,p.billet,p.service].join(" ").toLowerCase().includes(q))&&(!d||p.division===d));
+ $("#personnelTable").innerHTML=rows.map(p=>`<tr><td><span class="avatar">${p.name.slice(0,2).toUpperCase()}</span><strong>${p.name}</strong><br><small style="color:var(--muted)">${p.service}</small></td><td>${p.rank}</td><td>${p.ship}</td><td>${badge(p.division)}</td><td>${p.billet}</td><td><span class="badge green">${p.status}</span></td><td><button class="btn" onclick="openOfficer('${p.id}')">View</button></td></tr>`).join("")||`<tr><td colspan="7"><div class="empty">No matching records.</div></td></tr>`;
+ $("#personnelCount").textContent=`${rows.length} record${rows.length===1?"":"s"}`
+}
+function renderApplications(){
+ $("#applicationsGrid").innerHTML=data.applications.map(a=>`<article class="entity"><div class="eyebrow">${a.status} Application</div><h3>${a.name}</h3><p>${a.division} Division · ${a.billet}</p><div class="meta">${badge(a.division)}<span class="badge gold">${a.status}</span></div><div style="display:flex;gap:8px"><button class="btn primary" onclick="reviewApp('${a.id}',true)">Approve</button><button class="btn danger" onclick="reviewApp('${a.id}',false)">Decline</button></div></article>`).join("")||`<div class="empty">No pending applications.</div>`
+}
+function reviewApp(id,approve){
+ const a=data.applications.find(x=>x.id===id);if(!a)return;
+ if(approve){data.personnel.push({id:crypto.randomUUID(),name:a.name,service:`VF-2406-${String(data.personnel.length+1).padStart(3,"0")}`,rank:"Ensign",ship:"Unassigned",division:a.division,department:a.division,billet:a.billet,status:"Active",species:"Unknown",homeworld:"Unknown",bio:"",qualifications:["Academy Graduate"],awards:[],timeline:[{date:new Date().toLocaleDateString(),title:"Entered Vanguard Fleet service",details:"Application approved by Fleet Command."}]});log(`Application approved for ${a.name}.`);notify(`${a.name} approved.`)}else{log(`Application declined for ${a.name}.`);notify(`${a.name} declined.`)}
+ data.applications=data.applications.filter(x=>x.id!==id);save()
+}
+function renderShips(){
+ $("#shipsGrid").innerHTML=data.ships.map(s=>`<article class="entity"><div class="eyebrow">${s.registry}</div><h3>${s.name}</h3><p>${s.className}</p><div class="meta"><span class="badge green">${s.status}</span><span class="badge">${s.crew} crew</span><span class="badge gold">${s.openBillets} open billets</span></div><div class="progress-label"><span>Staffing</span><span>${Math.round((s.crew/(s.crew+s.openBillets))*100)}%</span></div><div class="progress"><span style="width:${Math.round((s.crew/(s.crew+s.openBillets))*100)}%"></span></div></article>`).join("")
+}
+function renderAcademy(){
+ const c=[["Fleet Orientation","Core","100"],["Roleplay Fundamentals","Core","80"],["Bridge Officer Qualification","Command","50"],["Medical Officer Qualification","Medical","50"],["Engineering Fundamentals","Operations","25"],["Science Officer Qualification","Science","25"]];
+ $("#academyGrid").innerHTML=c.map(x=>`<article class="entity"><div class="eyebrow">${x[1]}</div><h3>${x[0]}</h3><p>Training module with lessons, assessment and instructor approval.</p><div class="meta"><span class="badge">${x[2]}% configured</span></div><div class="progress"><span style="width:${x[2]}%"></span></div></article>`).join("")
+}
+function renderAwards(){
+ $("#awardsGrid").innerHTML=data.awards.map(a=>`<article class="entity"><div class="eyebrow">${a.code}</div><h3>${a.name}</h3><p>${a.criteria}</p><div class="meta"><span class="badge gold">${a.category}</span></div><button class="btn gold" onclick="openAction('award',null,'${a.name.replaceAll("'","\\'")}')">Issue Award</button></article>`).join("")
+}
+function renderQualifications(){
+ $("#qualificationsGrid").innerHTML=data.qualifications.map(q=>`<article class="entity"><div class="eyebrow">${q.code}</div><h3>${q.name}</h3><p>${q.description}</p><div class="meta">${badge(q.division)}</div><button class="btn primary" onclick="openAction('qualify',null,'${q.name.replaceAll("'","\\'")}')">Assign Qualification</button></article>`).join("")
+}
+function renderMissions(){
+ $("#missionsGrid").innerHTML=data.missions.map(m=>`<article class="entity"><div class="eyebrow">Stardate ${m.stardate}</div><h3>${m.title}</h3><p>${m.summary}</p><div class="meta"><span class="badge green">${m.status}</span><span class="badge">${m.ship}</span></div></article>`).join("")||`<div class="empty">No missions entered.</div>`
+}
+function renderOrders(){
+ $("#ordersList").innerHTML=data.orders.map(o=>`<div class="item"><div><strong>${o.number} — ${o.title}</strong><small>Issued ${o.date}</small></div><span class="badge gold">${o.status}</span></div>`).join("")
+}
+function renderAudit(){
+ $("#auditList").innerHTML=data.audit.slice(0,20).map(a=>`<div class="item"><div><strong>${a.text}</strong><small>${a.time}</small></div><span class="badge">Recorded</span></div>`).join("")||`<div class="empty">No audit records.</div>`;
+ $("#recentActivity").innerHTML=data.audit.slice(0,5).map(a=>`<div class="item"><div><strong>${a.text}</strong><small>${a.time}</small></div></div>`).join("")
+}
+function renderVPIN(){
+ $("#vpinSelector").innerHTML=data.personnel.map(p=>`<option value="${p.id}">${p.rank} ${p.name}</option>`).join("");
+ renderVPINRecord($("#vpinSelector").value||data.personnel[0]?.id)
+}
+function renderVPINRecord(id){
+ const p=data.personnel.find(x=>x.id===id);if(!p){$("#vpinContent").innerHTML=`<div class="empty">No personnel record selected.</div>`;return}
+ $("#vpinContent").innerHTML=`
+ <div class="profile-hero"><div class="portrait">${p.name.slice(0,2).toUpperCase()}</div><div><div class="eyebrow">${p.service}</div><h2 style="margin:5px 0">${p.rank} ${p.name}</h2><p style="color:var(--muted);margin:0">${p.species} · ${p.homeworld}</p><div class="profile-stats"><div class="statbox"><small>Assignment</small>${p.ship}</div><div class="statbox"><small>Billet</small>${p.billet}</div><div class="statbox"><small>Division</small>${p.division}</div></div></div></div>
+ <div class="tabs"><button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="qualificationsTab">Qualifications</button><button class="tab" data-tab="awardsTab">Awards</button><button class="tab" data-tab="timelineTab">Timeline</button></div>
+ <div class="tab-panel active" id="overview"><div class="panel" style="box-shadow:none"><div class="panel-body"><p style="color:var(--muted);line-height:1.7">${p.bio||"No biography entered."}</p><button class="btn" onclick="openOfficer('${p.id}')">Edit Personnel Jacket</button></div></div></div>
+ <div class="tab-panel" id="qualificationsTab"><div class="cards">${p.qualifications.map(q=>`<div class="entity"><div class="eyebrow">Qualification</div><h3>${q}</h3></div>`).join("")||`<div class="empty">No qualifications recorded.</div>`}</div></div>
+ <div class="tab-panel" id="awardsTab"><div class="ribbon-rack">${p.awards.map(()=>`<div class="ribbon"></div>`).join("")}</div><div class="cards" style="margin-top:14px">${p.awards.map(a=>`<div class="entity"><div class="eyebrow">Decoration</div><h3>${a}</h3></div>`).join("")||`<div class="empty">No awards recorded.</div>`}</div></div>
+ <div class="tab-panel" id="timelineTab"><div class="list">${p.timeline.map(t=>`<div class="item"><div><strong>${t.title}</strong><small>${t.date}</small><p style="color:var(--muted);margin:6px 0 0">${t.details||""}</p></div></div>`).join("")||`<div class="empty">No service history recorded.</div>`}</div></div>`;
+ $$(".tab").forEach(b=>b.onclick=()=>{$$(".tab").forEach(x=>x.classList.remove("active"));$$(".tab-panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");$("#"+b.dataset.tab).classList.add("active")})
+}
+function renderSettings(){$("#fleetName").value=data.settings.fleetName;$("#fleetMotto").value=data.settings.motto}
+function renderAll(){renderMetrics();renderPersonnel();renderApplications();renderShips();renderAcademy();renderAwards();renderQualifications();renderMissions();renderOrders();renderAudit();renderVPIN();renderSettings()}
+function field(label,name,type="text",value="",full=false,options=[]){
+ return `<div class="form-field ${full?"full":""}"><label>${label}</label>${type==="select"?`<select name="${name}" required>${options.map(o=>`<option ${o===value?"selected":""}>${o}</option>`).join("")}</select>`:type==="textarea"?`<textarea name="${name}" required>${value||""}</textarea>`:`<input name="${name}" type="${type}" value="${value||""}" required>`}</div>`
+}
+function openOfficer(id){openAction("editPersonnel",data.personnel.find(x=>x.id===id))}
+function openAction(type,record=null,preset=""){
+ if($("#quickModal").open)$("#quickModal").close();
+ $("#actionType").value=type;let title="",html="";
+ const people=data.personnel.map(p=>p.name),ships=data.ships.map(s=>s.name).concat(["Unassigned"]);
+ if(type==="quick"){$("#quickModal").showModal();return}
+ if(type==="personnel"){title="Add Personnel";html=field("Name","name")+field("Service Number","service","text",`VF-2406-${String(data.personnel.length+1).padStart(3,"0")}`)+field("Rank","rank","select","Ensign",false,["Ensign","Lieutenant Junior Grade","Lieutenant","Lieutenant Commander","Commander","Captain"])+field("Ship","ship","select","Unassigned",false,ships)+field("Division","division","select","Command",false,["Command","Medical","Science","Operations","Security","Flight"])+field("Billet","billet")}
+ if(type==="editPersonnel"){title=`Edit Personnel Jacket — ${record.name}`;html=field("Name","name","text",record.name)+field("Service Number","service","text",record.service)+field("Rank","rank","text",record.rank)+field("Ship","ship","select",record.ship,false,ships)+field("Division","division","select",record.division,false,["Command","Medical","Science","Operations","Security","Flight"])+field("Billet","billet","text",record.billet)+field("Species","species","text",record.species)+field("Homeworld","homeworld","text",record.homeworld)+field("Biography","bio","textarea",record.bio,true)+field("Qualifications","qualifications","textarea",record.qualifications.join(", "),true)+field("Awards","awards","textarea",record.awards.join(", "),true)+`<input type="hidden" name="id" value="${record.id}">`}
+ if(type==="promote"){title="Promote Officer";html=field("Officer","person","select","",false,people)+field("New Rank","rank","select","",false,["Ensign","Lieutenant Junior Grade","Lieutenant","Lieutenant Commander","Commander","Captain","Commodore","Rear Admiral"])}
+ if(type==="award"){title="Issue Decoration";html=field("Officer","person","select","",false,people)+field("Decoration","award","select",preset,false,data.awards.map(a=>a.name))+field("Citation","citation","textarea","",true)}
+ if(type==="qualify"){title="Add Qualification";html=field("Officer","person","select","",false,people)+field("Qualification","qualification","select",preset,false,data.qualifications.map(q=>q.name))+field("Approving Authority","authority","text","Vanguard Fleet Academy",true)}
+ if(type==="transfer"){title="Transfer Personnel";html=field("Officer","person","select","",false,people)+field("New Ship","ship","select","",false,ships)+field("New Billet","billet")+field("Division","division","select","",false,["Command","Medical","Science","Operations","Security","Flight"])}
+ if(type==="mission"){title="Create Mission";html=field("Mission Title","title")+field("Assigned Ship","ship","select","",false,ships)+field("Stardate","stardate","text","2406.")+field("Status","status","select","Active",false,["Active","Planned","Completed"])+field("Mission Summary","summary","textarea","",true)}
+ if(type==="order"){title="Publish Fleet Order";html=field("Order Number","number","text",`VFCO-${String(data.orders.length+1).padStart(3,"0")}`)+field("Status","status","select","Active",false,["Active","Superseded","Archived"])+field("Title","title","text","",true)}
+ if(type==="ship"){title="Commission Ship";html=field("Ship Name","name")+field("Registry","registry")+field("Class","className")+field("Status","status","select","Operational",false,["Operational","Refit","Reserve","Decommissioned"])+field("Open Billets","openBillets","number","10")}
+ $("#modalTitle").textContent=title;$("#modalFields").innerHTML=html;$("#actionModal").showModal()
+}
+$("#actionForm").onsubmit=e=>{
+ e.preventDefault();const type=$("#actionType").value,f=Object.fromEntries(new FormData(e.target).entries());
+ if(type==="personnel"){data.personnel.push({id:crypto.randomUUID(),...f,status:"Active",species:"Unknown",homeworld:"Unknown",bio:"",qualifications:[],awards:[],timeline:[{date:new Date().toLocaleDateString(),title:"Personnel record created",details:"Entered into VPIN."}]});log(`Personnel record created for ${f.name}.`)}
+ if(type==="editPersonnel"){const p=data.personnel.find(x=>x.id===f.id);Object.assign(p,{name:f.name,service:f.service,rank:f.rank,ship:f.ship,division:f.division,billet:f.billet,species:f.species,homeworld:f.homeworld,bio:f.bio,qualifications:f.qualifications.split(",").map(x=>x.trim()).filter(Boolean),awards:f.awards.split(",").map(x=>x.trim()).filter(Boolean)});log(`Personnel jacket updated for ${p.name}.`)}
+ if(type==="promote"){const p=data.personnel.find(x=>x.name===f.person);p.rank=f.rank;p.timeline.unshift({date:new Date().toLocaleDateString(),title:`Promoted to ${f.rank}`,details:"Promotion authorized by Fleet Command."});log(`${p.name} promoted to ${f.rank}.`)}
+ if(type==="award"){const p=data.personnel.find(x=>x.name===f.person);if(!p.awards.includes(f.award))p.awards.push(f.award);p.timeline.unshift({date:new Date().toLocaleDateString(),title:`Awarded ${f.award}`,details:f.citation});log(`${f.award} issued to ${p.name}.`)}
+ if(type==="qualify"){const p=data.personnel.find(x=>x.name===f.person);if(!p.qualifications.includes(f.qualification))p.qualifications.push(f.qualification);p.timeline.unshift({date:new Date().toLocaleDateString(),title:`Earned ${f.qualification}`,details:`Approved by ${f.authority}.`});log(`${f.qualification} assigned to ${p.name}.`)}
+ if(type==="transfer"){const p=data.personnel.find(x=>x.name===f.person);Object.assign(p,{ship:f.ship,billet:f.billet,division:f.division});p.timeline.unshift({date:new Date().toLocaleDateString(),title:`Transferred to ${f.ship}`,details:`Assigned as ${f.billet}.`});log(`${p.name} transferred to ${f.ship}.`)}
+ if(type==="mission"){data.missions.unshift({id:crypto.randomUUID(),...f});log(`Mission created: ${f.title}.`)}
+ if(type==="order"){data.orders.unshift({id:crypto.randomUUID(),...f,date:new Date().toLocaleDateString()});log(`Fleet order published: ${f.number}.`)}
+ if(type==="ship"){data.ships.push({id:crypto.randomUUID(),...f,crew:0,openBillets:Number(f.openBillets),description:""});log(`${f.name} commissioned.`)}
+ save();$("#actionModal").close();notify("Record saved successfully.")
+};
+$$("[data-view]").forEach(b=>b.onclick=()=>showView(b.dataset.view));
+$$("[data-view-jump]").forEach(b=>b.onclick=()=>showView(b.dataset.viewJump));
+$$("[data-action]").forEach(b=>b.onclick=()=>openAction(b.dataset.action));
+$("#menuToggle").onclick=()=>$("#sidebar").classList.toggle("open");
+$("#personnelSearch").oninput=renderPersonnel;$("#divisionFilter").onchange=renderPersonnel;
+$("#vpinSelector").onchange=e=>renderVPINRecord(e.target.value);
+$("#saveSettings").onclick=()=>{data.settings.fleetName=$("#fleetName").value;data.settings.motto=$("#fleetMotto").value;log("Fleet settings updated.");save();notify("Settings saved.")};
+$("#resetData").onclick=()=>{if(confirm("Reset all prototype data?")){localStorage.removeItem(KEY);data=JSON.parse(JSON.stringify(seed));save();notify("Prototype reset.")}};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="vfms-data.json";a.click();URL.revokeObjectURL(u);log("VFMS data exported.");save();notify("Data exported.")};
+$("#loginBtn").onclick=()=>{if($("#loginUser").value==="admin"&&$("#loginPass").value==="vanguard"){$("#loginScreen").classList.add("hidden");$("#systemShell").classList.remove("hidden");sessionStorage.setItem("vfms-auth","1");renderAll()}else notify("Incorrect prototype login.")};
+$("#logoutBtn").onclick=()=>{sessionStorage.removeItem("vfms-auth");$("#systemShell").classList.add("hidden");$("#loginScreen").classList.remove("hidden")};
+if(sessionStorage.getItem("vfms-auth")==="1"){$("#loginScreen").classList.add("hidden");$("#systemShell").classList.remove("hidden");renderAll()}
+window.openAction=openAction;window.openOfficer=openOfficer;window.reviewApp=reviewApp;
+</script>
+</body>
+</html>
