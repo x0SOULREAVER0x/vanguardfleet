@@ -83,3 +83,14 @@ The award artwork is now:
 - Cache-busted so browsers load the new files immediately
 
 Upload every extracted file directly into the repository root.
+
+
+## Version 2.4.3 Critical Fix
+
+- Corrects a filename error that changed `.png` to `.pn`
+- Adds valid cache-busting to every award image
+- Tightens the logo's transparent canvas
+- Enlarges and mathematically centers the emblem
+- Refreshes the service-worker cache
+
+Upload every extracted file into the repository root and replace matching files.

@@ -706,3 +706,51 @@ url("vanguard-station.jpg") center/cover no-repeat;border-bottom:1px solid var(-
     max-height:96px !important;
   }
 }
+
+
+/* Version 2.4.3 — Award paths and larger centered emblem */
+.command-header .brand-mark{
+  position:relative !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:8px !important;
+  overflow:hidden !important;
+}
+
+.command-header .brand-mark img{
+  display:block !important;
+  width:min(218px,96%) !important;
+  height:auto !important;
+  max-width:96% !important;
+  max-height:218px !important;
+  margin:auto !important;
+  object-fit:contain !important;
+  object-position:50% 50% !important;
+  transform:none !important;
+}
+
+.command-header .brand-mark:hover img{
+  transform:scale(1.035) !important;
+}
+
+@media(max-width:980px){
+  .command-header .brand-mark img{
+    width:min(176px,94%) !important;
+    max-height:176px !important;
+  }
+}
+
+@media(max-width:760px){
+  .command-header .brand-mark img{
+    width:min(126px,92%) !important;
+    max-height:126px !important;
+  }
+}
+
+@media(max-width:480px){
+  .command-header .brand-mark img{
+    width:min(98px,90%) !important;
+    max-height:98px !important;
+  }
+}
