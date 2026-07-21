@@ -1,22 +1,16 @@
-VANGUARD FLEET — VPIN PHASE 1
+VANGUARD FLEET — VPIN HTML-ONLY VERSION
 
-Upload these four files into the ROOT of the GitHub repository:
+Upload these two files to the ROOT of the GitHub repository:
 
 1. index.html — replace the existing homepage
-2. vpin.html — new personnel database page
-3. vpin.css — new VPIN styling
-4. vpin.js — search, filters and personnel-record tabs
+2. vpin.html — new standalone VPIN page
 
-This first working version includes:
-- A clickable VPIN card on the homepage
-- A new VPIN navigation link on the homepage
-- Personnel search and filters
-- One active personnel record: Lt. JG Sovak
-- Overview, career history, qualifications, awards and mission tabs
-- Mobile-responsive layout
-- The current site-wide legal footer
+This version does NOT require:
+- vpin.js
+- vpin.css
 
-No existing app.js or service-worker.js file needs to be changed.
+The VPIN styling and search/filter behavior are embedded directly inside vpin.html.
+The homepage VPIN card links directly to vpin.html.
 
-After uploading and committing, open:
+After committing, open:
 https://x0SOULREAVER0x.github.io/vanguardfleet/vpin.html

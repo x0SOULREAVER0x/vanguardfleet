@@ -11,7 +11,470 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="vpin.css">
+  <style>
+/* VPIN Phase 1 */
+.vpin-feature-link {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+.vpin-feature-link article {
+  height: 100%;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.vpin-feature-link:hover article,
+.vpin-feature-link:focus-visible article {
+  transform: translateY(-3px);
+  border-color: #d5aa48;
+  box-shadow: 0 12px 32px rgba(0,0,0,.32);
+}
+.vpin-open-label {
+  display: block;
+  margin-top: 1rem;
+  color: #d8ad4d;
+  font-family: Rajdhani, sans-serif;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.vpin-main {
+  padding-bottom: 2rem;
+}
+.vpin-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: end;
+  padding: clamp(2rem, 5vw, 4rem);
+  border-bottom: 1px solid rgba(106,180,232,.28);
+  background:
+    linear-gradient(100deg, rgba(5,12,20,.96), rgba(10,28,43,.84)),
+    radial-gradient(circle at 80% 20%, rgba(51,141,198,.25), transparent 35%);
+}
+.vpin-hero h2 {
+  margin: .35rem 0 .7rem;
+  font-family: Rajdhani, sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: .95;
+  text-transform: uppercase;
+}
+.vpin-hero > div:first-child p:last-child {
+  max-width: 780px;
+  color: #b9c8d4;
+}
+.database-status {
+  min-width: 220px;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid rgba(100,188,236,.45);
+  background: rgba(3,11,18,.75);
+  text-align: right;
+}
+.database-status span,
+.database-status small {
+  display: block;
+  color: #94a8b8;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.database-status strong {
+  display: block;
+  margin: .3rem 0;
+  color: #70e6a2;
+  font-family: Rajdhani, sans-serif;
+  font-size: 1.6rem;
+}
+.vpin-search-panel,
+.personnel-jacket {
+  margin: 2rem auto;
+  width: min(1180px, calc(100% - 2rem));
+  border: 1px solid rgba(115,174,211,.28);
+  background: rgba(7,16,25,.94);
+  box-shadow: 0 18px 50px rgba(0,0,0,.3);
+}
+.vpin-search-panel {
+  padding: clamp(1.2rem, 3vw, 2rem);
+}
+.vpin-section-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+}
+.vpin-section-heading h2 {
+  margin: .2rem 0 0;
+  font-family: Rajdhani, sans-serif;
+  text-transform: uppercase;
+}
+.vpin-section-heading > span {
+  color: #81c7ef;
+}
+.vpin-search-controls {
+  display: grid;
+  grid-template-columns: minmax(220px, 2fr) repeat(2, minmax(150px, 1fr)) auto;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  align-items: end;
+}
+.vpin-search-controls label span {
+  display: block;
+  margin-bottom: .4rem;
+  color: #9fb2c0;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.vpin-search-controls input,
+.vpin-search-controls select {
+  width: 100%;
+  min-height: 44px;
+  padding: .75rem .85rem;
+  color: #edf6fc;
+  border: 1px solid rgba(110,177,217,.35);
+  background: #06111b;
+  font: inherit;
+}
+.personnel-results {
+  border-top: 1px solid rgba(110,177,217,.22);
+}
+.personnel-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 54px minmax(150px, 1.35fr) repeat(3, minmax(120px, 1fr)) 90px 120px;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  color: #e7f1f7;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid rgba(110,177,217,.18);
+  background: transparent;
+  cursor: pointer;
+}
+.personnel-row:hover,
+.personnel-row:focus-visible {
+  background: rgba(39,111,153,.16);
+}
+.personnel-row span {
+  min-width: 0;
+}
+.personnel-row small {
+  display: block;
+  color: #8195a4;
+}
+.mini-portrait {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #4f9cca;
+  background: linear-gradient(145deg, #143246, #07131d);
+  color: #d8ad4d;
+  font-family: Rajdhani, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+.personnel-name strong {
+  display: block;
+  font-family: Rajdhani, sans-serif;
+  font-size: 1.15rem;
+}
+.status-active,
+.fit-status {
+  color: #6ee39d;
+  font-weight: 700;
+}
+.record-arrow {
+  color: #d8ad4d;
+  text-align: right;
+  font-size: .85rem;
+  font-weight: 700;
+}
+.no-results {
+  padding: 1rem;
+  color: #aab9c4;
+  text-align: center;
+}
+.jacket-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(110,177,217,.25);
+  background: linear-gradient(90deg, rgba(19,61,86,.65), rgba(7,18,27,.7));
+}
+.jacket-header h2 {
+  margin: .2rem 0;
+  font-family: Rajdhani, sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-transform: uppercase;
+}
+.jacket-header p {
+  margin: 0;
+}
+.record-state {
+  text-align: right;
+}
+.record-state span,
+.record-state small {
+  display: block;
+  color: #8da1af;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.record-state strong {
+  display: block;
+  color: #6ee39d;
+  font-family: Rajdhani, sans-serif;
+  font-size: 1.6rem;
+}
+.identity-grid {
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  gap: 2rem;
+  padding: 2rem;
+}
+.portrait-frame {
+  padding: .55rem;
+  border: 1px solid rgba(104,182,227,.45);
+  background: #040b11;
+}
+.portrait-placeholder {
+  aspect-ratio: 4 / 5;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background:
+    linear-gradient(rgba(8,20,30,.82), rgba(8,20,30,.9)),
+    repeating-linear-gradient(0deg, transparent 0 12px, rgba(72,145,185,.12) 13px);
+}
+.portrait-delta {
+  color: #d8ad4d;
+  font-size: 4rem;
+}
+.portrait-placeholder strong,
+.portrait-placeholder small {
+  display: block;
+  letter-spacing: .12em;
+}
+.rank-block {
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid rgba(104,182,227,.25);
+  border-top: 0;
+}
+.rank-pips {
+  display: block;
+  margin-bottom: .35rem;
+  color: #d8ad4d;
+  letter-spacing: .45em;
+}
+.rank-block strong,
+.rank-block small {
+  display: block;
+}
+.rank-block small {
+  color: #9bafbd;
+}
+.record-fields dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(210px, 1fr));
+  margin: 0;
+  border-top: 1px solid rgba(110,177,217,.2);
+  border-left: 1px solid rgba(110,177,217,.2);
+}
+.record-fields dl div {
+  padding: .9rem 1rem;
+  border-right: 1px solid rgba(110,177,217,.2);
+  border-bottom: 1px solid rgba(110,177,217,.2);
+}
+.record-fields dt,
+.compact-dl dt {
+  color: #8197a7;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.record-fields dd,
+.compact-dl dd {
+  margin: .25rem 0 0;
+  color: #eef6fb;
+}
+.record-tabs {
+  display: flex;
+  gap: .25rem;
+  overflow-x: auto;
+  padding: 0 2rem;
+  border-top: 1px solid rgba(110,177,217,.2);
+  border-bottom: 1px solid rgba(110,177,217,.2);
+  background: #050e16;
+}
+.record-tab {
+  padding: 1rem 1.2rem;
+  white-space: nowrap;
+  color: #9fb1be;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  font-family: Rajdhani, sans-serif;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.record-tab.active {
+  color: #f0c765;
+  border-bottom-color: #d8ad4d;
+}
+.record-tab-panels {
+  padding: 2rem;
+}
+.record-panel.active {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.record-card {
+  padding: 1.25rem;
+  border: 1px solid rgba(110,177,217,.22);
+  background: rgba(5,13,21,.7);
+}
+.record-card h3,
+.timeline h3 {
+  margin-top: 0;
+  font-family: Rajdhani, sans-serif;
+  text-transform: uppercase;
+}
+.compact-dl {
+  margin: 0;
+}
+.compact-dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .45rem 0;
+  border-bottom: 1px solid rgba(110,177,217,.14);
+}
+.timeline {
+  grid-column: 1 / -1;
+}
+.timeline article {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 1rem;
+  position: relative;
+  padding-bottom: 1.5rem;
+}
+.timeline article > span {
+  width: 14px;
+  height: 14px;
+  margin-top: .25rem;
+  border: 3px solid #d8ad4d;
+  border-radius: 50%;
+  background: #07111a;
+}
+.timeline article:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 18px;
+  bottom: 0;
+  width: 2px;
+  background: rgba(216,173,77,.35);
+}
+.timeline small {
+  color: #80bddd;
+  letter-spacing: .1em;
+}
+.qualification-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.qualification-grid article {
+  padding: 1.2rem;
+  border: 1px solid rgba(110,177,217,.22);
+  background: rgba(8,22,32,.72);
+}
+.qualification-grid span {
+  display: block;
+  color: #6ee39d;
+  font-size: 1.5rem;
+}
+.qualification-grid strong,
+.qualification-grid small {
+  display: block;
+}
+.qualification-grid small {
+  margin-top: .3rem;
+  color: #91a6b4;
+}
+.empty-record {
+  grid-column: 1 / -1;
+  padding: 3rem 1rem;
+  text-align: center;
+  border: 1px dashed rgba(110,177,217,.32);
+}
+.empty-record > span {
+  color: #d8ad4d;
+  font-size: 2.5rem;
+}
+.footer-motto {
+  color: #d8ad4d;
+  letter-spacing: .08em;
+}
+@media (max-width: 900px) {
+  .vpin-hero,
+  .identity-grid {
+    grid-template-columns: 1fr;
+  }
+  .database-status,
+  .record-state {
+    text-align: left;
+  }
+  .vpin-search-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+  .personnel-row {
+    grid-template-columns: 48px 1fr auto;
+  }
+  .personnel-row > span:nth-child(3),
+  .personnel-row > span:nth-child(4),
+  .personnel-row > span:nth-child(5),
+  .record-arrow {
+    display: none;
+  }
+  .record-panel.active {
+    grid-template-columns: 1fr;
+  }
+  .qualification-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .vpin-search-controls,
+  .record-fields dl,
+  .qualification-grid {
+    grid-template-columns: 1fr;
+  }
+  .jacket-header {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+  .identity-grid,
+  .record-tab-panels {
+    padding: 1.25rem;
+  }
+  .record-tabs {
+    padding: 0 1rem;
+  }
+}
+
+  </style>
 </head>
 <body>
   <div class="site-shell">
@@ -241,6 +704,70 @@
   </div>
 
   <script src="app.js"></script>
-  <script src="vpin.js"></script>
+  <script>
+(() => {
+  const search = document.querySelector("#vpin-search");
+  const division = document.querySelector("#division-filter");
+  const status = document.querySelector("#status-filter");
+  const reset = document.querySelector("#reset-search");
+  const rows = [...document.querySelectorAll(".personnel-row")];
+  const count = document.querySelector("#result-count");
+  const empty = document.querySelector("#no-results");
+  const record = document.querySelector("#sovak-record");
+
+  function filterRecords() {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedDivision = division?.value || "";
+    const selectedStatus = status?.value || "";
+
+    let visible = 0;
+    rows.forEach((row) => {
+      const searchable = Object.values(row.dataset).join(" ").toLowerCase();
+      const matchesQuery = !query || searchable.includes(query);
+      const matchesDivision = !selectedDivision || row.dataset.division === selectedDivision;
+      const matchesStatus = !selectedStatus || row.dataset.status === selectedStatus;
+      const show = matchesQuery && matchesDivision && matchesStatus;
+      row.hidden = !show;
+      if (show) visible += 1;
+    });
+
+    count.textContent = `${visible} record${visible === 1 ? "" : "s"} found`;
+    empty.hidden = visible !== 0;
+  }
+
+  search?.addEventListener("input", filterRecords);
+  division?.addEventListener("change", filterRecords);
+  status?.addEventListener("change", filterRecords);
+  reset?.addEventListener("click", () => {
+    search.value = "";
+    division.value = "";
+    status.value = "";
+    filterRecords();
+    search.focus();
+  });
+
+  rows.forEach((row) => {
+    row.addEventListener("click", () => {
+      record?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  const tabs = [...document.querySelectorAll(".record-tab")];
+  const panels = [...document.querySelectorAll(".record-panel")];
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const target = tab.dataset.tab;
+      tabs.forEach((item) => item.classList.toggle("active", item === tab));
+      panels.forEach((panel) => {
+        const active = panel.dataset.panel === target;
+        panel.classList.toggle("active", active);
+        panel.hidden = !active;
+      });
+    });
+  });
+})();
+
+  </script>
 </body>
 </html>
