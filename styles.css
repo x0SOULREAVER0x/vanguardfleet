@@ -125,7 +125,7 @@ h1 {
   display: flex;
   align-items: center;
   padding: 55px;
-  background: url("assets/vanguard-station.jpg") center / cover no-repeat;
+  background: url("vanguard-station.jpg") center / cover no-repeat;
   overflow: hidden;
 }
 .hero-overlay {

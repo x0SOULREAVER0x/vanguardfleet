@@ -25,3 +25,7 @@ The static values can later be connected to Invision Community:
 - Apply now → Character application workflow
 
 The extracted artwork is used only as a local visual prototype asset.
+
+
+## Phone upload version
+Upload all six files directly into the repository root. No assets folder is required.
