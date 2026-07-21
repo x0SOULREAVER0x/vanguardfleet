@@ -1,31 +1,15 @@
-# Vanguard Fleet Homepage Prototype
+# Vanguard Fleet Public Site — Version 2.1
 
-Open `index.html` in a modern browser.
+Upload all files directly into the root of the GitHub `vanguardfleet` repository.
 
-## Included
-- Responsive Vanguard Fleet homepage
-- Approved dark navy, gold, silver and Federation-blue styling
-- VICS access card
-- Vanguard Station hero
-- Fleet status
-- Latest news
-- Featured ship
-- Fleet orders
-- Quick-access subsystem buttons
-- Mobile navigation
-- Prototype modal interactions
+Included pages:
+- Home
+- The Fleet
+- Join
+- Ships
+- Academy
+- Awards
+- Community
+- Development Roadmap
 
-## Next integration stage
-The static values can later be connected to Invision Community:
-- Authentication → Invision member session
-- Latest news → Pages database
-- Fleet orders → Pages database
-- Ships → Ship records database
-- VPIN → Personnel database
-- Apply now → Character application workflow
-
-The extracted artwork is used only as a local visual prototype asset.
-
-
-## Phone upload version
-Upload all six files directly into the repository root. No assets folder is required.
+All assets use a flat, phone-friendly file structure. Replace existing files with matching names and upload the new HTML pages.

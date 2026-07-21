@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050a10">
+  <title>Academy | Vanguard Fleet</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="site-shell">
+    
+<header class="masthead">
+  <a class="brand-mark" href="index.html" aria-label="Vanguard Fleet home">
+    <img src="vanguard-logo.jpg" alt="Vanguard Fleet emblem">
+  </a>
+  <div class="brand-copy">
+    <p class="system-label">United Federation of Planets • Starfleet Command</p>
+    <h1>Vanguard Fleet</h1>
+    <p class="motto">Beyond the Frontier, We Endure.</p>
+  </div>
+  <section class="access-panel">
+    <div>
+      <strong>VICS</strong>
+      <span>System status: online</span>
+    </div>
+    <button class="btn btn-blue" data-open="login">Enter VICS</button>
+    <small>Guest clearance • Level 0</small>
+  </section>
+</header>
+
+<nav class="main-nav">
+  <button id="nav-toggle" class="nav-toggle" aria-expanded="false">☰ Menu</button>
+  <div id="nav-links" class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">The Fleet</a>
+    <a href="ships.html">Ships</a>
+    <a href="academy.html" class="active">Academy</a>
+    <a href="join.html">Join</a>
+    <a href="awards.html">Awards</a>
+    <a href="community.html">Community</a>
+    <a href="development.html">Development</a>
+  </div>
+</nav>
+
+
+    <main>
+<section class="page-hero"><p class="system-label">Vanguard Fleet Academy</p><h2>Prepare for the Frontier</h2><p>Orientation, qualifications and advanced leadership programs for every department.</p></section>
+<section class="content-grid">
+  <article class="content-card"><h3>Cadet Orientation</h3><p>Community standards, posting fundamentals and fleet systems.</p></article>
+  <article class="content-card"><h3>Command School</h3><p>Leadership, mission management and command qualification.</p></article>
+  <article class="content-card"><h3>Medical School</h3><p>Clinical roleplay, xenomedicine and emergency response.</p></article>
+  <article class="content-card"><h3>Engineering School</h3><p>Starship systems, damage control and technical storytelling.</p></article>
+  <article class="content-card"><h3>Security & Tactical</h3><p>Protective operations, investigations and tactical doctrine.</p></article>
+  <article class="content-card"><h3>Science Division</h3><p>Research, anomalies, first contact and scientific discovery.</p></article>
+</section>
+</main>
+    
+<footer>
+  <strong>Vanguard Fleet Command</strong>
+  <p>Vanguard Fleet is an unofficial, non-commercial Star Trek-inspired roleplaying community. Star Trek and all related marks, logos and characters are owned by their respective rights holders. This fan production is not endorsed by, sponsored by, licensed by or affiliated with CBS Studios Inc., Paramount Pictures Corporation or any Star Trek rights holder.</p>
+</footer>
+
+  </div>
+  
+<dialog id="modal">
+  <form method="dialog">
+    <button class="modal-x" aria-label="Close">×</button>
+    <p class="system-label">VICS Database</p>
+    <h2 id="modal-title">System Record</h2>
+    <p id="modal-copy">This module is ready for integration.</p>
+    <button class="btn btn-blue">Acknowledge</button>
+  </form>
+</dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
