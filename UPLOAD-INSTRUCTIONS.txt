@@ -1,1 +1,13 @@
-Replace awards.html in the repository root. This removes the lower four award cards so only the Highest Fleet Decorations section remains.
+VANGUARD FLEET SITE-WIDE UPDATE
+
+Upload app.js to the root of the GitHub repository and replace the existing app.js.
+
+This single shared file will:
+1. Change the footer on every current page that loads app.js.
+2. Add the expanded VPIN definition to the VPIN card on the home page.
+
+No HTML files need to be replaced for this update.
+
+After uploading, allow GitHub Pages a minute or two to rebuild, then hard-refresh the browser:
+Windows: Ctrl + F5
+Mobile: close the tab and reopen it, or clear the page cache.
