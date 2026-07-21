@@ -11,268 +11,820 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+
   <style>
-    .featured-honors {
-      position: relative;
-      padding: clamp(1.2rem, 3vw, 2.4rem);
-      margin: 1.5rem auto 2.5rem;
-      max-width: 1200px;
-      overflow: hidden;
-      border: 1px solid rgba(232,190,72,.35);
+    .awards-register {
+      margin: 28px auto 0;
+      padding: clamp(18px, 3vw, 34px);
+      border: 1px solid rgba(211, 169, 69, .72);
       background:
-        radial-gradient(circle at 50% 20%, rgba(214,161,45,.12), transparent 34%),
-        linear-gradient(145deg, rgba(5,10,18,.96), rgba(9,18,31,.92));
-      box-shadow: 0 24px 70px rgba(0,0,0,.45), inset 0 0 45px rgba(23,77,125,.12);
+        linear-gradient(135deg, rgba(31, 68, 105, .18), transparent 44%),
+        linear-gradient(315deg, rgba(211, 169, 69, .08), transparent 40%),
+        rgba(4, 11, 18, .88);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .025);
     }
-    .featured-honors::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: .25;
-      background-image:
-        radial-gradient(circle, rgba(255,255,255,.9) 0 1px, transparent 1.5px),
-        radial-gradient(circle, rgba(232,190,72,.8) 0 1px, transparent 1.5px);
-      background-size: 83px 83px, 127px 127px;
-      background-position: 12px 15px, 51px 37px;
+
+    .awards-tools {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(190px, 260px) auto;
+      gap: 12px;
+      margin: 22px 0 28px;
     }
-    .honors-heading {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      margin-bottom: 1.5rem;
+
+    .awards-tools input,
+    .awards-tools select {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 13px;
+      border: 1px solid rgba(211, 169, 69, .52);
+      border-radius: 6px;
+      background: rgba(1, 8, 14, .92);
+      color: #f3f6f9;
+      font: inherit;
     }
-    .honors-heading h2 {
-      margin: .15rem 0 .35rem;
-      letter-spacing: .08em;
+
+    .awards-tools input:focus,
+    .awards-tools select:focus {
+      outline: none;
+      border-color: #65c8ff;
+      box-shadow: 0 0 0 3px rgba(101, 200, 255, .12);
+    }
+
+    .award-result-count {
+      display: grid;
+      place-items: center;
+      min-width: 128px;
+      border: 1px solid rgba(211, 169, 69, .52);
+      border-radius: 6px;
+      color: #e9c76c;
+      font-family: "Rajdhani", sans-serif;
+      font-weight: 700;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .award-category {
+      margin-top: 34px;
+    }
+
+    .award-category-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 0 0 15px;
+      color: #e8c25c;
+      font-family: "Rajdhani", sans-serif;
+      font-size: clamp(1.2rem, 2.3vw, 1.7rem);
+      letter-spacing: .09em;
       text-transform: uppercase;
     }
-    .presentation-grid {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: clamp(1rem, 2vw, 1.6rem);
-      align-items: stretch;
+
+    .award-category-title::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, rgba(211, 169, 69, .74), transparent);
     }
-    .presentation-card {
-      width: 100%;
-      min-width: 0;
+
+    .official-award-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .official-award-card {
       display: flex;
       flex-direction: column;
       min-height: 100%;
-      padding: clamp(1rem, 2.4vw, 1.7rem);
-      border: 1px solid rgba(232,190,72,.7);
-      background: linear-gradient(180deg, rgba(7,13,22,.82), rgba(3,7,12,.94));
-      box-shadow: inset 0 0 26px rgba(232,190,72,.06), 0 15px 35px rgba(0,0,0,.32);
-      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+      padding: 16px;
+      border: 1px solid rgba(211, 169, 69, .56);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .025), transparent 38%),
+        rgba(7, 17, 27, .9);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
     }
-    .presentation-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255,215,105,.95);
-      box-shadow: 0 20px 45px rgba(0,0,0,.45), 0 0 28px rgba(232,190,72,.14);
+
+    .official-award-card:hover {
+      transform: translateY(-3px);
+      border-color: #e0ba54;
+      box-shadow: 0 15px 32px rgba(0, 0, 0, .34);
     }
-    .medal-stage {
-      display: grid;
-      place-items: center;
-      height: 470px;
-      min-height: 470px;
-      padding: 1rem;
-      background: radial-gradient(circle at 50% 56%, rgba(232,190,72,.16), transparent 42%);
-    }
-    .medal-stage img {
-      display: block;
+
+    .official-award-image {
       width: 100%;
-      max-width: 290px;
-      height: 440px;
+      height: 220px;
       object-fit: contain;
-      object-position: center;
-      filter: drop-shadow(0 15px 18px rgba(0,0,0,.58));
+      margin-bottom: 10px;
     }
-    .presentation-copy {
-      text-align: center;
-      margin-top: .8rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(232,190,72,.25);
+
+    .ribbon-only {
+      width: 132px;
+      height: 38px;
+      margin: 34px auto 28px;
+      border: 2px solid rgba(225, 196, 118, .72);
+      box-shadow: inset 0 1px rgba(255,255,255,.28), 0 8px 20px rgba(0,0,0,.35);
     }
-    .precedence {
-      margin: 0 0 .15rem;
-      color: #f0c95c;
-      font-family: Rajdhani, sans-serif;
-      font-size: clamp(1.4rem, 3vw, 2rem);
+
+    .award-precedence {
+      color: #65c8ff;
+      font-family: "Rajdhani", sans-serif;
       font-weight: 700;
-      letter-spacing: .04em;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-size: .76rem;
+    }
+
+    .official-award-card h3 {
+      margin: 5px 0 8px;
+      color: #e7c35e;
+      font-family: "Rajdhani", sans-serif;
+      font-size: 1.35rem;
+      text-transform: uppercase;
+      line-height: 1.05;
+    }
+
+    .official-award-card p {
+      color: #b8c2ce;
+      line-height: 1.55;
+      font-size: .9rem;
+    }
+
+    .award-card-actions {
+      margin-top: auto;
+      padding-top: 12px;
+    }
+
+    .award-detail-button {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid rgba(101, 200, 255, .54);
+      border-radius: 5px;
+      background: rgba(25, 88, 128, .13);
+      color: #cdeeff;
+      font-family: "Rajdhani", sans-serif;
+      font-weight: 700;
+      letter-spacing: .08em;
       text-transform: uppercase;
     }
-    .presentation-copy h3 {
-      margin: .1rem 0 .35rem;
-      font-size: clamp(1.25rem, 2.4vw, 1.65rem);
-    }
-    .presentation-copy p:last-child {
-      max-width: 44ch;
-      margin: .55rem auto 0;
-    }
-    
-    }
-    
-    
+
+    .award-detail-button:hover {
+      background: rgba(25, 103, 153, .26);
     }
 
-    
-    @media (max-width: 1180px) and (min-width: 761px) {
-      .presentation-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+    .award-empty {
+      display: none;
+      padding: 34px;
+      border: 1px dashed rgba(211, 169, 69, .45);
+      color: #aeb9c6;
+      text-align: center;
     }
 
-    @media (max-width: 760px) {
-      .presentation-grid { grid-template-columns: 1fr; }
-      .medal-stage { height: 430px; min-height: 430px; }
-      .medal-stage img { height: 400px; max-width: 280px; }
+    .awards-reference-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 34px;
+    }
+
+    .awards-reference-panel {
+      padding: 20px;
+      border: 1px solid rgba(211, 169, 69, .52);
+      background: rgba(7, 17, 27, .88);
+    }
+
+    .awards-reference-panel h3 {
+      margin: 0 0 12px;
+      color: #e7c35e;
+      font-family: "Rajdhani", sans-serif;
+      font-size: 1.45rem;
+      text-transform: uppercase;
+    }
+
+    .awards-reference-panel p,
+    .awards-reference-panel li {
+      color: #b8c2ce;
+      line-height: 1.6;
+    }
+
+    .ribbon-rack {
+      display: grid;
+      grid-template-columns: repeat(3, 88px);
+      gap: 5px;
+      justify-content: center;
+      margin: 22px auto;
+    }
+
+    .ribbon-rack span {
+      height: 27px;
+      border: 1px solid rgba(225, 196, 118, .66);
+    }
+
+    .honor-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .honor-record {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+      gap: 10px;
+      padding: 10px;
+      background: rgba(13, 29, 44, .72);
+      border: 1px solid rgba(255, 255, 255, .07);
+      font-size: .87rem;
+    }
+
+    .honor-record strong { color: #eef3f8; }
+    .honor-record span { color: #9facbb; }
+    .honor-record span:last-child { color: #e7c35e; }
+
+    #award-record-modal {
+      width: min(680px, calc(100% - 24px));
+      border: 1px solid #d3a945;
+      background: #07111b;
+      color: #edf3f8;
+      padding: 0;
+    }
+
+    #award-record-modal::backdrop {
+      background: rgba(0, 0, 0, .8);
+      backdrop-filter: blur(5px);
+    }
+
+    .award-modal-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(211, 169, 69, .45);
+    }
+
+    .award-modal-head h2 {
+      margin: 2px 0 0;
+      color: #e7c35e;
+      font-family: "Rajdhani", sans-serif;
+      text-transform: uppercase;
+    }
+
+    .award-modal-close {
+      min-width: 40px;
+      min-height: 40px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 5px;
+      background: transparent;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .award-modal-body {
+      padding: 20px;
+    }
+
+    .award-modal-layout {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: 22px;
+    }
+
+    .award-modal-layout img {
+      width: 100%;
+      max-height: 260px;
+      object-fit: contain;
+    }
+
+    .award-modal-layout dl { margin: 0; }
+    .award-modal-layout dt {
+      margin-top: 13px;
+      color: #65c8ff;
+      font-family: "Rajdhani", sans-serif;
+      font-weight: 700;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      font-size: .76rem;
+    }
+    .award-modal-layout dd {
+      margin: 4px 0 0;
+      color: #b8c2ce;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 980px) {
+      .official-award-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 720px) {
+      .awards-tools { grid-template-columns: 1fr; }
+      .award-result-count { min-height: 44px; }
+      .awards-reference-grid { grid-template-columns: 1fr; }
+      .award-modal-layout { grid-template-columns: 1fr; }
+      .award-modal-layout img { max-height: 230px; }
+    }
+
+    @media (max-width: 520px) {
+      .official-award-grid { grid-template-columns: 1fr; }
+      .official-award-image { height: 245px; }
+      .honor-record { grid-template-columns: 1fr; }
+      .ribbon-rack { grid-template-columns: repeat(3, minmax(0, 88px)); }
     }
   </style>
 </head>
+
 <body>
-  <div class="site-shell">
-    <header class="masthead command-header">
-      <a class="brand-mark" href="index.html" aria-label="Vanguard Fleet home">
-        <img src="vanguard-logo.png" alt="Vanguard Fleet emblem">
-      </a>
-      <div class="brand-copy">
-        <p class="system-label">United Federation of Planets • Starfleet Command</p>
-        <h1><span>Vanguard</span><span>Fleet</span></h1>
-        <p class="motto">Beyond the Frontier, We Endure.</p>
-      </div>
-      <section class="access-panel vics-panel">
-        <strong class="vics-title">VICS</strong>
-        <span class="vics-full-name">Vanguard Integrated<br>Computer System</span>
-        <span class="vics-status"><i></i> System Status: Online</span>
-        <button class="btn btn-blue vics-button" data-open="login">Enter VICS</button>
-        <small>Guest Clearance • Level 0</small>
-      </section>
-    </header>
+<div class="site-shell">
 
-    <nav class="main-nav">
-      <button id="nav-toggle" class="nav-toggle" aria-expanded="false">☰ Menu</button>
-      <div id="nav-links" class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">The Fleet</a>
-        <a href="ships.html">Ships</a>
-        <a href="academy.html">Academy</a>
-        <a href="join.html">Join</a>
-        <a href="awards.html" class="active">Awards</a>
-        <a href="community.html">Community</a>
-        <a href="development.html">Development</a>
-      </div>
-    </nav>
+<header class="masthead command-header">
+  <a class="brand-mark" href="index.html" aria-label="Vanguard Fleet home">
+    <img src="vanguard-logo.png" alt="Vanguard Fleet emblem">
+  </a>
 
-    <main>
-      <section class="page-hero">
-        <p class="system-label">Awards & Decorations</p>
-        <h2>Earn Your Legacy</h2>
-        <p>Recognizing exceptional storytelling, leadership, service and community contribution.</p>
-      </section>
-
-      <section class="featured-honors" aria-labelledby="highest-decorations">
-        <div class="honors-heading">
-          <p class="system-label">Order of Precedence</p>
-          <h2 id="highest-decorations">Highest Fleet Decorations</h2>
-          <p>The premier honors of Vanguard Fleet, presented in full ceremonial configuration.</p>
-        </div>
-
-        <div class="presentation-grid">
-          <article class="presentation-card">
-            <div class="medal-stage">
-              <img src="award-star-of-vanguard.png?v=421" alt="Star of Vanguard ribbon bar and full-size medal">
-            </div>
-            <div class="presentation-copy">
-              <p class="precedence">#1 Star of Vanguard</p>
-              <h3>Highest Fleet Decoration</h3>
-              <p>The highest decoration in Vanguard Fleet, awarded for extraordinary heroism and actions that change the course of events.</p>
-            </div>
-          </article>
-
-          <article class="presentation-card">
-            <div class="medal-stage">
-              <img src="award-vanguard-cross.png?v=421" alt="Vanguard Cross ribbon bar and full-size medal">
-            </div>
-            <div class="presentation-copy">
-              <p class="precedence">#2 Vanguard Cross</p>
-              <h3>Gallantry and Heroism</h3>
-              <p>Awarded for exceptional bravery, gallantry and heroic leadership in the face of overwhelming odds.</p>
-            </div>
-          </article>
-<article class="presentation-card">
-            <div class="medal-stage">
-              <img src="award-medal-of-valor.png?v=460" alt="Medal of Valor ribbon bar and full-size medal">
-            </div>
-            <div class="presentation-copy">
-              <p class="precedence">#3 Medal of Valor</p>
-              <h3>Third Highest Decoration</h3>
-              <p>Awarded for acts of valor in the face of great personal risk or danger.</p>
-            </div>
-          </article>
-
-          <article class="presentation-card">
-            <div class="medal-stage">
-              <img src="award-distinguished-service.png?v=460" alt="Distinguished Service Medal ribbon bar and full-size medal">
-            </div>
-            <div class="presentation-copy">
-              <p class="precedence">#4 Distinguished Service Medal</p>
-              <h3>Exceptional Fleet Service</h3>
-              <p>Awarded for outstanding and dedicated service with significant and lasting contributions to the Fleet and the Federation.</p>
-            </div>
-          </article>
-
-        </div>
-      </section>
-
-      
-
-      <section class="official-awards-section">
-        <div class="section-heading">
-          <p class="system-label">Complete Decorations Register</p>
-          <h2>Official Awards Board</h2>
-          <p>The full board remains available for the complete order of precedence, qualification badges, campaign medals, service awards, unit citations, ribbon racks and challenge coins.</p>
-        </div>
-        <figure class="official-awards-board">
-          <a href="vanguard-awards-board.png" target="_blank" rel="noopener">
-            <img src="vanguard-awards-board.png?v=290" alt="Official Vanguard Fleet awards and decorations board">
-          </a>
-        </figure>
-      </section>
-
-      <section class="section-block">
-        <div class="section-heading">
-          <p class="system-label">Vanguard Fleet Awards System</p>
-          <h2>One Award. Every Display.</h2>
-          <p>Award entries will update VPIN, ribbon racks, citations, Discord announcements, career portfolios and the Hall of Honor.</p>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-  <strong>Vanguard Fleet Command</strong>
-
-  <p><strong>© 2026 Vanguard Fleet. All Rights Reserved.</strong></p>
-
-  <p>Vanguard Fleet is an unofficial, non-commercial Star Trek-inspired roleplaying organization. Star Trek, the Starfleet insignia, the United Federation of Planets and all related names, logos, characters, ships and trademarks are the property of CBS Studios Inc., Paramount Global and their respective rights holders. Vanguard Fleet is not endorsed by, sponsored by, licensed by or affiliated with CBS Studios, Paramount or any Star Trek rights holder.</p>
-
-  <p>All original Vanguard Fleet artwork, graphics, medals, ribbons, website design, written content, lore and original intellectual property are © 2026 Vanguard Fleet unless otherwise noted. Unauthorized reproduction or redistribution of original Vanguard Fleet content without permission is prohibited.</p>
-
-  <p class="footer-motto"><strong>Live Long. Write Boldly. Explore Together.</strong></p>
-</footer>
+  <div class="brand-copy">
+    <p class="system-label">United Federation of Planets • Starfleet Command</p>
+    <h1><span>Vanguard</span><span>Fleet</span></h1>
+    <p class="motto">Beyond the Frontier, We Endure.</p>
   </div>
 
-  <dialog id="modal">
-    <form method="dialog">
-      <button class="modal-x" aria-label="Close">×</button>
-      <p class="system-label">VICS Database</p>
-      <h2 id="modal-title">System Record</h2>
-      <p id="modal-copy">This module is ready for integration.</p>
-      <button class="btn btn-blue">Acknowledge</button>
-    </form>
-  </dialog>
-  <script src="app.js"></script>
+  <section class="access-panel vics-panel">
+    <strong class="vics-title">VICS</strong>
+    <span class="vics-full-name">Vanguard Integrated<br>Computer System</span>
+    <span class="vics-status"><i></i> System Status: Online</span>
+    <button class="btn btn-blue vics-button" data-open="login">Enter VICS</button>
+    <small>Guest Clearance • Level 0</small>
+  </section>
+</header>
+
+<nav class="main-nav">
+  <button id="nav-toggle" class="nav-toggle" aria-expanded="false">☰ Menu</button>
+  <div id="nav-links" class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">The Fleet</a>
+    <a href="ships.html">Ships</a>
+    <a href="academy.html">Academy</a>
+    <a href="join.html">Join</a>
+    <a href="awards.html" class="active">Awards</a>
+    <a href="community.html">Community</a>
+    <a href="development.html">Development</a>
+  </div>
+</nav>
+
+<main>
+<section class="page-hero">
+  <p class="system-label">Awards & Decorations</p>
+  <h2>Earn Your Legacy</h2>
+  <p>Recognizing exceptional storytelling, leadership, service and community contribution.</p>
+</section>
+
+<section class="award-grid visual-awards exact-awards">
+  <article class="award-card">
+    <img src="award-star-of-vanguard.png?v=301" alt="Star of Vanguard medal and ribbon">
+    <div class="award-card-copy">
+      <p class="system-label">Highest Fleet Decoration</p>
+      <h3>Star of Vanguard</h3>
+      <p>The highest decoration in Vanguard Fleet, awarded for extraordinary heroism and actions that change the course of events.</p>
+    </div>
+  </article>
+
+  <article class="award-card">
+    <img src="award-vanguard-cross.png?v=301" alt="Vanguard Cross medal and ribbon">
+    <div class="award-card-copy">
+      <p class="system-label">Gallantry and Heroism</p>
+      <h3>Vanguard Cross</h3>
+      <p>Awarded for exceptional bravery, gallantry and heroic leadership in the face of overwhelming odds.</p>
+    </div>
+  </article>
+
+  <article class="award-card">
+    <img src="award-distinguished-service.png?v=301" alt="Distinguished Service Medal medal and ribbon">
+    <div class="award-card-copy">
+      <p class="system-label">Exceptional Fleet Service</p>
+      <h3>Distinguished Service Medal</h3>
+      <p>Awarded for outstanding and dedicated service with significant and lasting contributions to the Fleet.</p>
+    </div>
+  </article>
+
+  <article class="award-card">
+    <img src="award-explorers-star.png?v=301" alt="Explorer's Star medal and ribbon">
+    <div class="award-card-copy">
+      <p class="system-label">Exploration and First Contact</p>
+      <h3>Explorer's Star</h3>
+      <p>Awarded for first contact, major discoveries and advancement of known space.</p>
+    </div>
+  </article>
+
+  <article class="award-card">
+    <img src="award-emergency-medical.png?v=301" alt="Emergency Medical Medal medal and ribbon">
+    <div class="award-card-copy">
+      <p class="system-label">Medical Excellence</p>
+      <h3>Emergency Medical Medal</h3>
+      <p>Awarded for excellence in emergency response and medical service during critical situations.</p>
+    </div>
+  </article>
+
+  <article class="award-card">
+    <img src="award-innovation-medal.png?v=301" alt="Innovation Medal medal and ribbon">
+    <div class="award-card-copy">
+      <p class="system-label">Engineering Achievement</p>
+      <h3>Innovation Medal</h3>
+      <p>Awarded for innovative solutions, creative engineering and meaningful technical breakthroughs.</p>
+    </div>
+  </article>
+</section>
+
+<section class="official-awards-section">
+  <div class="section-heading">
+    <p class="system-label">Complete Decorations Register</p>
+    <h2>Official Awards Board</h2>
+    <p>Search the complete order of precedence and open any record for its criteria, eligibility and approval authority.</p>
+  </div>
+
+  <div class="awards-register">
+    <div class="awards-tools">
+      <input id="award-search" type="search" placeholder="Search awards, criteria or category…" aria-label="Search awards">
+      <select id="award-filter" aria-label="Filter award category">
+        <option value="All">All award categories</option>
+      </select>
+      <div class="award-result-count" id="award-count">0 Awards</div>
+    </div>
+
+    <div id="award-sections"></div>
+    <div class="award-empty" id="award-empty">No awards match your search.</div>
+
+    <div class="awards-reference-grid">
+      <section class="awards-reference-panel">
+        <h3>Ribbon Rack Reference</h3>
+        <p>Ribbons are arranged in order of precedence, three per row, from the wearer's upper right to lower left.</p>
+        <div class="ribbon-rack" id="ribbon-rack"></div>
+        <p style="text-align:center;color:#65c8ff;font-family:Rajdhani,sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:.78rem;">Top to bottom • left to right</p>
+      </section>
+
+      <section class="awards-reference-panel">
+        <h3>Hall of Honor</h3>
+        <div class="honor-list">
+          <div class="honor-record"><strong>Star of Vanguard</strong><span>No recipient recorded</span><span>—</span></div>
+          <div class="honor-record"><strong>Vanguard Cross</strong><span>No recipient recorded</span><span>—</span></div>
+          <div class="honor-record"><strong>Medal of Valor</strong><span>No recipient recorded</span><span>—</span></div>
+          <div class="honor-record"><strong>Distinguished Service Medal</strong><span>No recipient recorded</span><span>—</span></div>
+        </div>
+      </section>
+
+      <section class="awards-reference-panel">
+        <h3>Qualification Badges</h3>
+        <p>The final badge register will include Academy, Command, Medical, Operations, Science, Security, Flight and Special Operations qualifications.</p>
+        <ul>
+          <li>Academy Graduate and instructor credentials</li>
+          <li>Bridge, command and departmental qualifications</li>
+          <li>Specialty and advanced-service badges</li>
+          <li>Automatic display within each VPIN jacket</li>
+        </ul>
+      </section>
+
+      <section class="awards-reference-panel">
+        <h3>VFMS Integration</h3>
+        <p>When the live personnel system is connected, issuing an award will update the recipient's VPIN record, ribbon rack, citation, career timeline and Hall of Honor entry.</p>
+      </section>
+    </div>
+  </div>
+</section>
+
+<section class="section-block">
+  <div class="section-heading">
+    <p class="system-label">Vanguard Fleet Awards System</p>
+    <h2>One Award. Every Display.</h2>
+    <p>Award entries will update VPIN, ribbon racks, citations, Discord announcements, career portfolios and the Hall of Honor.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <strong>Vanguard Fleet Command</strong>
+  <p>Vanguard Fleet is an unofficial, non-commercial Star Trek-inspired roleplaying community. Star Trek and all related marks, logos and characters are owned by their respective rights holders. This fan production is not endorsed by, sponsored by, licensed by or affiliated with CBS Studios Inc., Paramount Pictures Corporation or any Star Trek rights holder.</p>
+</footer>
+</div>
+
+<dialog id="modal">
+  <form method="dialog">
+    <button class="modal-x" aria-label="Close">×</button>
+    <p class="system-label">VICS Database</p>
+    <h2 id="modal-title">System Record</h2>
+    <p id="modal-copy">This module is ready for integration.</p>
+    <button class="btn btn-blue">Acknowledge</button>
+  </form>
+</dialog>
+
+<dialog id="award-record-modal">
+  <div class="award-modal-head">
+    <div>
+      <p class="system-label" style="margin:0;">Official Decoration Record</p>
+      <h2 id="award-modal-title">Award</h2>
+    </div>
+    <button class="award-modal-close" id="award-modal-close" aria-label="Close award record">×</button>
+  </div>
+  <div class="award-modal-body">
+    <div class="award-modal-layout">
+      <div id="award-modal-visual"></div>
+      <dl>
+        <dt>Order of precedence</dt>
+        <dd id="award-modal-precedence"></dd>
+        <dt>Category</dt>
+        <dd id="award-modal-category"></dd>
+        <dt>Official criteria</dt>
+        <dd id="award-modal-criteria"></dd>
+        <dt>Eligibility</dt>
+        <dd id="award-modal-eligibility"></dd>
+        <dt>Approval authority</dt>
+        <dd id="award-modal-authority"></dd>
+      </dl>
+    </div>
+  </div>
+</dialog>
+
+<script src="app.js"></script>
+<script>
+(function () {
+  const awards = [
+    {
+      precedence: 1,
+      name: "Star of Vanguard",
+      category: "Highest Fleet Decorations",
+      image: "award-star-of-vanguard.png?v=301",
+      ribbon: "linear-gradient(90deg,#122a54 0 40%,#d7ae52 40% 60%,#122a54 60%)",
+      criteria: "The highest decoration of Vanguard Fleet, reserved for extraordinary heroism or service whose impact fundamentally changes the course of a mission, campaign or the Fleet itself.",
+      eligibility: "Any active member whose conduct meets the highest standard of exceptional heroism or historic fleetwide service.",
+      authority: "Vanguard Fleet Command"
+    },
+    {
+      precedence: 2,
+      name: "Vanguard Cross",
+      category: "Highest Fleet Decorations",
+      image: "award-vanguard-cross.png?v=301",
+      ribbon: "linear-gradient(90deg,#122a54 0 22%,#f1f1f1 22% 40%,#55aee9 40% 60%,#f1f1f1 60% 78%,#122a54 78%)",
+      criteria: "Awarded for exceptional bravery, gallantry and heroic leadership in the face of overwhelming odds.",
+      eligibility: "Members who demonstrate conspicuous courage and decisive leadership during an extreme crisis.",
+      authority: "Vanguard Fleet Command"
+    },
+    {
+      precedence: 3,
+      name: "Medal of Valor",
+      category: "Highest Fleet Decorations",
+      image: "",
+      ribbon: "linear-gradient(90deg,#14294d 0 22%,#eee 22% 34%,#b61f2e 34% 66%,#eee 66% 78%,#14294d 78%)",
+      criteria: "Awarded for courageous action involving great personal risk or danger in order to protect others or preserve a mission.",
+      eligibility: "Any member whose documented actions demonstrate exceptional valor.",
+      authority: "Vanguard Fleet Command"
+    },
+    {
+      precedence: 4,
+      name: "Distinguished Service Medal",
+      category: "Highest Fleet Decorations",
+      image: "award-distinguished-service.png?v=301",
+      ribbon: "linear-gradient(90deg,#a9cee8 0 19%,#f2f2f2 19% 31%,#14294d 31% 69%,#f2f2f2 69% 81%,#a9cee8 81%)",
+      criteria: "Awarded for outstanding and dedicated service resulting in significant and lasting contributions to Vanguard Fleet.",
+      eligibility: "Members with a sustained record of service of exceptionally high merit.",
+      authority: "Vanguard Fleet Command"
+    },
+    {
+      precedence: 5,
+      name: "Fleet Commendation Medal",
+      category: "Fleet Service Awards",
+      image: "",
+      ribbon: "linear-gradient(90deg,#14294d 0 17%,#d7ae52 17% 27%,#eee 27% 39%,#14294d 39% 61%,#eee 61% 73%,#d7ae52 73% 83%,#14294d 83%)",
+      criteria: "Awarded for meritorious performance, exceptional leadership or a contribution worthy of formal fleetwide recognition.",
+      eligibility: "Any member whose service clearly exceeds the normal expectations of their billet.",
+      authority: "Fleet Command or authorized commanding officer"
+    },
+    {
+      precedence: 6,
+      name: "Explorer's Star",
+      category: "Exploration & Science",
+      image: "award-explorers-star.png?v=301",
+      ribbon: "linear-gradient(90deg,#14294d 0 42%,#e9ecef 42% 58%,#14294d 58%)",
+      criteria: "Awarded for first contact, major discoveries, stellar surveys or work that substantially advances knowledge of unexplored space.",
+      eligibility: "Members participating in an exploration or scientific achievement of exceptional importance.",
+      authority: "Fleet Command or Science Command"
+    },
+    {
+      precedence: 7,
+      name: "Innovation Medal",
+      category: "Engineering & Development",
+      image: "award-innovation-medal.png?v=301",
+      ribbon: "linear-gradient(90deg,#14294d 0 21%,#7d5bc5 21% 35%,#d7ae52 35% 65%,#7d5bc5 65% 79%,#14294d 79%)",
+      criteria: "Awarded for innovative solutions, creative engineering or technical breakthroughs that improve Fleet operations.",
+      eligibility: "Members who successfully develop and implement an original improvement with measurable value.",
+      authority: "Fleet Command, Development or Chief Engineer"
+    },
+    {
+      precedence: 8,
+      name: "Engineering Excellence Medal",
+      category: "Engineering & Development",
+      image: "award-engineering-excellence.png?v=301",
+      ribbon: "linear-gradient(90deg,#14294d 0 20%,#d7ae52 20% 34%,#d8772d 34% 66%,#d7ae52 66% 80%,#14294d 80%)",
+      criteria: "Awarded for exceptional engineering skill, technical leadership, damage control or mission-saving improvisation.",
+      eligibility: "Engineering personnel or other members whose technical actions materially preserve a vessel, station or mission.",
+      authority: "Fleet Command or Chief Engineer"
+    },
+    {
+      precedence: 9,
+      name: "Emergency Medical Medal",
+      category: "Medical Awards",
+      image: "award-emergency-medical.png?v=301",
+      ribbon: "linear-gradient(90deg,#14294d 0 22%,#d7ae52 22% 34%,#b61f2e 34% 66%,#d7ae52 66% 78%,#14294d 78%)",
+      criteria: "Awarded for excellence in emergency response, trauma care or medical service during a critical incident.",
+      eligibility: "Medical personnel or other members who provide extraordinary lifesaving care during an emergency.",
+      authority: "Fleet Command or Chief Medical Officer"
+    },
+    {
+      precedence: 10,
+      name: "Medical Excellence Medal",
+      category: "Medical Awards",
+      image: "award-medical-excellence.png?v=301",
+      ribbon: "linear-gradient(90deg,#14294d 0 20%,#f2f2f2 20% 34%,#b61f2e 34% 66%,#f2f2f2 66% 80%,#14294d 80%)",
+      criteria: "Awarded for distinguished medical service, clinical excellence, compassion or an exceptional contribution to fleet medicine.",
+      eligibility: "Members with sustained or singular medical achievement of exceptional merit.",
+      authority: "Fleet Command or Chief Medical Officer"
+    },
+    {
+      precedence: 11,
+      name: "Command Excellence Medal",
+      category: "Command & Leadership",
+      image: "",
+      ribbon: "linear-gradient(90deg,#14294d 0 20%,#d7ae52 20% 33%,#a71d2c 33% 67%,#d7ae52 67% 80%,#14294d 80%)",
+      criteria: "Awarded for superior command performance, stewardship of personnel and successful mission leadership.",
+      eligibility: "Commanding officers, executive officers or members serving in formally designated leadership positions.",
+      authority: "Vanguard Fleet Command"
+    },
+    {
+      precedence: 12,
+      name: "Mentor Medal",
+      category: "Command & Leadership",
+      image: "",
+      ribbon: "linear-gradient(90deg,#14294d 0 22%,#4da36a 22% 36%,#d7ae52 36% 64%,#4da36a 64% 78%,#14294d 78%)",
+      criteria: "Awarded for sustained excellence in mentorship, instruction, onboarding and member development.",
+      eligibility: "Members with a documented record of helping other members grow and succeed.",
+      authority: "Fleet Command or Academy Command"
+    },
+    {
+      precedence: 13,
+      name: "Security Service Medal",
+      category: "Security & Tactical",
+      image: "",
+      ribbon: "linear-gradient(90deg,#14294d 0 22%,#d7ae52 22% 35%,#111 35% 65%,#d7ae52 65% 78%,#14294d 78%)",
+      criteria: "Awarded for exceptional service in security, force protection, tactical readiness or defense of Fleet personnel.",
+      eligibility: "Security personnel or other members whose actions provide exceptional protection to others.",
+      authority: "Fleet Command or Chief of Security"
+    },
+    {
+      precedence: 14,
+      name: "Tactical Excellence Medal",
+      category: "Security & Tactical",
+      image: "",
+      ribbon: "linear-gradient(90deg,#14294d 0 19%,#b61f2e 19% 32%,#d7ae52 32% 68%,#b61f2e 68% 81%,#14294d 81%)",
+      criteria: "Awarded for superior tactical judgment, planning and execution with significant operational impact.",
+      eligibility: "Members responsible for an exceptional tactical achievement.",
+      authority: "Fleet Command"
+    },
+    {
+      precedence: 15,
+      name: "Peacekeeper's Medal",
+      category: "Diplomacy & Community",
+      image: "",
+      ribbon: "linear-gradient(90deg,#14294d 0 21%,#f2f2f2 21% 34%,#51a6a2 34% 66%,#f2f2f2 66% 79%,#14294d 79%)",
+      criteria: "Awarded for preventing conflict, protecting peace or resolving a dangerous dispute through restraint and diplomacy.",
+      eligibility: "Any member whose actions result in an exceptional peaceful resolution.",
+      authority: "Vanguard Fleet Command"
+    },
+    {
+      precedence: 16,
+      name: "Community Service Medal",
+      category: "Diplomacy & Community",
+      image: "",
+      ribbon: "linear-gradient(90deg,#14294d 0 22%,#49a96d 22% 35%,#f2f2f2 35% 65%,#49a96d 65% 78%,#14294d 78%)",
+      criteria: "Awarded for sustained service that strengthens the Vanguard Fleet community, improves participation or supports members.",
+      eligibility: "Any member whose community contribution substantially exceeds ordinary expectations.",
+      authority: "Fleet Command or Community Command"
+    },
+    {
+      precedence: 17,
+      name: "Fleet Unit Citation",
+      category: "Unit Awards",
+      image: "",
+      ribbon: "linear-gradient(90deg,#14294d 0 20%,#f2f2f2 20% 33%,#d7ae52 33% 67%,#f2f2f2 67% 80%,#14294d 80%)",
+      criteria: "Awarded to a ship, station or formal Fleet unit for outstanding collective achievement.",
+      eligibility: "All eligible members assigned to the cited unit during the recognized action or period.",
+      authority: "Vanguard Fleet Command"
+    },
+    {
+      precedence: 18,
+      name: "Campaign Service Medal",
+      category: "Campaign & Service Medals",
+      image: "",
+      ribbon: "linear-gradient(90deg,#14294d 0 18%,#71844e 18% 34%,#d7ae52 34% 66%,#71844e 66% 82%,#14294d 82%)",
+      criteria: "Awarded for honorable participation in a designated fleetwide story campaign or major operational arc.",
+      eligibility: "Members meeting the published participation standard for the designated campaign.",
+      authority: "Fleet Command"
+    }
+  ];
+
+  const search = document.getElementById("award-search");
+  const filter = document.getElementById("award-filter");
+  const sections = document.getElementById("award-sections");
+  const count = document.getElementById("award-count");
+  const empty = document.getElementById("award-empty");
+  const modal = document.getElementById("award-record-modal");
+
+  [...new Set(awards.map(a => a.category))].forEach(category => {
+    const option = document.createElement("option");
+    option.value = category;
+    option.textContent = category;
+    filter.appendChild(option);
+  });
+
+  document.getElementById("ribbon-rack").innerHTML = awards.slice(0, 12)
+    .map(a => `<span title="${a.name}" style="background:${a.ribbon}"></span>`)
+    .join("");
+
+  function awardVisual(a, modalView) {
+    if (a.image) {
+      return `<img class="${modalView ? "" : "official-award-image"}" src="${a.image}" alt="${a.name} medal and ribbon">`;
+    }
+    return `<div class="ribbon-only" style="background:${a.ribbon}" aria-label="${a.name} ribbon"></div>`;
+  }
+
+  function card(a) {
+    return `
+      <article class="official-award-card">
+        ${awardVisual(a, false)}
+        <div class="award-precedence">#${a.precedence} • ${a.category}</div>
+        <h3>${a.name}</h3>
+        <p>${a.criteria}</p>
+        <div class="award-card-actions">
+          <button class="award-detail-button" data-award="${a.precedence}">View Official Record</button>
+        </div>
+      </article>`;
+  }
+
+  function render() {
+    const query = search.value.trim().toLowerCase();
+    const category = filter.value;
+
+    const results = awards.filter(a => {
+      const categoryMatch = category === "All" || a.category === category;
+      const queryMatch = !query || [
+        a.name, a.category, a.criteria, a.eligibility, a.authority
+      ].join(" ").toLowerCase().includes(query);
+      return categoryMatch && queryMatch;
+    });
+
+    const groups = [...new Set(results.map(a => a.category))];
+
+    sections.innerHTML = groups.map(group => `
+      <section class="award-category">
+        <h3 class="award-category-title">${group}</h3>
+        <div class="official-award-grid">
+          ${results.filter(a => a.category === group).map(card).join("")}
+        </div>
+      </section>
+    `).join("");
+
+    count.textContent = `${results.length} Award${results.length === 1 ? "" : "s"}`;
+    empty.style.display = results.length ? "none" : "block";
+
+    sections.querySelectorAll("[data-award]").forEach(button => {
+      button.addEventListener("click", () => openAward(Number(button.dataset.award)));
+    });
+  }
+
+  function openAward(precedence) {
+    const award = awards.find(a => a.precedence === precedence);
+    if (!award) return;
+
+    document.getElementById("award-modal-title").textContent = award.name;
+    document.getElementById("award-modal-visual").innerHTML = awardVisual(award, true);
+    document.getElementById("award-modal-precedence").textContent = `#${award.precedence}`;
+    document.getElementById("award-modal-category").textContent = award.category;
+    document.getElementById("award-modal-criteria").textContent = award.criteria;
+    document.getElementById("award-modal-eligibility").textContent = award.eligibility;
+    document.getElementById("award-modal-authority").textContent = award.authority;
+    modal.showModal();
+  }
+
+  search.addEventListener("input", render);
+  filter.addEventListener("change", render);
+  document.getElementById("award-modal-close").addEventListener("click", () => modal.close());
+
+  /* Inline navigation fallback in case app.js is delayed or unavailable. */
+  const navToggle = document.getElementById("nav-toggle");
+  const navLinks = document.getElementById("nav-links");
+  if (navToggle && navLinks) {
+    navToggle.addEventListener("click", () => {
+      const expanded = navToggle.getAttribute("aria-expanded") === "true";
+      navToggle.setAttribute("aria-expanded", String(!expanded));
+      navLinks.classList.toggle("open");
+    });
+  }
+
+  render();
+})();
+</script>
 </body>
 </html>

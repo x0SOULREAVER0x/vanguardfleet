@@ -1,16 +1,20 @@
-VANGUARD FLEET — VPIN HTML-ONLY VERSION
+VANGUARD FLEET AWARDS PAGE REPLACEMENT
 
-Upload these two files to the ROOT of the GitHub repository:
+This file is named awards.html so it directly replaces the existing page.
 
-1. index.html — replace the existing homepage
-2. vpin.html — new standalone VPIN page
+UPLOAD:
+1. Download and extract the ZIP.
+2. In the GitHub repository, open the existing awards.html.
+3. Choose Edit or Delete/Upload.
+4. Upload this new awards.html and commit directly to the main branch.
+5. Wait about 1–3 minutes.
+6. Open:
+   https://x0SOULREAVER0x.github.io/vanguardfleet/awards.html
+7. Refresh the page. On Android Chrome, use a new Incognito tab if an older cached copy appears.
 
-This version does NOT require:
-- vpin.js
-- vpin.css
-
-The VPIN styling and search/filter behavior are embedded directly inside vpin.html.
-The homepage VPIN card links directly to vpin.html.
-
-After committing, open:
-https://x0SOULREAVER0x.github.io/vanguardfleet/vpin.html
+This build:
+- Preserves the existing Vanguard Fleet header, navigation, hero, top award display and footer.
+- Removes the broken vanguard-awards-board.png reference.
+- Replaces it with a searchable interactive official awards register.
+- Uses the medal image files already present in the repository.
+- Includes inline board JavaScript, so the register does not depend on a new external .js file.
