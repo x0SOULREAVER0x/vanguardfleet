@@ -666,3 +666,43 @@ url("vanguard-station.jpg") center/cover no-repeat;border-bottom:1px solid var(-
 @media(max-width:560px){
   .visual-awards{grid-template-columns:1fr}
 }
+
+
+/* Version 2.4.1 — Corrected isolated fleet seal */
+.command-header .brand-mark{
+  padding:14px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:hidden;
+}
+
+.command-header .brand-mark img{
+  display:block !important;
+  width:min(184px,90%) !important;
+  height:auto !important;
+  max-width:100% !important;
+  max-height:184px !important;
+  margin:auto !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  transform:none !important;
+}
+
+.command-header .brand-mark:hover img{
+  transform:scale(1.045) !important;
+}
+
+@media(max-width:760px){
+  .command-header .brand-mark img{
+    width:min(122px,88%) !important;
+    max-height:122px !important;
+  }
+}
+
+@media(max-width:480px){
+  .command-header .brand-mark img{
+    width:min(96px,86%) !important;
+    max-height:96px !important;
+  }
+}

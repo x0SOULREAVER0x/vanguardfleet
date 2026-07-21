@@ -67,3 +67,8 @@ Adds original medal and ribbon artwork for:
 - Engineering Excellence Medal
 
 Artwork is stored in `awards-assets/` as responsive SVG files.
+
+
+## Version 2.4.1 True Logo Crop
+
+This release isolates only the circular Vanguard Fleet seal from the original rectangular artwork, removes the surrounding background, places it on a transparent square canvas and restores true CSS centering.
