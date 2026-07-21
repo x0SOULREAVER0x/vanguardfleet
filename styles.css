@@ -570,47 +570,48 @@ url("vanguard-station.jpg") center/cover no-repeat;border-bottom:1px solid var(-
 }
 
 
-/* Version 2.3.1 — Fleet emblem alignment correction */
+/* Version 2.3.2 — True centered transparent fleet emblem */
 .command-header .brand-mark{
-  padding:0;
-  position:relative;
+  padding:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .command-header .brand-mark img{
-  width:82%;
-  max-width:176px;
+  width:min(176px,88%);
+  height:auto;
   max-height:176px;
-  margin:0;
+  margin:auto;
   object-fit:contain;
   object-position:center;
-  transform:translate(8px,6px);
+  transform:none;
 }
 
 .command-header .brand-mark:hover img{
-  transform:translate(8px,6px) scale(1.055);
+  transform:scale(1.055);
 }
 
 @media(max-width:760px){
   .command-header .brand-mark img{
-    width:80%;
-    max-width:120px;
+    width:min(120px,86%);
     max-height:120px;
-    transform:translate(4px,3px);
+    transform:none;
   }
 
   .command-header .brand-mark:hover img{
-    transform:translate(4px,3px) scale(1.04);
+    transform:scale(1.04);
   }
 }
 
 @media(max-width:480px){
   .command-header .brand-mark img{
-    max-width:96px;
+    width:min(96px,84%);
     max-height:96px;
-    transform:translate(3px,2px);
+    transform:none;
   }
 
   .command-header .brand-mark:hover img{
-    transform:translate(3px,2px) scale(1.035);
+    transform:scale(1.035);
   }
 }

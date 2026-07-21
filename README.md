@@ -47,6 +47,10 @@ Changes included:
 - Responsive desktop, tablet and mobile header layout
 
 
-## Version 2.3.1 Logo Alignment Fix
+## Version 2.3.2 Centered Logo Asset
 
-Moves the fleet emblem slightly right and down, removes uneven panel padding and keeps it visually centered at desktop, tablet and mobile sizes.
+- Rebuilt the uploaded fleet emblem on a balanced square canvas
+- Added a transparent `vanguard-logo.png`
+- Updated every page to use the PNG
+- Removed CSS nudging and restored true horizontal and vertical centering
+- Retained a JPG fallback
