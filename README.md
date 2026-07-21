@@ -45,3 +45,8 @@ Changes included:
 - Animated online-status indicator
 - LCARS-inspired Enter VICS control
 - Responsive desktop, tablet and mobile header layout
+
+
+## Version 2.3.1 Logo Alignment Fix
+
+Moves the fleet emblem slightly right and down, removes uneven panel padding and keeps it visually centered at desktop, tablet and mobile sizes.
