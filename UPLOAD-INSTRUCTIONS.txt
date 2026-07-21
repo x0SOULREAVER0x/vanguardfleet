@@ -1,2 +1,1 @@
-Replace the existing awards.html in the root of your GitHub repository with this version.
-No image files need to be replaced for this update.
+Replace awards.html in the repository root. This removes the lower four award cards so only the Highest Fleet Decorations section remains.
