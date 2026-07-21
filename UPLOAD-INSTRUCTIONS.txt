@@ -1,13 +1,16 @@
-VANGUARD FLEET SITE-WIDE UPDATE
+UPLOAD BOTH FILES TO THE ROOT OF THE REPOSITORY:
 
-Upload app.js to the root of the GitHub repository and replace the existing app.js.
+1. app.js
+2. service-worker.js
 
-This single shared file will:
-1. Change the footer on every current page that loads app.js.
-2. Add the expanded VPIN definition to the VPIN card on the home page.
+Choose “Replace” for both files and commit the changes.
 
-No HTML files need to be replaced for this update.
+The previous update did not reach the repository: the live app.js is still the old version.
+The service worker also cached that old file under vanguard-v21.
 
-After uploading, allow GitHub Pages a minute or two to rebuild, then hard-refresh the browser:
-Windows: Ctrl + F5
-Mobile: close the tab and reopen it, or clear the page cache.
+This package replaces the JavaScript and changes the cache to vanguard-v22-footer-vpin,
+which forces GitHub Pages to load the updated footer and VPIN text.
+
+After GitHub finishes deploying:
+- Close the site tab completely and reopen it.
+- If needed, refresh once more after 1–2 minutes.
