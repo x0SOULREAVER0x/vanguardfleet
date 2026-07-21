@@ -102,3 +102,12 @@ The six award images are now embedded directly inside `awards.html`.
 They no longer depend on separate image-file paths or folders, so GitHub Pages cannot lose or misroute them.
 
 The fleet emblem was also enlarged again within the upper-left header panel.
+
+
+## Version 2.4.5 Remade Header Logo
+
+- Rebuilt the logo as a true circular transparent PNG
+- Removed the original rectangular background and lower platform
+- Added equal transparent margins
+- Enlarged the upper-left header panel slightly
+- Forced exact horizontal and vertical centering
