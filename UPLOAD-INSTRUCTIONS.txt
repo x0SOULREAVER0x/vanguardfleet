@@ -1,16 +1,20 @@
-UPLOAD BOTH FILES TO THE ROOT OF THE REPOSITORY:
+VANGUARD FLEET HTML UPDATE
 
-1. app.js
-2. service-worker.js
+Upload all eight HTML files directly into the ROOT of the GitHub repository and replace the matching files:
 
-Choose “Replace” for both files and commit the changes.
+index.html
+about.html
+ships.html
+academy.html
+join.html
+awards.html
+community.html
+development.html
 
-The previous update did not reach the repository: the live app.js is still the old version.
-The service worker also cached that old file under vanguard-v21.
+This update:
+- Adds the full Vanguard Personnel Information Network definition directly to index.html.
+- Replaces the footer directly in every website page.
+- Preserves the Awards page version with the unwanted lower awards removed.
+- Does not require app.js or service-worker.js changes.
 
-This package replaces the JavaScript and changes the cache to vanguard-v22-footer-vpin,
-which forces GitHub Pages to load the updated footer and VPIN text.
-
-After GitHub finishes deploying:
-- Close the site tab completely and reopen it.
-- If needed, refresh once more after 1–2 minutes.
+After committing the files, wait for GitHub Pages deployment to finish and reload the website.
