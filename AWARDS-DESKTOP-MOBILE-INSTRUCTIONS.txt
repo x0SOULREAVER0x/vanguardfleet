@@ -1,0 +1,21 @@
+VANGUARD FLEET AWARDS — DESKTOP + MOBILE FIX
+
+Replace the existing awards.html in the repository root with this file.
+
+Desktop changes:
+- Top award cards use a controlled 3-column layout.
+- Official Awards Board uses a controlled 3-column layout.
+- Full medal artwork remains visible with object-fit: contain.
+- Card heights and spacing are standardized.
+- Content is centered within a maximum desktop width.
+
+Tablet:
+- Two columns.
+
+Phone:
+- One full-width card per row.
+
+After committing, force-refresh the desktop browser:
+Windows: Ctrl + F5
+Mac: Command + Shift + R
+Or open the page in an Incognito/Private window.
