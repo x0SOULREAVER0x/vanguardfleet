@@ -94,3 +94,11 @@ Upload every extracted file directly into the repository root.
 - Refreshes the service-worker cache
 
 Upload every extracted file into the repository root and replace matching files.
+
+
+## Version 2.4.4 Embedded Award Fix
+
+The six award images are now embedded directly inside `awards.html`.
+They no longer depend on separate image-file paths or folders, so GitHub Pages cannot lose or misroute them.
+
+The fleet emblem was also enlarged again within the upper-left header panel.

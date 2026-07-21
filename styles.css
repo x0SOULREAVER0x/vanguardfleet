@@ -754,3 +754,38 @@ url("vanguard-station.jpg") center/cover no-repeat;border-bottom:1px solid var(-
     max-height:98px !important;
   }
 }
+
+
+/* Version 2.4.4 — Embedded award artwork and stronger logo sizing */
+.command-header .brand-mark{
+  padding:4px !important;
+}
+
+.command-header .brand-mark img{
+  width:min(232px,98%) !important;
+  max-width:98% !important;
+  max-height:232px !important;
+  margin:auto !important;
+  transform:none !important;
+}
+
+@media(max-width:980px){
+  .command-header .brand-mark img{
+    width:min(188px,96%) !important;
+    max-height:188px !important;
+  }
+}
+
+@media(max-width:760px){
+  .command-header .brand-mark img{
+    width:min(130px,94%) !important;
+    max-height:130px !important;
+  }
+}
+
+@media(max-width:480px){
+  .command-header .brand-mark img{
+    width:min(100px,92%) !important;
+    max-height:100px !important;
+  }
+}
