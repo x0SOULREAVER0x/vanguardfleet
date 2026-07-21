@@ -52,9 +52,12 @@
       z-index: 1;
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: clamp(1rem, 2.5vw, 2rem);
+      gap: clamp(1rem, 2vw, 1.6rem);
+      align-items: stretch;
     }
     .presentation-card {
+      width: 100%;
+      min-width: 0;
       display: flex;
       flex-direction: column;
       min-height: 100%;
@@ -72,16 +75,18 @@
     .medal-stage {
       display: grid;
       place-items: center;
-      min-height: clamp(370px, 48vw, 590px);
-      padding: .5rem;
+      height: 470px;
+      min-height: 470px;
+      padding: 1rem;
       background: radial-gradient(circle at 50% 56%, rgba(232,190,72,.16), transparent 42%);
     }
     .medal-stage img {
       display: block;
-      width: auto;
-      max-width: 100%;
-      height: clamp(350px, 45vw, 560px);
+      width: 100%;
+      max-width: 290px;
+      height: 440px;
       object-fit: contain;
+      object-position: center;
       filter: drop-shadow(0 15px 18px rgba(0,0,0,.58));
     }
     .presentation-copy {
@@ -107,17 +112,23 @@
       max-width: 44ch;
       margin: .55rem auto 0;
     }
-    .presentation-card:last-child { grid-column: 1 / -1; width: min(560px, 100%); justify-self: center; }
+    
     }
     
+    
+    }
+
+    
     @media (max-width: 1180px) and (min-width: 761px) {
-      .presentation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .presentation-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 760px) {
       .presentation-grid { grid-template-columns: 1fr; }
-      .medal-stage { min-height: 410px; }
-      .medal-stage img { height: min(520px, 112vw); }
+      .medal-stage { height: 430px; min-height: 430px; }
+      .medal-stage img { height: 400px; max-width: 280px; }
     }
   </style>
 </head>
@@ -193,7 +204,7 @@
           </article>
 <article class="presentation-card">
             <div class="medal-stage">
-              <img src="award-medal-of-valor.png?v=450" alt="Medal of Valor ribbon bar and full-size medal">
+              <img src="award-medal-of-valor.png?v=460" alt="Medal of Valor ribbon bar and full-size medal">
             </div>
             <div class="presentation-copy">
               <p class="precedence">#3 Medal of Valor</p>
@@ -204,7 +215,7 @@
 
           <article class="presentation-card">
             <div class="medal-stage">
-              <img src="award-distinguished-service.png?v=450" alt="Distinguished Service Medal ribbon bar and full-size medal">
+              <img src="award-distinguished-service.png?v=460" alt="Distinguished Service Medal ribbon bar and full-size medal">
             </div>
             <div class="presentation-copy">
               <p class="precedence">#4 Distinguished Service Medal</p>
@@ -218,7 +229,7 @@
 
       <section class="award-grid visual-awards exact-awards">
         <article class="award-card">
-          <img src="award-distinguished-service.png?v=450" alt="Distinguished Service Medal medal and ribbon">
+          <img src="award-distinguished-service.png?v=460" alt="Distinguished Service Medal medal and ribbon">
           <div class="award-card-copy">
             <p class="system-label">Exceptional Fleet Service</p>
             <h3>Distinguished Service Medal</h3>
