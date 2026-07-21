@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Vanguard Fleet Management System command dashboard prototype." />
+  <title>VFMS | Fleet Command Dashboard</title>
+  <style>
+    :root{
+      --bg:#070b12;
+      --panel:#101826;
+      --panel-2:#162235;
+      --line:#28415f;
+      --text:#edf4ff;
+      --muted:#9fb0c5;
+      --gold:#d7ae52;
+      --blue:#4aa8ff;
+      --teal:#38c6bd;
+      --red:#ff6a6a;
+      --purple:#aa8cff;
+      --green:#5fd38d;
+      --warning:#f3c667;
+      --radius:18px;
+      --shadow:0 18px 45px rgba(0,0,0,.32);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(74,168,255,.13), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(215,174,82,.10), transparent 25%),
+        var(--bg);
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+
+    .app{
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:280px 1fr;
+    }
+
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      padding:22px 16px;
+      border-right:1px solid rgba(255,255,255,.08);
+      background:rgba(7,11,18,.90);
+      backdrop-filter:blur(16px);
+      z-index:20;
+    }
+
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding:8px 10px 22px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    .brand-mark{
+      width:48px;
+      height:48px;
+      border-radius:15px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(145deg, var(--gold), #72531e);
+      color:#08101b;
+      font-weight:900;
+      box-shadow:0 0 28px rgba(215,174,82,.25);
+      letter-spacing:-1px;
+    }
+
+    .brand strong{display:block;font-size:1rem;letter-spacing:.08em}
+    .brand span{display:block;color:var(--muted);font-size:.78rem;margin-top:3px}
+
+    .nav{
+      display:grid;
+      gap:6px;
+      margin-top:18px;
+    }
+
+    .nav button{
+      width:100%;
+      border:0;
+      border-radius:13px;
+      padding:12px 14px;
+      background:transparent;
+      color:var(--muted);
+      text-align:left;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      transition:.2s ease;
+    }
+
+    .nav button:hover,.nav button.active{
+      background:linear-gradient(90deg, rgba(74,168,255,.17), rgba(74,168,255,.04));
+      color:var(--text);
+      box-shadow:inset 3px 0 0 var(--blue);
+    }
+
+    .nav .icon{width:24px;text-align:center}
+    .sidebar-footer{
+      position:absolute;
+      left:16px;
+      right:16px;
+      bottom:18px;
+      border:1px solid rgba(255,255,255,.08);
+      background:var(--panel);
+      border-radius:15px;
+      padding:13px;
+    }
+
+    .sidebar-footer small{color:var(--muted)}
+    .status-row{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:.85rem}
+    .dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 12px rgba(95,211,141,.8)}
+
+    main{min-width:0;padding:22px 26px 45px}
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .topbar h1{font-size:clamp(1.55rem,3vw,2.45rem);margin:0}
+    .eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:.17em;font-weight:800;font-size:.72rem;margin-bottom:6px}
+    .top-actions{display:flex;gap:10px;align-items:center}
+
+    .btn{
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:12px;
+      color:var(--text);
+      background:var(--panel);
+      padding:10px 14px;
+      transition:.2s ease;
+    }
+    .btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.25)}
+    .btn.primary{
+      background:linear-gradient(135deg, #2f8de6, #17589e);
+      border-color:#4aa8ff;
+      box-shadow:0 10px 25px rgba(74,168,255,.18);
+    }
+    .btn.gold{
+      background:linear-gradient(135deg,#e6c473,#9d7228);
+      color:#0d1118;
+      border-color:#f2d48c;
+      font-weight:800;
+    }
+    .btn.danger{background:#32171b;border-color:#6d2d36;color:#ffd7dc}
+
+    .section{display:none;animation:fade .22s ease}
+    .section.active{display:block}
+    @keyframes fade{from{opacity:.45;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:24px;
+      padding:24px;
+      background:
+        linear-gradient(125deg, rgba(74,168,255,.20), transparent 45%),
+        linear-gradient(315deg, rgba(215,174,82,.12), transparent 40%),
+        var(--panel);
+      box-shadow:var(--shadow);
+      margin-bottom:20px;
+    }
+    .hero:after{
+      content:"";
+      position:absolute;
+      width:280px;height:280px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:50%;
+      right:-80px;top:-130px;
+      box-shadow:0 0 0 26px rgba(255,255,255,.02),0 0 0 55px rgba(255,255,255,.015);
+    }
+    .hero h2{margin:0 0 8px;font-size:1.5rem}
+    .hero p{margin:0;color:var(--muted);max-width:850px;line-height:1.65}
+
+    .metric-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+      margin-bottom:20px;
+    }
+
+    .metric{
+      background:linear-gradient(180deg, rgba(255,255,255,.025), transparent),var(--panel);
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:var(--radius);
+      padding:17px;
+      box-shadow:var(--shadow);
+    }
+    .metric-label{color:var(--muted);font-size:.82rem}
+    .metric-value{font-size:1.85rem;font-weight:850;margin:8px 0 4px}
+    .metric-trend{font-size:.78rem;color:var(--green)}
+
+    .grid-2{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+
+    .panel{
+      background:var(--panel);
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .panel-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:16px 18px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .panel-header h3{margin:0;font-size:1rem}
+    .panel-body{padding:16px 18px}
+
+    .quick-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+    }
+    .quick-action{
+      border:1px solid rgba(255,255,255,.08);
+      background:var(--panel-2);
+      color:var(--text);
+      border-radius:14px;
+      padding:15px;
+      text-align:left;
+      min-height:100px;
+    }
+    .quick-action:hover{border-color:var(--blue);transform:translateY(-2px)}
+    .quick-action strong{display:block;margin:8px 0 4px}
+    .quick-action span{font-size:.78rem;color:var(--muted);line-height:1.4}
+
+    .list{display:grid;gap:11px}
+    .list-item{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      background:var(--panel-2);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:13px;
+      padding:12px;
+    }
+    .list-item strong{display:block;font-size:.9rem}
+    .list-item small{color:var(--muted)}
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      border-radius:999px;
+      padding:5px 9px;
+      font-size:.72rem;
+      background:rgba(74,168,255,.15);
+      color:#bfe1ff;
+      border:1px solid rgba(74,168,255,.3);
+      white-space:nowrap;
+    }
+    .badge.gold{background:rgba(215,174,82,.14);color:#f5d997;border-color:rgba(215,174,82,.35)}
+    .badge.green{background:rgba(95,211,141,.13);color:#bff2d1;border-color:rgba(95,211,141,.32)}
+    .badge.red{background:rgba(255,106,106,.12);color:#ffc4c4;border-color:rgba(255,106,106,.28)}
+    .badge.purple{background:rgba(170,140,255,.13);color:#d8cbff;border-color:rgba(170,140,255,.3)}
+
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:space-between;
+      margin-bottom:14px;
+    }
+    .search-group{display:flex;gap:10px;flex-wrap:wrap}
+    input,select,textarea{
+      color:var(--text);
+      background:#0b121e;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:11px;
+      padding:10px 12px;
+      outline:none;
+    }
+    input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,168,255,.12)}
+    textarea{width:100%;min-height:100px;resize:vertical}
+
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:13px 12px;border-bottom:1px solid rgba(255,255,255,.07);text-align:left;font-size:.86rem}
+    th{color:var(--muted);font-size:.74rem;text-transform:uppercase;letter-spacing:.08em}
+    tr:hover td{background:rgba(255,255,255,.02)}
+    .table-wrap{overflow:auto}
+
+    .avatar{
+      width:34px;height:34px;border-radius:50%;
+      display:inline-grid;place-items:center;
+      background:linear-gradient(145deg,#25476c,#101a29);
+      border:1px solid rgba(255,255,255,.12);
+      margin-right:9px;
+      font-size:.72rem;font-weight:800;
+    }
+
+    .card-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+      gap:14px;
+    }
+    .entity-card{
+      background:var(--panel);
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:17px;
+      padding:16px;
+      box-shadow:var(--shadow);
+    }
+    .entity-card h3{margin:0 0 6px}
+    .entity-card p{margin:0;color:var(--muted);font-size:.83rem;line-height:1.5}
+    .entity-card .meta{display:flex;gap:7px;flex-wrap:wrap;margin:13px 0}
+
+    .progress{
+      height:9px;border-radius:999px;background:#07101a;overflow:hidden;border:1px solid rgba(255,255,255,.07)
+    }
+    .progress span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--teal));border-radius:999px}
+
+    .stat-bars{display:grid;gap:13px}
+    .stat-bar-label{display:flex;justify-content:space-between;color:var(--muted);font-size:.82rem;margin-bottom:6px}
+
+    .empty{
+      padding:28px;
+      text-align:center;
+      color:var(--muted);
+      border:1px dashed rgba(255,255,255,.12);
+      border-radius:14px;
+    }
+
+    dialog{
+      width:min(620px,calc(100% - 28px));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:20px;
+      background:var(--panel);
+      color:var(--text);
+      padding:0;
+      box-shadow:0 30px 90px rgba(0,0,0,.65);
+    }
+    dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(5px)}
+    .modal-head,.modal-foot{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .modal-head{border-bottom:1px solid rgba(255,255,255,.08)}
+    .modal-foot{border-top:1px solid rgba(255,255,255,.08);justify-content:flex-end}
+    .modal-head h3{margin:0}
+    .modal-body{padding:18px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+    .form-field{display:grid;gap:6px}
+    .form-field.full{grid-column:1/-1}
+    .form-field label{color:var(--muted);font-size:.8rem}
+
+    .toast{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      max-width:360px;
+      padding:13px 15px;
+      background:#10271a;
+      border:1px solid #2b7c4a;
+      color:#d7ffe4;
+      border-radius:12px;
+      box-shadow:var(--shadow);
+      opacity:0;
+      transform:translateY(12px);
+      pointer-events:none;
+      transition:.25s ease;
+      z-index:100;
+    }
+    .toast.show{opacity:1;transform:none}
+
+    .mobile-toggle{display:none}
+
+    @media (max-width:1050px){
+      .metric-grid{grid-template-columns:repeat(2,1fr)}
+      .grid-2{grid-template-columns:1fr}
+      .quick-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:780px){
+      .app{grid-template-columns:1fr}
+      .sidebar{
+        position:fixed;
+        left:-300px;
+        transition:.25s ease;
+        width:280px;
+      }
+      .sidebar.open{left:0}
+      .mobile-toggle{display:inline-flex}
+      main{padding:18px 14px 36px}
+      .topbar{align-items:flex-start}
+      .top-actions .btn:not(.mobile-toggle){display:none}
+      .metric-grid,.grid-3{grid-template-columns:1fr 1fr}
+      .quick-grid{grid-template-columns:1fr}
+      .form-grid{grid-template-columns:1fr}
+      .form-field.full{grid-column:auto}
+    }
+    @media (max-width:520px){
+      .metric-grid,.grid-3{grid-template-columns:1fr}
+      .hero{padding:19px}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">VF</div>
+        <div>
+          <strong>VANGUARD FLEET</strong>
+          <span>Management System</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <button class="active" data-section="dashboard"><span class="icon">⌂</span> Dashboard</button>
+        <button data-section="personnel"><span class="icon">👤</span> Personnel</button>
+        <button data-section="applications"><span class="icon">📥</span> Applications</button>
+        <button data-section="ships"><span class="icon">🚀</span> Ships</button>
+        <button data-section="academy"><span class="icon">🎓</span> Academy</button>
+        <button data-section="awards"><span class="icon">🏅</span> Awards</button>
+        <button data-section="qualifications"><span class="icon">◈</span> Qualifications</button>
+        <button data-section="missions"><span class="icon">🪐</span> Missions</button>
+        <button data-section="orders"><span class="icon">📜</span> Fleet Orders</button>
+        <button data-section="audit"><span class="icon">🗂</span> Audit Log</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <small>System status</small>
+        <div class="status-row"><span class="dot"></span> Operational prototype</div>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <button class="btn mobile-toggle" id="menuToggle" aria-label="Open navigation">☰</button>
+          <div>
+            <div class="eyebrow">Fleet Command Access</div>
+            <h1 id="pageTitle">Command Dashboard</h1>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button class="btn" id="exportBtn">Export Data</button>
+          <button class="btn primary" data-open="quickActionModal">New Action</button>
+        </div>
+      </header>
+
+      <section class="section active" id="dashboard">
+        <div class="hero">
+          <h2>Welcome to Fleet Command</h2>
+          <p>Manage personnel, assignments, qualifications, decorations, missions and fleet records from one unified command interface. This prototype stores changes locally in the browser until a live database is connected.</p>
+        </div>
+
+        <div class="metric-grid">
+          <article class="metric">
+            <div class="metric-label">Active Personnel</div>
+            <div class="metric-value" id="metricPersonnel">1</div>
+            <div class="metric-trend">Current active roster</div>
+          </article>
+          <article class="metric">
+            <div class="metric-label">Commissioned Ships</div>
+            <div class="metric-value" id="metricShips">1</div>
+            <div class="metric-trend">1 currently operational</div>
+          </article>
+          <article class="metric">
+            <div class="metric-label">Pending Applications</div>
+            <div class="metric-value" id="metricApplications">2</div>
+            <div class="metric-trend">Requires command review</div>
+          </article>
+          <article class="metric">
+            <div class="metric-label">Active Missions</div>
+            <div class="metric-value" id="metricMissions">1</div>
+            <div class="metric-trend">Fleetwide operations</div>
+          </article>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Command Actions</h3>
+              <span class="badge">Interactive</span>
+            </div>
+            <div class="panel-body">
+              <div class="quick-grid">
+                <button class="quick-action" data-action="promote"><span>⭐</span><strong>Promote Officer</strong><span>Record promotion and update rank history.</span></button>
+                <button class="quick-action" data-action="award"><span>🏅</span><strong>Issue Decoration</strong><span>Add an award, citation and timeline entry.</span></button>
+                <button class="quick-action" data-action="qualify"><span>◈</span><strong>Add Qualification</strong><span>Record a new professional qualification.</span></button>
+                <button class="quick-action" data-action="transfer"><span>↔</span><strong>Transfer Personnel</strong><span>Change assignment, ship or department.</span></button>
+                <button class="quick-action" data-action="mission"><span>🪐</span><strong>Create Mission</strong><span>Open a new fleet or ship operation.</span></button>
+                <button class="quick-action" data-action="order"><span>📜</span><strong>Publish Fleet Order</strong><span>Issue an official command directive.</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Recent Activity</h3>
+              <button class="btn" data-section-jump="audit">View all</button>
+            </div>
+            <div class="panel-body">
+              <div class="list" id="recentActivity"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:18px">
+          <div class="panel">
+            <div class="panel-header"><h3>Fleet Readiness</h3><span class="badge green">Nominal</span></div>
+            <div class="panel-body stat-bars">
+              <div><div class="stat-bar-label"><span>Personnel staffing</span><span>72%</span></div><div class="progress"><span style="width:72%"></span></div></div>
+              <div><div class="stat-bar-label"><span>Academy completion</span><span>85%</span></div><div class="progress"><span style="width:85%"></span></div></div>
+              <div><div class="stat-bar-label"><span>Mission readiness</span><span>90%</span></div><div class="progress"><span style="width:90%"></span></div></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><h3>Pending Reviews</h3><span class="badge gold">2 items</span></div>
+            <div class="panel-body">
+              <div class="list">
+                <div class="list-item"><div><strong>Application: T'Vel</strong><small>Science Officer candidate</small></div><button class="btn" data-section-jump="applications">Review</button></div>
+                <div class="list-item"><div><strong>Application: Marcus Vale</strong><small>Operations Officer candidate</small></div><button class="btn" data-section-jump="applications">Review</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="personnel">
+        <div class="toolbar">
+          <div class="search-group">
+            <input id="personnelSearch" type="search" placeholder="Search personnel..." />
+            <select id="divisionFilter">
+              <option value="">All divisions</option>
+              <option>Command</option><option>Medical</option><option>Science</option><option>Operations</option><option>Security</option><option>Flight</option>
+            </select>
+          </div>
+          <button class="btn primary" data-action="personnel">Add Personnel</button>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><h3>Active Personnel Roster</h3><span class="badge" id="personnelCountBadge">1 record</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Officer</th><th>Rank</th><th>Assignment</th><th>Division</th><th>Billet</th><th>Status</th><th></th></tr></thead>
+              <tbody id="personnelTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="applications">
+        <div class="card-grid" id="applicationsGrid"></div>
+      </section>
+
+      <section class="section" id="ships">
+        <div class="toolbar"><div></div><button class="btn primary" data-action="ship">Commission Ship</button></div>
+        <div class="card-grid" id="shipsGrid"></div>
+      </section>
+
+      <section class="section" id="academy">
+        <div class="grid-3">
+          <article class="metric"><div class="metric-label">Cadets Enrolled</div><div class="metric-value">2</div><div class="metric-trend">Across all courses</div></article>
+          <article class="metric"><div class="metric-label">Courses Available</div><div class="metric-value">5</div><div class="metric-trend">Core curriculum</div></article>
+          <article class="metric"><div class="metric-label">Graduation Rate</div><div class="metric-value">85%</div><div class="metric-trend">Prototype estimate</div></article>
+        </div>
+        <div class="card-grid" style="margin-top:18px" id="academyGrid"></div>
+      </section>
+
+      <section class="section" id="awards">
+        <div class="toolbar"><div></div><button class="btn gold" data-action="award">Issue Decoration</button></div>
+        <div class="card-grid" id="awardsGrid"></div>
+      </section>
+
+      <section class="section" id="qualifications">
+        <div class="toolbar"><div></div><button class="btn primary" data-action="qualify">Add Qualification</button></div>
+        <div class="card-grid" id="qualificationsGrid"></div>
+      </section>
+
+      <section class="section" id="missions">
+        <div class="toolbar"><div></div><button class="btn primary" data-action="mission">Create Mission</button></div>
+        <div class="card-grid" id="missionsGrid"></div>
+      </section>
+
+      <section class="section" id="orders">
+        <div class="toolbar"><div></div><button class="btn gold" data-action="order">Publish Fleet Order</button></div>
+        <div class="list" id="ordersList"></div>
+      </section>
+
+      <section class="section" id="audit">
+        <div class="panel">
+          <div class="panel-header"><h3>System Audit Log</h3><button class="btn danger" id="clearAudit">Clear Local Log</button></div>
+          <div class="panel-body"><div class="list" id="auditList"></div></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="actionModal">
+    <form method="dialog" id="actionForm">
+      <div class="modal-head"><h3 id="modalTitle">New Action</h3><button class="btn" value="cancel">✕</button></div>
+      <div class="modal-body">
+        <input type="hidden" id="actionType" />
+        <div class="form-grid" id="modalFields"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" value="cancel">Cancel</button>
+        <button class="btn primary" type="submit" value="default">Save Record</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="quickActionModal">
+    <div class="modal-head"><h3>Select Command Action</h3><button class="btn" onclick="document.getElementById('quickActionModal').close()">✕</button></div>
+    <div class="modal-body">
+      <div class="quick-grid">
+        <button class="quick-action" data-action="promote"><strong>Promote Officer</strong><span>Record a rank advancement.</span></button>
+        <button class="quick-action" data-action="award"><strong>Issue Decoration</strong><span>Add medal and citation.</span></button>
+        <button class="quick-action" data-action="qualify"><strong>Add Qualification</strong><span>Add training credential.</span></button>
+        <button class="quick-action" data-action="mission"><strong>Create Mission</strong><span>Open a new operation.</span></button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const seed = {
+      personnel: [
+        {
+          id: crypto.randomUUID(),
+          name: "Sovak",
+          service: "VF-2403-001",
+          rank: "Lieutenant Junior Grade",
+          ship: "USS Discovery",
+          division: "Medical",
+          billet: "Medical Officer",
+          status: "Active",
+          qualifications: ["Academy Graduate","Medical Officer","Xenomedicine","Trauma Specialist","Bridge Officer"],
+          awards: []
+        }
+      ],
+      ships: [
+        {id: crypto.randomUUID(), name:"USS Discovery", registry:"NCC-78393-B", className:"Prometheus Tactical Cruiser", status:"Operational", crew:1, openBillets:8}
+      ],
+      applications: [
+        {id:crypto.randomUUID(), name:"T'Vel", division:"Science", billet:"Science Officer", status:"Pending"},
+        {id:crypto.randomUUID(), name:"Marcus Vale", division:"Operations", billet:"Engineering Officer", status:"Pending"}
+      ],
+      awards: [
+        {name:"Star of Vanguard", code:"VF-AWD-001", class:"Fleet Decoration"},
+        {name:"Vanguard Cross", code:"VF-AWD-002", class:"Fleet Decoration"},
+        {name:"Medal of Valor", code:"VF-AWD-003", class:"Valor"},
+        {name:"Distinguished Service Medal", code:"VF-AWD-004", class:"Service"},
+        {name:"Fleet Commendation Medal", code:"VF-AWD-005", class:"Commendation"}
+      ],
+      qualifications: [
+        {name:"Academy Graduate", code:"VF-ACA-001", division:"Academy"},
+        {name:"Bridge Officer", code:"VF-CMD-001", division:"Command"},
+        {name:"Medical Officer", code:"VF-MED-001", division:"Medical"},
+        {name:"Engineering", code:"VF-OPS-001", division:"Operations"},
+        {name:"Science Officer", code:"VF-SCI-001", division:"Science"},
+        {name:"Xenomedicine", code:"VF-MED-003", division:"Medical"},
+        {name:"Trauma Specialist", code:"VF-MED-002", division:"Medical"}
+      ],
+      missions: [
+        {id:crypto.randomUUID(), title:"Operation Silent Horizon", ship:"USS Discovery", status:"Active", stardate:"2406.202", summary:"Investigate anomalous subspace activity beyond charted patrol routes."}
+      ],
+      orders: [
+        {id:crypto.randomUUID(), number:"VFCO-001", title:"Establishment of the Vanguard Personnel Information Network", date:new Date().toLocaleDateString(), status:"Active"}
+      ],
+      audit: [
+        {time:new Date().toLocaleString(), text:"VFMS prototype initialized."},
+        {time:new Date().toLocaleString(), text:"Lt. JG Sovak personnel record loaded."}
+      ]
+    };
+
+    const STORAGE_KEY = "vfms-prototype-v1";
+    let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null") || seed;
+
+    const titles = {
+      dashboard:"Command Dashboard", personnel:"Personnel Management", applications:"Application Review",
+      ships:"Fleet Registry", academy:"Vanguard Academy", awards:"Decorations & Awards",
+      qualifications:"Qualification Database", missions:"Mission Operations", orders:"Fleet Orders", audit:"Audit Log"
+    };
+
+    const $ = (s, root=document) => root.querySelector(s);
+    const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+    const save = () => { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); renderAll(); };
+    const toast = msg => {
+      const el = $("#toast"); el.textContent = msg; el.classList.add("show");
+      clearTimeout(window.__toast); window.__toast = setTimeout(()=>el.classList.remove("show"), 2800);
+    };
+    const log = text => data.audit.unshift({time:new Date().toLocaleString(), text});
+
+    function go(section){
+      $$(".section").forEach(s=>s.classList.toggle("active", s.id===section));
+      $$(".nav button").forEach(b=>b.classList.toggle("active", b.dataset.section===section));
+      $("#pageTitle").textContent=titles[section]||"VFMS";
+      $("#sidebar").classList.remove("open");
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    $$(".nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.section)));
+    $$("[data-section-jump]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.sectionJump)));
+    $("#menuToggle").addEventListener("click",()=>$("#sidebar").classList.toggle("open"));
+
+    function divisionBadge(division){
+      const map={Medical:"green",Command:"gold",Science:"",Operations:"red",Security:"red",Flight:"purple",Academy:""};
+      return `<span class="badge ${map[division]||""}">${division}</span>`;
+    }
+
+    function renderPersonnel(){
+      const q=$("#personnelSearch").value.toLowerCase();
+      const div=$("#divisionFilter").value;
+      const rows=data.personnel.filter(p =>
+        (!q || [p.name,p.rank,p.ship,p.billet,p.service].join(" ").toLowerCase().includes(q)) &&
+        (!div || p.division===div)
+      );
+      $("#personnelTable").innerHTML=rows.map(p=>`
+        <tr>
+          <td><span class="avatar">${p.name.slice(0,2).toUpperCase()}</span><strong>${p.name}</strong><br><small style="color:var(--muted)">${p.service}</small></td>
+          <td>${p.rank}</td><td>${p.ship}</td><td>${divisionBadge(p.division)}</td><td>${p.billet}</td>
+          <td><span class="badge green">${p.status}</span></td>
+          <td><button class="btn" onclick="viewOfficer('${p.id}')">View</button></td>
+        </tr>`).join("") || `<tr><td colspan="7"><div class="empty">No matching personnel records.</div></td></tr>`;
+      $("#personnelCountBadge").textContent=`${rows.length} record${rows.length===1?"":"s"}`;
+    }
+
+    function viewOfficer(id){
+      const p=data.personnel.find(x=>x.id===id);
+      openAction("personnelView", p);
+    }
+
+    function renderApplications(){
+      $("#applicationsGrid").innerHTML=data.applications.map(a=>`
+        <article class="entity-card">
+          <div class="eyebrow">${a.status} Application</div>
+          <h3>${a.name}</h3>
+          <p>${a.division} Division · ${a.billet}</p>
+          <div class="meta">${divisionBadge(a.division)}<span class="badge gold">${a.status}</span></div>
+          <div style="display:flex;gap:8px">
+            <button class="btn primary" onclick="reviewApplication('${a.id}','approve')">Approve</button>
+            <button class="btn danger" onclick="reviewApplication('${a.id}','decline')">Decline</button>
+          </div>
+        </article>`).join("") || `<div class="empty">No applications awaiting review.</div>`;
+    }
+
+    function reviewApplication(id, decision){
+      const a=data.applications.find(x=>x.id===id);
+      if(!a) return;
+      if(decision==="approve"){
+        data.personnel.push({
+          id:crypto.randomUUID(), name:a.name, service:`VF-2406-${String(data.personnel.length+1).padStart(3,"0")}`,
+          rank:"Ensign", ship:"Unassigned", division:a.division, billet:a.billet, status:"Active", qualifications:["Academy Graduate"], awards:[]
+        });
+        log(`Application approved for ${a.name}; personnel record created.`);
+        toast(`${a.name} approved and added to personnel.`);
+      } else {
+        log(`Application declined for ${a.name}.`);
+        toast(`${a.name}'s application was declined.`);
+      }
+      data.applications=data.applications.filter(x=>x.id!==id);
+      save();
+    }
+
+    function renderShips(){
+      $("#shipsGrid").innerHTML=data.ships.map(s=>`
+        <article class="entity-card">
+          <div class="eyebrow">${s.registry}</div><h3>${s.name}</h3>
+          <p>${s.className}</p>
+          <div class="meta"><span class="badge green">${s.status}</span><span class="badge">${s.crew} crew</span><span class="badge gold">${s.openBillets} open billets</span></div>
+          <div class="stat-bar-label"><span>Staffing</span><span>${Math.min(100,Math.round((s.crew/(s.crew+s.openBillets))*100))}%</span></div>
+          <div class="progress"><span style="width:${Math.min(100,Math.round((s.crew/(s.crew+s.openBillets))*100))}%"></span></div>
+        </article>`).join("");
+    }
+
+    function renderAcademy(){
+      const courses=[
+        ["Fleet Orientation","Core","100%"],["Roleplay Fundamentals","Core","80%"],["Bridge Officer Qualification","Command","50%"],
+        ["Medical Officer Qualification","Medical","50%"],["Engineering Fundamentals","Operations","25%"]
+      ];
+      $("#academyGrid").innerHTML=courses.map(c=>`
+        <article class="entity-card"><div class="eyebrow">${c[1]}</div><h3>${c[0]}</h3><p>Training module with lesson material, assessment and instructor approval.</p>
+        <div class="meta"><span class="badge">${c[2]} configured</span></div><div class="progress"><span style="width:${c[2]}"></span></div></article>`).join("");
+    }
+
+    function renderAwards(){
+      $("#awardsGrid").innerHTML=data.awards.map(a=>`
+        <article class="entity-card"><div class="eyebrow">${a.code}</div><h3>${a.name}</h3><p>${a.class}</p>
+        <div class="meta"><span class="badge gold">Decoration</span></div>
+        <button class="btn gold" onclick="openAction('award',null,'${a.name.replaceAll("'","\\'")}')">Issue Award</button></article>`).join("");
+    }
+
+    function renderQualifications(){
+      $("#qualificationsGrid").innerHTML=data.qualifications.map(q=>`
+        <article class="entity-card"><div class="eyebrow">${q.code}</div><h3>${q.name}</h3><p>${q.division} qualification</p>
+        <div class="meta">${divisionBadge(q.division)}</div>
+        <button class="btn primary" onclick="openAction('qualify',null,'${q.name.replaceAll("'","\\'")}')">Assign Qualification</button></article>`).join("");
+    }
+
+    function renderMissions(){
+      $("#missionsGrid").innerHTML=data.missions.map(m=>`
+        <article class="entity-card"><div class="eyebrow">Stardate ${m.stardate}</div><h3>${m.title}</h3><p>${m.summary}</p>
+        <div class="meta"><span class="badge green">${m.status}</span><span class="badge">${m.ship}</span></div></article>`).join("") || `<div class="empty">No missions entered.</div>`;
+    }
+
+    function renderOrders(){
+      $("#ordersList").innerHTML=data.orders.map(o=>`
+        <div class="list-item"><div><strong>${o.number} — ${o.title}</strong><small>Issued ${o.date}</small></div><span class="badge gold">${o.status}</span></div>`).join("");
+    }
+
+    function renderAudit(){
+      const list=data.audit.length?data.audit:`No activity`;
+      $("#auditList").innerHTML=data.audit.map(a=>`
+        <div class="list-item"><div><strong>${a.text}</strong><small>${a.time}</small></div><span class="badge">Recorded</span></div>`).join("") || `<div class="empty">No audit entries.</div>`;
+      $("#recentActivity").innerHTML=data.audit.slice(0,5).map(a=>`
+        <div class="list-item"><div><strong>${a.text}</strong><small>${a.time}</small></div></div>`).join("");
+    }
+
+    function renderMetrics(){
+      $("#metricPersonnel").textContent=data.personnel.filter(p=>p.status==="Active").length;
+      $("#metricShips").textContent=data.ships.length;
+      $("#metricApplications").textContent=data.applications.length;
+      $("#metricMissions").textContent=data.missions.filter(m=>m.status==="Active").length;
+    }
+
+    function renderAll(){
+      renderPersonnel(); renderApplications(); renderShips(); renderAcademy(); renderAwards();
+      renderQualifications(); renderMissions(); renderOrders(); renderAudit(); renderMetrics();
+    }
+
+    $("#personnelSearch").addEventListener("input",renderPersonnel);
+    $("#divisionFilter").addEventListener("change",renderPersonnel);
+
+    const field = (label,name,type="text",value="",full=false,options=[]) => `
+      <div class="form-field ${full?"full":""}"><label>${label}</label>
+      ${type==="select"
+        ? `<select name="${name}" required>${options.map(o=>`<option ${o===value?"selected":""}>${o}</option>`).join("")}</select>`
+        : type==="textarea"
+        ? `<textarea name="${name}" required>${value||""}</textarea>`
+        : `<input name="${name}" type="${type}" value="${value||""}" required />`}
+      </div>`;
+
+    function personOptions(){ return data.personnel.map(p=>p.name); }
+    function shipOptions(){ return data.ships.map(s=>s.name).concat(["Unassigned"]); }
+
+    function openAction(type, record=null, preset=""){
+      $("#quickActionModal").open && $("#quickActionModal").close();
+      $("#actionType").value=type;
+      const fields=$("#modalFields");
+      let title="New Action", html="";
+
+      if(type==="personnelView"){
+        title=`Personnel Jacket — ${record.name}`;
+        html=`
+          ${field("Name","name","text",record.name)}
+          ${field("Service Number","service","text",record.service)}
+          ${field("Rank","rank","text",record.rank)}
+          ${field("Ship","ship","select",record.ship, false, shipOptions())}
+          ${field("Division","division","select",record.division,false,["Command","Medical","Science","Operations","Security","Flight"])}
+          ${field("Billet","billet","text",record.billet)}
+          ${field("Qualifications","qualifications","textarea",(record.qualifications||[]).join(", "),true)}
+          ${field("Decorations","awards","textarea",(record.awards||[]).join(", "),true)}
+          <input type="hidden" name="id" value="${record.id}">
+        `;
+      } else if(type==="promote"){
+        title="Promote Officer";
+        html=field("Officer","person","select","",false,personOptions())+field("New Rank","rank","select","",false,["Ensign","Lieutenant Junior Grade","Lieutenant","Lieutenant Commander","Commander","Captain","Commodore","Rear Admiral"]);
+      } else if(type==="award"){
+        title="Issue Decoration";
+        html=field("Officer","person","select","",false,personOptions())+field("Decoration","award","select",preset,false,data.awards.map(a=>a.name))+field("Citation","citation","textarea","",true);
+      } else if(type==="qualify"){
+        title="Add Qualification";
+        html=field("Officer","person","select","",false,personOptions())+field("Qualification","qualification","select",preset,false,data.qualifications.map(q=>q.name))+field("Approving Authority","authority","text","Vanguard Fleet Academy",true);
+      } else if(type==="transfer"){
+        title="Transfer Personnel";
+        html=field("Officer","person","select","",false,personOptions())+field("New Ship","ship","select","",false,shipOptions())+field("New Billet","billet","text","")+field("Division","division","select","",false,["Command","Medical","Science","Operations","Security","Flight"]);
+      } else if(type==="mission"){
+        title="Create Mission";
+        html=field("Mission Title","title")+field("Assigned Ship","ship","select","",false,shipOptions())+field("Stardate","stardate","text","2406.")+field("Status","status","select","Active",false,["Active","Planned","Completed"])+field("Mission Summary","summary","textarea","",true);
+      } else if(type==="order"){
+        title="Publish Fleet Order";
+        html=field("Order Number","number","text",`VFCO-${String(data.orders.length+1).padStart(3,"0")}`)+field("Status","status","select","Active",false,["Active","Superseded","Archived"])+field("Title","title","text","",true);
+      } else if(type==="personnel"){
+        title="Add Personnel";
+        html=field("Name","name")+field("Service Number","service","text",`VF-2406-${String(data.personnel.length+1).padStart(3,"0")}`)+field("Rank","rank","select","Ensign",false,["Ensign","Lieutenant Junior Grade","Lieutenant","Lieutenant Commander","Commander","Captain"])+field("Ship","ship","select","Unassigned",false,shipOptions())+field("Division","division","select","Command",false,["Command","Medical","Science","Operations","Security","Flight"])+field("Billet","billet");
+      } else if(type==="ship"){
+        title="Commission Ship";
+        html=field("Ship Name","name")+field("Registry","registry")+field("Class","className")+field("Status","status","select","Operational",false,["Operational","Refit","Reserve","Decommissioned"])+field("Open Billets","openBillets","number","10");
+      }
+
+      $("#modalTitle").textContent=title;
+      fields.innerHTML=html;
+      $("#actionModal").showModal();
+    }
+
+    $$("[data-action]").forEach(b=>b.addEventListener("click",()=>openAction(b.dataset.action)));
+    $$("[data-open]").forEach(b=>b.addEventListener("click",()=>document.getElementById(b.dataset.open).showModal()));
+
+    $("#actionForm").addEventListener("submit", e=>{
+      e.preventDefault();
+      const type=$("#actionType").value;
+      const form=Object.fromEntries(new FormData(e.target).entries());
+
+      if(type==="personnelView"){
+        const p=data.personnel.find(x=>x.id===form.id);
+        Object.assign(p,{name:form.name,service:form.service,rank:form.rank,ship:form.ship,division:form.division,billet:form.billet,
+          qualifications:form.qualifications.split(",").map(x=>x.trim()).filter(Boolean),
+          awards:form.awards.split(",").map(x=>x.trim()).filter(Boolean)});
+        log(`Personnel record updated for ${p.name}.`);
+      } else if(type==="promote"){
+        const p=data.personnel.find(x=>x.name===form.person); p.rank=form.rank;
+        log(`${p.name} promoted to ${form.rank}.`);
+      } else if(type==="award"){
+        const p=data.personnel.find(x=>x.name===form.person); if(!p.awards.includes(form.award)) p.awards.push(form.award);
+        log(`${form.award} issued to ${p.name}. Citation: ${form.citation}`);
+      } else if(type==="qualify"){
+        const p=data.personnel.find(x=>x.name===form.person); if(!p.qualifications.includes(form.qualification)) p.qualifications.push(form.qualification);
+        log(`${form.qualification} qualification added to ${p.name} by ${form.authority}.`);
+      } else if(type==="transfer"){
+        const p=data.personnel.find(x=>x.name===form.person); Object.assign(p,{ship:form.ship,billet:form.billet,division:form.division});
+        log(`${p.name} transferred to ${form.ship} as ${form.billet}.`);
+      } else if(type==="mission"){
+        data.missions.unshift({id:crypto.randomUUID(),...form});
+        log(`Mission created: ${form.title}.`);
+      } else if(type==="order"){
+        data.orders.unshift({id:crypto.randomUUID(),...form,date:new Date().toLocaleDateString()});
+        log(`Fleet order published: ${form.number} — ${form.title}.`);
+      } else if(type==="personnel"){
+        data.personnel.push({id:crypto.randomUUID(),...form,status:"Active",qualifications:[],awards:[]});
+        log(`Personnel record created for ${form.name}.`);
+      } else if(type==="ship"){
+        data.ships.push({id:crypto.randomUUID(),...form,crew:0,openBillets:Number(form.openBillets)});
+        log(`${form.name} (${form.registry}) commissioned.`);
+      }
+      save();
+      $("#actionModal").close();
+      toast("Record saved successfully.");
+    });
+
+    $("#clearAudit").addEventListener("click",()=>{
+      if(confirm("Clear the local audit log?")){
+        data.audit=[]; save(); toast("Audit log cleared.");
+      }
+    });
+
+    $("#exportBtn").addEventListener("click",()=>{
+      const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");
+      a.href=url; a.download="vfms-export.json"; a.click();
+      URL.revokeObjectURL(url);
+      log("Fleet data exported to JSON."); save(); toast("VFMS data exported.");
+    });
+
+    renderAll();
+    window.openAction=openAction;
+    window.viewOfficer=viewOfficer;
+    window.reviewApplication=reviewApplication;
+  </script>
+</body>
+</html>
