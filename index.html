@@ -50,8 +50,15 @@
 
 
     <main>
-<section class="hero">
+
+<section class="hero cinematic-hero">
+  <div class="starfield starfield-a" aria-hidden="true"></div>
+  <div class="starfield starfield-b" aria-hidden="true"></div>
+  <div class="nebula-glow" aria-hidden="true"></div>
   <div class="hero-shade"></div>
+  <div class="lcars-overlay lcars-top" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="lcars-overlay lcars-bottom" aria-hidden="true"><span></span><span></span></div>
+
   <div class="hero-copy">
     <p class="system-label">Vanguard Station • Asteria Expanse</p>
     <h2>Welcome to<br>Vanguard Fleet</h2>
@@ -60,16 +67,25 @@
     <div class="button-row">
       <a class="btn btn-gold" href="join.html">Join the Fleet</a>
       <button class="btn btn-blue" data-open="login">Enter VICS</button>
-      <a class="btn btn-ghost" href="about.html">Fleet briefing</a>
+      <a class="btn btn-ghost" href="about.html">Fleet Briefing</a>
     </div>
   </div>
+
   <aside class="station-chip">
     <span class="station-symbol">✦</span>
     <strong>Vanguard Station</strong>
     <small>Fleet Headquarters</small>
     <em>From Here, the Frontier Begins.</em>
   </aside>
+
+  <div class="hero-status" aria-label="Fleet status">
+    <span><b>28</b> Active Ships</span>
+    <span><b>142</b> Officers</span>
+    <span><b>7</b> Missions</span>
+    <span class="condition-green"><b>●</b> Condition Green</span>
+  </div>
 </section>
+
 <section class="command-deck">
   <article class="panel status-panel">
     <header><h3>Fleet Status</h3><span class="status-online">Nominal</span></header>

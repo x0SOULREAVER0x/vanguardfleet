@@ -79,3 +79,249 @@ url("vanguard-station.jpg") center/cover no-repeat;border-bottom:1px solid var(-
 .roadmap .complete{border-color:#5dcf73;color:#79e68d}.roadmap .active-status{border-color:var(--gold);color:var(--gold2)}
 @media(max-width:900px){.content-grid,.award-grid,.roadmap{grid-template-columns:1fr 1fr}.ship-grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.division-grid{grid-template-columns:1fr}.span-2{grid-column:span 2}}
 @media(max-width:600px){.content-grid,.award-grid,.roadmap,.steps{grid-template-columns:1fr}.span-2{grid-column:auto}.page-hero{padding:52px 22px}.page-hero h2{font-size:3.2rem}}
+
+
+/* Version 2.2 — Cinematic Vanguard Station hero */
+.cinematic-hero{
+  position:relative;
+  min-height:clamp(590px,72vh,820px);
+  overflow:hidden;
+  isolation:isolate;
+  background:
+    linear-gradient(90deg,rgba(1,5,10,.94) 0%,rgba(2,8,14,.76) 34%,rgba(2,8,14,.14) 66%,rgba(1,5,10,.56) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.14) 58%,rgba(0,0,0,.86)),
+    url("vanguard-hero.jpg") center 38%/cover no-repeat;
+}
+.cinematic-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:
+    radial-gradient(circle at 74% 39%,rgba(64,137,227,.22),transparent 26%),
+    radial-gradient(circle at 52% 14%,rgba(91,49,161,.18),transparent 34%);
+  animation:heroPulse 7s ease-in-out infinite alternate;
+}
+.cinematic-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(115deg,transparent 42%,rgba(148,207,255,.11) 49%,transparent 56%);
+  transform:translateX(-130%);
+  animation:lightSweep 11s ease-in-out infinite;
+}
+.cinematic-hero .hero-copy{
+  position:relative;
+  z-index:5;
+  max-width:710px;
+  padding:clamp(74px,10vw,132px) clamp(24px,6vw,88px) 142px;
+  text-shadow:0 3px 22px rgba(0,0,0,.95);
+}
+.cinematic-hero .hero-copy h2{
+  font-size:clamp(3.7rem,7.6vw,7.2rem);
+  line-height:.82;
+  letter-spacing:.015em;
+}
+.cinematic-hero .hero-copy>p:not(.system-label):not(.hero-kicker){
+  max-width:620px;
+  font-size:clamp(1rem,1.5vw,1.24rem);
+}
+.cinematic-hero .hero-kicker{
+  color:#dbeeff;
+  font-size:clamp(1rem,1.7vw,1.35rem);
+  letter-spacing:.08em;
+}
+.cinematic-hero .station-chip{
+  z-index:6;
+  right:clamp(22px,5vw,76px);
+  bottom:112px;
+  padding:18px 20px;
+  backdrop-filter:blur(8px);
+  background:linear-gradient(135deg,rgba(3,12,20,.78),rgba(3,12,20,.42));
+  border:1px solid rgba(181,215,244,.35);
+  box-shadow:0 18px 50px rgba(0,0,0,.42);
+}
+.hero-status{
+  position:absolute;
+  z-index:7;
+  left:0;
+  right:0;
+  bottom:0;
+  min-height:76px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid rgba(212,172,78,.52);
+  background:linear-gradient(90deg,rgba(3,10,17,.95),rgba(7,19,31,.86),rgba(3,10,17,.95));
+  backdrop-filter:blur(12px);
+}
+.hero-status span{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:15px 12px;
+  color:#c6d5e2;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font:600 .78rem Rajdhani;
+  border-right:1px solid rgba(212,172,78,.24);
+}
+.hero-status span:last-child{border-right:0}
+.hero-status b{
+  color:#f0c85e;
+  font-size:1.35rem;
+}
+.hero-status .condition-green b{
+  color:#70dc87;
+  filter:drop-shadow(0 0 7px rgba(112,220,135,.62));
+}
+.starfield{
+  position:absolute;
+  inset:-20%;
+  z-index:1;
+  pointer-events:none;
+  opacity:.52;
+  background-image:
+    radial-gradient(circle,#fff 0 1px,transparent 1.5px),
+    radial-gradient(circle,#b9dfff 0 1px,transparent 1.4px);
+  background-size:73px 73px,117px 117px;
+  background-position:0 0,31px 19px;
+}
+.starfield-a{animation:starDrift 70s linear infinite}
+.starfield-b{
+  opacity:.24;
+  transform:scale(1.22);
+  background-size:151px 151px,219px 219px;
+  animation:starDriftReverse 105s linear infinite;
+}
+.nebula-glow{
+  position:absolute;
+  z-index:2;
+  width:50%;
+  height:72%;
+  right:-6%;
+  top:3%;
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(49,107,205,.22),rgba(64,37,142,.12) 38%,transparent 70%);
+  filter:blur(18px);
+  animation:nebulaBreathe 9s ease-in-out infinite alternate;
+}
+.lcars-overlay{
+  position:absolute;
+  z-index:8;
+  display:flex;
+  gap:7px;
+  opacity:.74;
+  pointer-events:none;
+}
+.lcars-overlay span{height:7px;border-radius:999px;background:#d7a63b}
+.lcars-top{top:18px;right:28px}
+.lcars-top span:nth-child(1){width:112px;background:#559bd8}
+.lcars-top span:nth-child(2){width:48px}
+.lcars-top span:nth-child(3){width:18px;background:#b668d1}
+.lcars-bottom{left:28px;bottom:94px}
+.lcars-bottom span:nth-child(1){width:78px}
+.lcars-bottom span:nth-child(2){width:26px;background:#559bd8}
+
+@keyframes starDrift{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-110px,70px,0)}
+}
+@keyframes starDriftReverse{
+  from{transform:scale(1.22) translate3d(-40px,-20px,0)}
+  to{transform:scale(1.22) translate3d(95px,-70px,0)}
+}
+@keyframes nebulaBreathe{
+  from{opacity:.56;transform:scale(.96)}
+  to{opacity:1;transform:scale(1.08)}
+}
+@keyframes heroPulse{
+  from{opacity:.55}
+  to{opacity:1}
+}
+@keyframes lightSweep{
+  0%,62%{transform:translateX(-140%)}
+  82%,100%{transform:translateX(140%)}
+}
+
+@media(max-width:900px){
+  .cinematic-hero{
+    min-height:720px;
+    background-position:63% center;
+  }
+  .cinematic-hero .hero-copy{
+    padding:76px 26px 210px;
+    max-width:620px;
+  }
+  .cinematic-hero .station-chip{
+    left:26px;
+    right:auto;
+    bottom:102px;
+  }
+  .hero-status{grid-template-columns:repeat(2,1fr)}
+  .hero-status span:nth-child(2){border-right:0}
+  .hero-status span{min-height:48px}
+}
+@media(max-width:600px){
+  .cinematic-hero{
+    min-height:760px;
+    background-position:68% center;
+  }
+  .cinematic-hero .hero-copy{
+    padding-top:62px;
+  }
+  .cinematic-hero .hero-copy h2{
+    font-size:3.8rem;
+  }
+  .cinematic-hero .station-chip{
+    bottom:116px;
+  }
+  .hero-status span{
+    font-size:.66rem;
+    letter-spacing:.04em;
+  }
+  .hero-status b{font-size:1.05rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .starfield,.nebula-glow,.cinematic-hero::before,.cinematic-hero::after{animation:none!important}
+}
+
+
+/* Version 2.2.1 — Vanguard Station information-card overflow fix */
+.cinematic-hero .station-chip{
+  box-sizing:border-box;
+  width:min(320px,calc(100% - 48px));
+  max-width:calc(100% - 48px);
+  right:24px;
+  left:auto;
+  overflow:hidden;
+  white-space:normal;
+  text-align:center;
+}
+.cinematic-hero .station-chip strong,
+.cinematic-hero .station-chip small,
+.cinematic-hero .station-chip em{
+  display:block;
+  max-width:100%;
+  overflow-wrap:anywhere;
+}
+@media(min-width:901px){
+  .cinematic-hero .station-chip{
+    right:clamp(24px,3vw,52px);
+  }
+}
+@media(max-width:900px){
+  .cinematic-hero .station-chip{
+    left:24px;
+    right:24px;
+    width:auto;
+    max-width:none;
+  }
+}
+@media(max-width:600px){
+  .cinematic-hero .station-chip{
+    left:16px;
+    right:16px;
+  }
+}
