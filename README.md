@@ -111,3 +111,17 @@ The fleet emblem was also enlarged again within the upper-left header panel.
 - Added equal transparent margins
 - Enlarged the upper-left header panel slightly
 - Forced exact horizontal and vertical centering
+
+
+## Version 2.6 Realistic Awards
+Replaces flat icon-style artwork with realistic metallic medals suspended from striped service ribbons, matching the formal Vanguard Fleet awards-board reference.
+
+
+## Version 2.8 Official Awards Board
+
+The Awards page now uses the exact supplied Vanguard Fleet awards-and-decorations board as the official visual standard. It includes fleet decorations, departmental medals, campaign medals, service awards, unit citations, qualification badges, ribbon racks, challenge coins and certificate presentation.
+
+
+## Version 2.9 Exact Award Images
+
+The Awards page now uses exact crops from the official Vanguard Fleet awards board supplied by the user. No medals were redrawn or approximated.
