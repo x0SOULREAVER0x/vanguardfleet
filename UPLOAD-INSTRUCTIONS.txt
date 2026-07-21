@@ -1,9 +1,7 @@
-Vanguard Fleet Awards Update
-
-Upload all three files directly into the repository root and replace files with matching names:
+Upload these three files to the ROOT of the GitHub repository and replace the existing versions:
 
 - awards.html
-- award-star-of-vanguard.png
-- award-vanguard-cross.png
+- award-medal-of-valor.png
+- award-distinguished-service.png
 
-Then commit the changes. GitHub Pages normally refreshes within a few minutes.
+Then commit the changes. This is a fresh package containing only Awards #3 and #4.

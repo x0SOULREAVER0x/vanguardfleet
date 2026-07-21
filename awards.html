@@ -51,7 +51,7 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: clamp(1rem, 2.5vw, 2rem);
     }
     .presentation-card {
@@ -107,6 +107,13 @@
       max-width: 44ch;
       margin: .55rem auto 0;
     }
+    .presentation-card:last-child { grid-column: 1 / -1; width: min(560px, 100%); justify-self: center; }
+    }
+    
+    @media (max-width: 1180px) and (min-width: 761px) {
+      .presentation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
     @media (max-width: 760px) {
       .presentation-grid { grid-template-columns: 1fr; }
       .medal-stage { min-height: 410px; }
@@ -184,12 +191,34 @@
               <p>Awarded for exceptional bravery, gallantry and heroic leadership in the face of overwhelming odds.</p>
             </div>
           </article>
+<article class="presentation-card">
+            <div class="medal-stage">
+              <img src="award-medal-of-valor.png?v=450" alt="Medal of Valor ribbon bar and full-size medal">
+            </div>
+            <div class="presentation-copy">
+              <p class="precedence">#3 Medal of Valor</p>
+              <h3>Third Highest Decoration</h3>
+              <p>Awarded for acts of valor in the face of great personal risk or danger.</p>
+            </div>
+          </article>
+
+          <article class="presentation-card">
+            <div class="medal-stage">
+              <img src="award-distinguished-service.png?v=450" alt="Distinguished Service Medal ribbon bar and full-size medal">
+            </div>
+            <div class="presentation-copy">
+              <p class="precedence">#4 Distinguished Service Medal</p>
+              <h3>Exceptional Fleet Service</h3>
+              <p>Awarded for outstanding and dedicated service with significant and lasting contributions to the Fleet and the Federation.</p>
+            </div>
+          </article>
+
         </div>
       </section>
 
       <section class="award-grid visual-awards exact-awards">
         <article class="award-card">
-          <img src="award-distinguished-service.png?v=290" alt="Distinguished Service Medal medal and ribbon">
+          <img src="award-distinguished-service.png?v=450" alt="Distinguished Service Medal medal and ribbon">
           <div class="award-card-copy">
             <p class="system-label">Exceptional Fleet Service</p>
             <h3>Distinguished Service Medal</h3>
