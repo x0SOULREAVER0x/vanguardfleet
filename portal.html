@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My VPIN | Vanguard Fleet</title>
+<style>
+:root{--bg:#070b12;--panel:#101826;--panel2:#162235;--text:#edf4ff;--muted:#9fb0c5;--gold:#d7ae52;--blue:#4aa8ff;--green:#5fd38d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 5vw;border-bottom:1px solid #ffffff17;background:#0a101acc;position:sticky;top:0}
+main{width:min(1100px,92vw);margin:28px auto 60px}.eyebrow{color:var(--gold);letter-spacing:.16em;text-transform:uppercase;font-weight:800;font-size:.72rem}
+h1{margin:5px 0}.muted{color:var(--muted)}button{padding:10px 13px;border:1px solid #ffffff25;border-radius:11px;background:var(--panel);color:var(--text);cursor:pointer}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.panel{border:1px solid #ffffff17;border-radius:18px;background:var(--panel);overflow:hidden}.head{padding:16px 18px;border-bottom:1px solid #ffffff15}.body{padding:18px}
+.identity{display:grid;grid-template-columns:100px 1fr;gap:18px;align-items:center}.portrait{width:100px;height:120px;display:grid;place-items:center;border:1px solid #ffffff20;border-radius:16px;background:var(--panel2);font-size:2rem}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}.stat{padding:12px;border-radius:13px;background:var(--panel2)}.stat small{display:block;color:var(--muted);margin-bottom:5px}
+.list{display:grid;gap:10px}.item{padding:12px;border-radius:12px;border:1px solid #ffffff12;background:var(--panel2)}.badge{display:inline-block;padding:5px 9px;border:1px solid #4aa8ff55;border-radius:999px;color:#c8e7ff;background:#4aa8ff18;font-size:.75rem;margin:3px}
+.notice{padding:18px;border:1px dashed #ffffff25;border-radius:14px;color:var(--muted)}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.identity{grid-template-columns:1fr}.portrait{width:100%}}
+</style>
+</head>
+<body>
+<header><div><div class="eyebrow">Vanguard Personnel Information Network</div><strong>VFMS Member Portal</strong></div><button id="logout">Sign Out</button></header>
+<main>
+<div class="eyebrow">Authenticated Personnel Record</div>
+<h1 id="welcome">Loading record…</h1>
+<p class="muted">Your assignments, decorations, qualifications and service history are loaded from the VFMS database.</p>
+<div class="grid">
+<section class="panel"><div class="head"><strong>Personnel Overview</strong></div><div class="body" id="overview"><div class="notice">Loading personnel record…</div></div></section>
+<section class="panel"><div class="head"><strong>Qualifications</strong></div><div class="body" id="qualifications"><div class="notice">Loading…</div></div></section>
+<section class="panel"><div class="head"><strong>Decorations</strong></div><div class="body" id="awards"><div class="notice">Loading…</div></div></section>
+<section class="panel"><div class="head"><strong>Career Timeline</strong></div><div class="body" id="timeline"><div class="notice">Loading…</div></div></section>
+</div>
+</main>
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
+const supabase=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const {data:{session}}=await supabase.auth.getSession();
+if(!session) location.href="./login.html";
+document.getElementById("logout").onclick=async()=>{await supabase.auth.signOut();location.href="./login.html"};
+
+const {data:profile}=await supabase.from("profiles").select("display_name,role").single();
+document.getElementById("welcome").textContent=profile?`Welcome, ${profile.display_name}`:"My VPIN";
+
+const {data:p,error}=await supabase.from("personnel")
+ .select("id,service_number,character_name,species,homeworld,rank_name,division,department,billet,status,ships(name,registry)")
+ .eq("user_id",session.user.id).maybeSingle();
+
+if(error){document.getElementById("overview").innerHTML=`<div class="notice">${error.message}</div>`}
+else if(!p){document.getElementById("overview").innerHTML=`<div class="notice">Your account is active, but Fleet Command has not linked a personnel record to it yet.</div>`}
+else{
+ document.getElementById("welcome").textContent=`${p.rank_name} ${p.character_name}`;
+ document.getElementById("overview").innerHTML=`
+ <div class="identity"><div class="portrait">${p.character_name.slice(0,2).toUpperCase()}</div><div>
+ <h2>${p.rank_name} ${p.character_name}</h2><div class="muted">${p.service_number}</div>
+ <div class="stats">
+ <div class="stat"><small>Assignment</small>${p.ships?.name||"Unassigned"}</div>
+ <div class="stat"><small>Billet</small>${p.billet||"Unassigned"}</div>
+ <div class="stat"><small>Division</small>${p.division||"—"}</div>
+ <div class="stat"><small>Status</small>${p.status}</div></div></div></div>`;
+ const [{data:q},{data:a},{data:t}]=await Promise.all([
+  supabase.from("officer_qualifications").select("issued_on,status,qualifications_catalog(name,code)").eq("personnel_id",p.id),
+  supabase.from("officer_awards").select("issued_on,citation,awards_catalog(name,code)").eq("personnel_id",p.id),
+  supabase.from("career_events").select("event_date,title,details,event_type").eq("personnel_id",p.id).order("event_date",{ascending:false})
+ ]);
+ document.getElementById("qualifications").innerHTML=q?.length?q.map(x=>`<span class="badge">${x.qualifications_catalog.name}</span>`).join(""):`<div class="notice">No qualifications recorded.</div>`;
+ document.getElementById("awards").innerHTML=a?.length?a.map(x=>`<div class="item"><strong>${x.awards_catalog.name}</strong><div class="muted">${x.issued_on}</div></div>`).join(""):`<div class="notice">No decorations recorded.</div>`;
+ document.getElementById("timeline").innerHTML=t?.length?t.map(x=>`<div class="item"><strong>${x.title}</strong><div class="muted">${x.event_date} · ${x.event_type}</div>${x.details?`<p>${x.details}</p>`:""}</div>`).join(""):`<div class="notice">No career events recorded.</div>`;
+}
+</script>
+</body></html>
