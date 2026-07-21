@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050a10">
+  <title>VPIN | Vanguard Fleet</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="vpin.css">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="masthead command-header">
+      <a class="brand-mark" href="index.html" aria-label="Vanguard Fleet home">
+        <img src="vanguard-logo.png" alt="Vanguard Fleet emblem">
+      </a>
+      <div class="brand-copy">
+        <p class="system-label">United Federation of Planets • Starfleet Command</p>
+        <h1><span>Vanguard</span><span>Fleet</span></h1>
+        <p class="motto">Beyond the Frontier, We Endure.</p>
+      </div>
+      <section class="access-panel vics-panel">
+        <strong class="vics-title">VPIN</strong>
+        <span class="vics-full-name">Vanguard Personnel<br>Information Network</span>
+        <span class="vics-status"><i></i> Database Status: Online</span>
+        <small>Guest Clearance • Personnel Directory</small>
+      </section>
+    </header>
+
+    <nav class="main-nav">
+      <button id="nav-toggle" class="nav-toggle" aria-expanded="false">☰ Menu</button>
+      <div id="nav-links" class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">The Fleet</a>
+        <a href="ships.html">Ships</a>
+        <a href="academy.html">Academy</a>
+        <a href="join.html">Join</a>
+        <a href="awards.html">Awards</a>
+        <a href="vpin.html" class="active">VPIN</a>
+        <a href="community.html">Community</a>
+        <a href="development.html">Development</a>
+      </div>
+    </nav>
+
+    <main class="vpin-main">
+      <section class="vpin-hero">
+        <div>
+          <p class="system-label">Personnel Command Database</p>
+          <h2>Vanguard Personnel Information Network</h2>
+          <p>Authorized access to official Vanguard Fleet personnel records. Search active records by officer name, service number, assignment, rank, division or duty status.</p>
+        </div>
+        <div class="database-status">
+          <span>VPIN NODE 01</span>
+          <strong>ONLINE</strong>
+          <small>1 active record indexed</small>
+        </div>
+      </section>
+
+      <section class="vpin-search-panel" aria-labelledby="search-title">
+        <div class="vpin-section-heading">
+          <div>
+            <p class="system-label">Directory Search</p>
+            <h2 id="search-title">Personnel Records</h2>
+          </div>
+          <span id="result-count">1 record found</span>
+        </div>
+
+        <div class="vpin-search-controls">
+          <label>
+            <span>Search</span>
+            <input id="vpin-search" type="search" placeholder="Name, service number, assignment…" autocomplete="off">
+          </label>
+          <label>
+            <span>Division</span>
+            <select id="division-filter">
+              <option value="">All divisions</option>
+              <option value="Medical">Medical</option>
+              <option value="Command">Command</option>
+              <option value="Operations">Operations</option>
+              <option value="Science">Science</option>
+            </select>
+          </label>
+          <label>
+            <span>Duty Status</span>
+            <select id="status-filter">
+              <option value="">All statuses</option>
+              <option value="Active">Active</option>
+              <option value="Reserve">Reserve</option>
+              <option value="Leave">Leave</option>
+              <option value="Retired">Retired</option>
+            </select>
+          </label>
+          <button id="reset-search" class="btn btn-ghost" type="button">Reset</button>
+        </div>
+
+        <div id="personnel-results" class="personnel-results">
+          <button class="personnel-row" type="button"
+            data-name="Sovak"
+            data-service="VF-2403-SVK-001"
+            data-assignment="USS Discovery"
+            data-rank="Lieutenant Junior Grade"
+            data-division="Medical"
+            data-status="Active"
+            aria-controls="sovak-record">
+            <span class="mini-portrait" aria-hidden="true">S</span>
+            <span class="personnel-name"><strong>Sovak</strong><small>VF-2403-SVK-001</small></span>
+            <span><small>Rank</small>Lieutenant JG</span>
+            <span><small>Assignment</small>USS Discovery</span>
+            <span><small>Division</small>Medical</span>
+            <span class="status-active">● Active</span>
+            <span class="record-arrow">Open Record →</span>
+          </button>
+        </div>
+        <p id="no-results" class="no-results" hidden>No personnel records match the selected criteria.</p>
+      </section>
+
+      <section id="sovak-record" class="personnel-jacket" aria-labelledby="record-name">
+        <header class="jacket-header">
+          <div>
+            <p class="system-label">Official Personnel Jacket</p>
+            <h2 id="record-name">Lt. JG Sovak</h2>
+            <p>Medical Officer • USS Discovery NCC-78393-B</p>
+          </div>
+          <div class="record-state">
+            <span>Duty Status</span>
+            <strong>ACTIVE</strong>
+            <small>Medical Division</small>
+          </div>
+        </header>
+
+        <div class="identity-grid">
+          <aside class="officer-portrait">
+            <div class="portrait-frame">
+              <div class="portrait-placeholder">
+                <span class="portrait-delta">△</span>
+                <strong>SOVAK</strong>
+                <small>PORTRAIT PENDING</small>
+              </div>
+            </div>
+            <div class="rank-block">
+              <span class="rank-pips">● ○</span>
+              <strong>Lieutenant Junior Grade</strong>
+              <small>Medical Division</small>
+            </div>
+          </aside>
+
+          <div class="record-fields">
+            <dl>
+              <div><dt>Full Name</dt><dd>Sovak of Raal</dd></div>
+              <div><dt>Service Number</dt><dd>VF-2403-SVK-001</dd></div>
+              <div><dt>Species</dt><dd>Vulcan</dd></div>
+              <div><dt>Homeworld</dt><dd>Vulcan</dd></div>
+              <div><dt>Current Rank</dt><dd>Lieutenant Junior Grade</dd></div>
+              <div><dt>Current Billet</dt><dd>Medical Officer</dd></div>
+              <div><dt>Current Assignment</dt><dd>USS Discovery</dd></div>
+              <div><dt>Division</dt><dd>Medical</dd></div>
+              <div><dt>Security Clearance</dt><dd>Level 3</dd></div>
+              <div><dt>Medical Classification</dt><dd>Fit for Duty</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="record-tabs" role="tablist" aria-label="Personnel record sections">
+          <button class="record-tab active" type="button" data-tab="overview" role="tab">Overview</button>
+          <button class="record-tab" type="button" data-tab="career" role="tab">Career History</button>
+          <button class="record-tab" type="button" data-tab="qualifications" role="tab">Qualifications</button>
+          <button class="record-tab" type="button" data-tab="awards" role="tab">Awards</button>
+          <button class="record-tab" type="button" data-tab="missions" role="tab">Mission History</button>
+        </div>
+
+        <div class="record-tab-panels">
+          <section class="record-panel active" data-panel="overview">
+            <div class="record-card">
+              <h3>Personnel Summary</h3>
+              <p>Vulcan medical officer specializing in xenomedicine, battlefield trauma and neurological diagnostics. Assigned to the USS Discovery as a Medical Officer.</p>
+            </div>
+            <div class="record-card">
+              <h3>Current Assignment</h3>
+              <dl class="compact-dl">
+                <div><dt>Vessel</dt><dd>USS Discovery</dd></div>
+                <div><dt>Registry</dt><dd>NCC-78393-B</dd></div>
+                <div><dt>Class</dt><dd>Prometheus Tactical Cruiser</dd></div>
+                <div><dt>Billet</dt><dd>Medical Officer</dd></div>
+              </dl>
+            </div>
+            <div class="record-card">
+              <h3>Duty Readiness</h3>
+              <p class="fit-status">● FIT FOR DUTY</p>
+              <p>Detailed medical information is restricted. Public personnel access displays duty classification only.</p>
+            </div>
+          </section>
+
+          <section class="record-panel" data-panel="career" hidden>
+            <div class="timeline">
+              <article><span></span><div><small>PRE-SERVICE</small><h3>Vulcan Science Academy</h3><p>Advanced scientific and medical education.</p></div></article>
+              <article><span></span><div><small>RESIDENCY</small><h3>Earth Medical Residency</h3><p>Clinical residency emphasizing xenomedicine and cross-species care.</p></div></article>
+              <article><span></span><div><small>CURRENT ASSIGNMENT</small><h3>USS Discovery</h3><p>Medical Officer, Medical Division.</p></div></article>
+            </div>
+          </section>
+
+          <section class="record-panel" data-panel="qualifications" hidden>
+            <div class="qualification-grid">
+              <article><span>✓</span><strong>Xenomedicine</strong><small>Qualified</small></article>
+              <article><span>✓</span><strong>Battlefield Trauma</strong><small>Qualified</small></article>
+              <article><span>✓</span><strong>Neurological Diagnostics</strong><small>Qualified</small></article>
+              <article><span>✓</span><strong>Suus Mahna</strong><small>Certified Practitioner</small></article>
+            </div>
+          </section>
+
+          <section class="record-panel" data-panel="awards" hidden>
+            <div class="empty-record">
+              <span>✪</span>
+              <h3>Awards record pending</h3>
+              <p>Decorations and formal citations will appear here as they are entered by Personnel Command.</p>
+            </div>
+          </section>
+
+          <section class="record-panel" data-panel="missions" hidden>
+            <div class="empty-record">
+              <span>▤</span>
+              <h3>Mission history pending</h3>
+              <p>Mission participation records will be added as official logs are entered into VPIN.</p>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>Vanguard Fleet Command</strong>
+      <p><strong>© 2026 Vanguard Fleet. All Rights Reserved.</strong></p>
+      <p>Vanguard Fleet is an unofficial, non-commercial Star Trek-inspired roleplaying organization. Star Trek, the Starfleet insignia, the United Federation of Planets and all related names, logos, characters, ships and trademarks are the property of CBS Studios Inc., Paramount Global and their respective rights holders. Vanguard Fleet is not endorsed by, sponsored by, licensed by or affiliated with CBS Studios, Paramount or any Star Trek rights holder.</p>
+      <p>All original Vanguard Fleet artwork, graphics, medals, ribbons, website design, written content, lore and original intellectual property are © 2026 Vanguard Fleet unless otherwise noted. Unauthorized reproduction or redistribution of original Vanguard Fleet content without permission is prohibited.</p>
+      <p class="footer-motto"><strong>Live Long. Write Boldly. Explore Together.</strong></p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="vpin.js"></script>
+</body>
+</html>
