@@ -11,143 +11,254 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .featured-honors {
+      position: relative;
+      padding: clamp(1.2rem, 3vw, 2.4rem);
+      margin: 1.5rem auto 2.5rem;
+      max-width: 1200px;
+      overflow: hidden;
+      border: 1px solid rgba(232,190,72,.35);
+      background:
+        radial-gradient(circle at 50% 20%, rgba(214,161,45,.12), transparent 34%),
+        linear-gradient(145deg, rgba(5,10,18,.96), rgba(9,18,31,.92));
+      box-shadow: 0 24px 70px rgba(0,0,0,.45), inset 0 0 45px rgba(23,77,125,.12);
+    }
+    .featured-honors::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .25;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.9) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(232,190,72,.8) 0 1px, transparent 1.5px);
+      background-size: 83px 83px, 127px 127px;
+      background-position: 12px 15px, 51px 37px;
+    }
+    .honors-heading {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .honors-heading h2 {
+      margin: .15rem 0 .35rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .presentation-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(1rem, 2.5vw, 2rem);
+    }
+    .presentation-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      padding: clamp(1rem, 2.4vw, 1.7rem);
+      border: 1px solid rgba(232,190,72,.7);
+      background: linear-gradient(180deg, rgba(7,13,22,.82), rgba(3,7,12,.94));
+      box-shadow: inset 0 0 26px rgba(232,190,72,.06), 0 15px 35px rgba(0,0,0,.32);
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+    .presentation-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,215,105,.95);
+      box-shadow: 0 20px 45px rgba(0,0,0,.45), 0 0 28px rgba(232,190,72,.14);
+    }
+    .medal-stage {
+      display: grid;
+      place-items: center;
+      min-height: clamp(370px, 48vw, 590px);
+      padding: .5rem;
+      background: radial-gradient(circle at 50% 56%, rgba(232,190,72,.16), transparent 42%);
+    }
+    .medal-stage img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: clamp(350px, 45vw, 560px);
+      object-fit: contain;
+      filter: drop-shadow(0 15px 18px rgba(0,0,0,.58));
+    }
+    .presentation-copy {
+      text-align: center;
+      margin-top: .8rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(232,190,72,.25);
+    }
+    .precedence {
+      margin: 0 0 .15rem;
+      color: #f0c95c;
+      font-family: Rajdhani, sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .presentation-copy h3 {
+      margin: .1rem 0 .35rem;
+      font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+    }
+    .presentation-copy p:last-child {
+      max-width: 44ch;
+      margin: .55rem auto 0;
+    }
+    @media (max-width: 760px) {
+      .presentation-grid { grid-template-columns: 1fr; }
+      .medal-stage { min-height: 410px; }
+      .medal-stage img { height: min(520px, 112vw); }
+    }
+  </style>
 </head>
 <body>
   <div class="site-shell">
-    
+    <header class="masthead command-header">
+      <a class="brand-mark" href="index.html" aria-label="Vanguard Fleet home">
+        <img src="vanguard-logo.png" alt="Vanguard Fleet emblem">
+      </a>
+      <div class="brand-copy">
+        <p class="system-label">United Federation of Planets • Starfleet Command</p>
+        <h1><span>Vanguard</span><span>Fleet</span></h1>
+        <p class="motto">Beyond the Frontier, We Endure.</p>
+      </div>
+      <section class="access-panel vics-panel">
+        <strong class="vics-title">VICS</strong>
+        <span class="vics-full-name">Vanguard Integrated<br>Computer System</span>
+        <span class="vics-status"><i></i> System Status: Online</span>
+        <button class="btn btn-blue vics-button" data-open="login">Enter VICS</button>
+        <small>Guest Clearance • Level 0</small>
+      </section>
+    </header>
 
-<header class="masthead command-header">
-  <a class="brand-mark" href="index.html" aria-label="Vanguard Fleet home">
-    <img src="vanguard-logo.png" alt="Vanguard Fleet emblem">
-  </a>
-
-  <div class="brand-copy">
-    <p class="system-label">United Federation of Planets • Starfleet Command</p>
-    <h1><span>Vanguard</span><span>Fleet</span></h1>
-    <p class="motto">Beyond the Frontier, We Endure.</p>
-  </div>
-
-  <section class="access-panel vics-panel">
-    <strong class="vics-title">VICS</strong>
-    <span class="vics-full-name">Vanguard Integrated<br>Computer System</span>
-    <span class="vics-status"><i></i> System Status: Online</span>
-    <button class="btn btn-blue vics-button" data-open="login">Enter VICS</button>
-    <small>Guest Clearance • Level 0</small>
-  </section>
-</header>
-
-
-<nav class="main-nav">
-  <button id="nav-toggle" class="nav-toggle" aria-expanded="false">☰ Menu</button>
-  <div id="nav-links" class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="about.html">The Fleet</a>
-    <a href="ships.html">Ships</a>
-    <a href="academy.html">Academy</a>
-    <a href="join.html">Join</a>
-    <a href="awards.html" class="active">Awards</a>
-    <a href="community.html">Community</a>
-    <a href="development.html">Development</a>
-  </div>
-</nav>
-
+    <nav class="main-nav">
+      <button id="nav-toggle" class="nav-toggle" aria-expanded="false">☰ Menu</button>
+      <div id="nav-links" class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">The Fleet</a>
+        <a href="ships.html">Ships</a>
+        <a href="academy.html">Academy</a>
+        <a href="join.html">Join</a>
+        <a href="awards.html" class="active">Awards</a>
+        <a href="community.html">Community</a>
+        <a href="development.html">Development</a>
+      </div>
+    </nav>
 
     <main>
-<section class="page-hero"><p class="system-label">Awards & Decorations</p><h2>Earn Your Legacy</h2><p>Recognizing exceptional storytelling, leadership, service and community contribution.</p></section>
+      <section class="page-hero">
+        <p class="system-label">Awards & Decorations</p>
+        <h2>Earn Your Legacy</h2>
+        <p>Recognizing exceptional storytelling, leadership, service and community contribution.</p>
+      </section>
 
+      <section class="featured-honors" aria-labelledby="highest-decorations">
+        <div class="honors-heading">
+          <p class="system-label">Order of Precedence</p>
+          <h2 id="highest-decorations">Highest Fleet Decorations</h2>
+          <p>The premier honors of Vanguard Fleet, presented in full ceremonial configuration.</p>
+        </div>
 
-<section class="award-grid visual-awards exact-awards">
+        <div class="presentation-grid">
+          <article class="presentation-card">
+            <div class="medal-stage">
+              <img src="award-star-of-vanguard.png?v=421" alt="Star of Vanguard ribbon bar and full-size medal">
+            </div>
+            <div class="presentation-copy">
+              <p class="precedence">#1 Star of Vanguard</p>
+              <h3>Highest Fleet Decoration</h3>
+              <p>The highest decoration in Vanguard Fleet, awarded for extraordinary heroism and actions that change the course of events.</p>
+            </div>
+          </article>
 
-<article class="award-card">
-  <img src="award-star-of-vanguard.png?v=290" alt="Star of Vanguard medal and ribbon">
-  <div class="award-card-copy">
-    <p class="system-label">Highest Fleet Decoration</p>
-    <h3>Star of Vanguard</h3>
-    <p>The highest decoration in Vanguard Fleet, awarded for extraordinary heroism and actions that change the course of events.</p>
+          <article class="presentation-card">
+            <div class="medal-stage">
+              <img src="award-vanguard-cross.png?v=421" alt="Vanguard Cross ribbon bar and full-size medal">
+            </div>
+            <div class="presentation-copy">
+              <p class="precedence">#2 Vanguard Cross</p>
+              <h3>Gallantry and Heroism</h3>
+              <p>Awarded for exceptional bravery, gallantry and heroic leadership in the face of overwhelming odds.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="award-grid visual-awards exact-awards">
+        <article class="award-card">
+          <img src="award-distinguished-service.png?v=290" alt="Distinguished Service Medal medal and ribbon">
+          <div class="award-card-copy">
+            <p class="system-label">Exceptional Fleet Service</p>
+            <h3>Distinguished Service Medal</h3>
+            <p>Awarded for outstanding and dedicated service with significant and lasting contributions to the Fleet.</p>
+          </div>
+        </article>
+        <article class="award-card">
+          <img src="award-explorers-star.png?v=290" alt="Explorer's Star medal and ribbon">
+          <div class="award-card-copy">
+            <p class="system-label">Exploration and First Contact</p>
+            <h3>Explorer's Star</h3>
+            <p>Awarded for first contact, major discoveries and advancement of known space.</p>
+          </div>
+        </article>
+        <article class="award-card">
+          <img src="award-emergency-medical.png?v=290" alt="Emergency Medical Medal medal and ribbon">
+          <div class="award-card-copy">
+            <p class="system-label">Medical Excellence</p>
+            <h3>Emergency Medical Medal</h3>
+            <p>Awarded for excellence in emergency response and medical service during critical situations.</p>
+          </div>
+        </article>
+        <article class="award-card">
+          <img src="award-innovation-medal.png?v=290" alt="Innovation Medal medal and ribbon">
+          <div class="award-card-copy">
+            <p class="system-label">Engineering Achievement</p>
+            <h3>Innovation Medal</h3>
+            <p>Awarded for innovative solutions, creative engineering and meaningful technical breakthroughs.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="official-awards-section">
+        <div class="section-heading">
+          <p class="system-label">Complete Decorations Register</p>
+          <h2>Official Awards Board</h2>
+          <p>The full board remains available for the complete order of precedence, qualification badges, campaign medals, service awards, unit citations, ribbon racks and challenge coins.</p>
+        </div>
+        <figure class="official-awards-board">
+          <a href="vanguard-awards-board.png" target="_blank" rel="noopener">
+            <img src="vanguard-awards-board.png?v=290" alt="Official Vanguard Fleet awards and decorations board">
+          </a>
+        </figure>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="system-label">Vanguard Fleet Awards System</p>
+          <h2>One Award. Every Display.</h2>
+          <p>Award entries will update VPIN, ribbon racks, citations, Discord announcements, career portfolios and the Hall of Honor.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>Vanguard Fleet Command</strong>
+      <p>Vanguard Fleet is an unofficial, non-commercial Star Trek-inspired roleplaying community. Star Trek and all related marks, logos and characters are owned by their respective rights holders. This fan production is not endorsed by, sponsored by, licensed by or affiliated with CBS Studios Inc., Paramount Pictures Corporation or any Star Trek rights holder.</p>
+    </footer>
   </div>
-</article>
 
-<article class="award-card">
-  <img src="award-vanguard-cross.png?v=290" alt="Vanguard Cross medal and ribbon">
-  <div class="award-card-copy">
-    <p class="system-label">Gallantry and Heroism</p>
-    <h3>Vanguard Cross</h3>
-    <p>Awarded for exceptional bravery, gallantry and heroic leadership in the face of overwhelming odds.</p>
-  </div>
-</article>
-
-<article class="award-card">
-  <img src="award-distinguished-service.png?v=290" alt="Distinguished Service Medal medal and ribbon">
-  <div class="award-card-copy">
-    <p class="system-label">Exceptional Fleet Service</p>
-    <h3>Distinguished Service Medal</h3>
-    <p>Awarded for outstanding and dedicated service with significant and lasting contributions to the Fleet.</p>
-  </div>
-</article>
-
-<article class="award-card">
-  <img src="award-explorers-star.png?v=290" alt="Explorer's Star medal and ribbon">
-  <div class="award-card-copy">
-    <p class="system-label">Exploration and First Contact</p>
-    <h3>Explorer's Star</h3>
-    <p>Awarded for first contact, major discoveries and advancement of known space.</p>
-  </div>
-</article>
-
-<article class="award-card">
-  <img src="award-emergency-medical.png?v=290" alt="Emergency Medical Medal medal and ribbon">
-  <div class="award-card-copy">
-    <p class="system-label">Medical Excellence</p>
-    <h3>Emergency Medical Medal</h3>
-    <p>Awarded for excellence in emergency response and medical service during critical situations.</p>
-  </div>
-</article>
-
-<article class="award-card">
-  <img src="award-innovation-medal.png?v=290" alt="Innovation Medal medal and ribbon">
-  <div class="award-card-copy">
-    <p class="system-label">Engineering Achievement</p>
-    <h3>Innovation Medal</h3>
-    <p>Awarded for innovative solutions, creative engineering and meaningful technical breakthroughs.</p>
-  </div>
-</article>
-
-</section>
-
-<section class="official-awards-section">
-  <div class="section-heading">
-    <p class="system-label">Complete Decorations Register</p>
-    <h2>Official Awards Board</h2>
-    <p>The full board remains available for the complete order of precedence, qualification badges, campaign medals, service awards, unit citations, ribbon racks and challenge coins.</p>
-  </div>
-  <figure class="official-awards-board">
-    <a href="vanguard-awards-board.png" target="_blank" rel="noopener">
-      <img src="vanguard-awards-board.png?v=290" alt="Official Vanguard Fleet awards and decorations board">
-    </a>
-  </figure>
-</section>
-
-
-<section class="section-block"><div class="section-heading"><p class="system-label">Vanguard Fleet Awards System</p><h2>One Award. Every Display.</h2><p>Award entries will update VPIN, ribbon racks, citations, Discord announcements, career portfolios and the Hall of Honor.</p></div></section>
-</main>
-    
-<footer>
-  <strong>Vanguard Fleet Command</strong>
-  <p>Vanguard Fleet is an unofficial, non-commercial Star Trek-inspired roleplaying community. Star Trek and all related marks, logos and characters are owned by their respective rights holders. This fan production is not endorsed by, sponsored by, licensed by or affiliated with CBS Studios Inc., Paramount Pictures Corporation or any Star Trek rights holder.</p>
-</footer>
-
-  </div>
-  
-<dialog id="modal">
-  <form method="dialog">
-    <button class="modal-x" aria-label="Close">×</button>
-    <p class="system-label">VICS Database</p>
-    <h2 id="modal-title">System Record</h2>
-    <p id="modal-copy">This module is ready for integration.</p>
-    <button class="btn btn-blue">Acknowledge</button>
-  </form>
-</dialog>
-
+  <dialog id="modal">
+    <form method="dialog">
+      <button class="modal-x" aria-label="Close">×</button>
+      <p class="system-label">VICS Database</p>
+      <h2 id="modal-title">System Record</h2>
+      <p id="modal-copy">This module is ready for integration.</p>
+      <button class="btn btn-blue">Acknowledge</button>
+    </form>
+  </dialog>
   <script src="app.js"></script>
 </body>
 </html>
