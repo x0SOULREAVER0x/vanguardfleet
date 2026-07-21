@@ -32,3 +32,16 @@ Upload every file into the repository root and replace files with matching names
 ## Version 2.2.1 Fix
 
 Corrects the Vanguard Station information card being clipped at the right edge on narrower desktop windows and mobile screens.
+
+
+## Version 2.3 Command Header
+
+Changes included:
+- Fleet emblem centered and enlarged
+- Clickable emblem with subtle hover glow
+- Larger metallic Vanguard Fleet title
+- Motto rebalanced beneath the title
+- VICS expanded to “Vanguard Integrated Computer System”
+- Animated online-status indicator
+- LCARS-inspired Enter VICS control
+- Responsive desktop, tablet and mobile header layout

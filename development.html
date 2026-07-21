@@ -15,24 +15,27 @@
 <body>
   <div class="site-shell">
     
-<header class="masthead">
+
+<header class="masthead command-header">
   <a class="brand-mark" href="index.html" aria-label="Vanguard Fleet home">
     <img src="vanguard-logo.jpg" alt="Vanguard Fleet emblem">
   </a>
+
   <div class="brand-copy">
     <p class="system-label">United Federation of Planets • Starfleet Command</p>
-    <h1>Vanguard Fleet</h1>
+    <h1><span>Vanguard</span><span>Fleet</span></h1>
     <p class="motto">Beyond the Frontier, We Endure.</p>
   </div>
-  <section class="access-panel">
-    <div>
-      <strong>VICS</strong>
-      <span>System status: online</span>
-    </div>
-    <button class="btn btn-blue" data-open="login">Enter VICS</button>
-    <small>Guest clearance • Level 0</small>
+
+  <section class="access-panel vics-panel">
+    <strong class="vics-title">VICS</strong>
+    <span class="vics-full-name">Vanguard Integrated<br>Computer System</span>
+    <span class="vics-status"><i></i> System Status: Online</span>
+    <button class="btn btn-blue vics-button" data-open="login">Enter VICS</button>
+    <small>Guest Clearance • Level 0</small>
   </section>
 </header>
+
 
 <nav class="main-nav">
   <button id="nav-toggle" class="nav-toggle" aria-expanded="false">☰ Menu</button>

@@ -325,3 +325,246 @@ url("vanguard-station.jpg") center/cover no-repeat;border-bottom:1px solid var(-
     right:16px;
   }
 }
+
+
+/* Version 2.3 — Command Header */
+.command-header{
+  display:grid;
+  grid-template-columns:220px minmax(0,1fr) 300px;
+  align-items:stretch;
+  min-height:190px;
+  border-bottom:1px solid var(--line);
+  background:
+    linear-gradient(90deg,rgba(4,14,23,.98),rgba(7,20,32,.96) 48%,rgba(3,12,20,.98));
+}
+
+.command-header .brand-mark{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+  padding:18px;
+  border-right:1px solid var(--line);
+  overflow:hidden;
+}
+
+.command-header .brand-mark img{
+  display:block;
+  width:min(172px,100%);
+  height:auto;
+  max-height:154px;
+  object-fit:contain;
+  margin:auto;
+  transition:transform .25s ease,filter .25s ease;
+}
+
+.command-header .brand-mark:hover img{
+  transform:scale(1.055);
+  filter:drop-shadow(0 0 12px rgba(226,181,66,.7));
+}
+
+.command-header .brand-copy{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:0;
+  padding:24px 34px;
+}
+
+.command-header .brand-copy h1{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.22em;
+  margin:2px 0 4px;
+  font:700 clamp(3.2rem,5.3vw,5.5rem)/.82 Rajdhani,sans-serif;
+  letter-spacing:.035em;
+  text-transform:uppercase;
+  background:linear-gradient(180deg,#fff0aa 0%,#ddb44e 45%,#9d6d18 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 0 11px rgba(221,180,78,.2));
+}
+
+.command-header .brand-copy h1 span{
+  white-space:nowrap;
+}
+
+.command-header .motto{
+  margin:9px 0 0;
+  color:#9eb4c7;
+  font-size:.98rem;
+  letter-spacing:.18em;
+}
+
+.vics-panel{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-width:0;
+  padding:20px 24px;
+  text-align:center;
+  border-left:1px solid var(--line);
+  background:
+    linear-gradient(180deg,rgba(11,29,45,.94),rgba(4,15,25,.98));
+}
+
+.vics-title{
+  color:var(--gold2);
+  font:700 2.25rem/.9 Rajdhani,sans-serif;
+  letter-spacing:.12em;
+}
+
+.vics-full-name{
+  color:#9bc4e6;
+  font:600 .83rem/1.25 Rajdhani,sans-serif;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.vics-status{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  color:#8fe3a0;
+  font:600 .78rem Rajdhani,sans-serif;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.vics-status i{
+  width:9px;
+  height:9px;
+  flex:0 0 9px;
+  border-radius:50%;
+  background:#65df7f;
+  box-shadow:0 0 0 4px rgba(101,223,127,.08),0 0 12px rgba(101,223,127,.85);
+  animation:vicsPulse 1.8s ease-in-out infinite;
+}
+
+.vics-button{
+  min-width:152px;
+  margin-top:2px;
+  border-radius:999px 999px 999px 14px;
+  letter-spacing:.1em;
+}
+
+.vics-panel small{
+  color:#71899d;
+  letter-spacing:.06em;
+}
+
+@keyframes vicsPulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.45;transform:scale(.78)}
+}
+
+@media(max-width:980px){
+  .command-header{
+    grid-template-columns:180px minmax(0,1fr) 260px;
+  }
+
+  .command-header .brand-copy{
+    padding-left:24px;
+    padding-right:24px;
+  }
+
+  .command-header .brand-copy h1{
+    font-size:clamp(2.7rem,5vw,4.2rem);
+  }
+}
+
+@media(max-width:760px){
+  .command-header{
+    grid-template-columns:140px minmax(0,1fr);
+    min-height:auto;
+  }
+
+  .command-header .brand-mark{
+    grid-row:1;
+    grid-column:1;
+    padding:14px;
+  }
+
+  .command-header .brand-mark img{
+    width:116px;
+    max-height:116px;
+  }
+
+  .command-header .brand-copy{
+    grid-row:1;
+    grid-column:2;
+    padding:18px;
+  }
+
+  .command-header .brand-copy h1{
+    display:block;
+    font-size:clamp(2.4rem,10vw,3.8rem);
+    line-height:.78;
+  }
+
+  .command-header .brand-copy h1 span{
+    display:block;
+  }
+
+  .command-header .motto{
+    font-size:.72rem;
+    letter-spacing:.12em;
+  }
+
+  .vics-panel{
+    grid-column:1 / -1;
+    grid-row:2;
+    min-height:138px;
+    border-left:0;
+    border-top:1px solid var(--line);
+  }
+
+  .vics-full-name br{
+    display:none;
+  }
+}
+
+@media(max-width:480px){
+  .command-header{
+    grid-template-columns:112px minmax(0,1fr);
+  }
+
+  .command-header .brand-mark{
+    padding:10px;
+  }
+
+  .command-header .brand-mark img{
+    width:94px;
+    max-height:94px;
+  }
+
+  .command-header .brand-copy{
+    padding:14px 12px;
+  }
+
+  .command-header .brand-copy .system-label{
+    font-size:.56rem;
+    letter-spacing:.08em;
+  }
+
+  .command-header .brand-copy h1{
+    font-size:2.35rem;
+  }
+
+  .command-header .motto{
+    font-size:.62rem;
+    line-height:1.35;
+  }
+
+  .vics-panel{
+    padding:17px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .vics-status i{animation:none}
+}
