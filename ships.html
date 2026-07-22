@@ -1,90 +1,72 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#050a10">
-  <title>Ships | Vanguard Fleet</title>
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icon-192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vanguard Fleet Registry</title>
+<style>
+:root{--bg:#030914;--panel:#091a30e8;--line:#68beff38;--blue:#5fc7ff;--gold:#f1c767;--text:#edf7ff;--muted:#9db0c3}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at 15% 0,#15395a66,transparent 30%),linear-gradient(#020711,#06101e 50%,#030813);min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:radial-gradient(circle,#fff 0 1px,transparent 1.4px);background-size:83px 83px}
+.wrap{width:min(1380px,calc(100% - 28px));margin:auto}.top{position:sticky;top:0;z-index:10;background:#020812d9;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav{height:70px;display:flex;align-items:center;gap:20px}.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:white}.logo{width:44px;height:44px;border:1px solid #5fc7ff88;border-radius:50%;display:grid;place-items:center}.logo svg{width:31px}.brand b{display:block;letter-spacing:.16em;font-size:.92rem}.brand small{color:var(--muted);letter-spacing:.12em}.links{margin-left:auto;display:flex;gap:6px}.links a{color:#b8c9d8;text-decoration:none;padding:9px 12px;border-radius:7px;font-size:.84rem}.links a:hover,.links .active{background:#5fc7ff18;color:#fff}
+.hero{padding:78px 0 45px}.heroGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:38px;align-items:center}.eyebrow{color:var(--blue);font-size:.75rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase}.eyebrow:before{content:"";display:inline-block;width:30px;height:1px;background:var(--blue);vertical-align:middle;margin-right:9px}
+h1{font-size:clamp(3rem,7vw,6rem);line-height:.9;margin:17px 0 21px;letter-spacing:-.055em}h1 span{display:block;color:transparent;-webkit-text-stroke:1px #5fc7ffbb}.lead{color:#b5c7d7;line-height:1.75;max-width:700px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}.btn{padding:12px 16px;border:1px solid #5fc7ff66;border-radius:8px;background:#5fc7ff1c;color:#fff;text-decoration:none;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.btn.alt{border-color:#ffffff20;background:#ffffff08;color:#c7d4df}
+.heroArt{height:370px;border:1px solid var(--line);border-radius:20px;position:relative;overflow:hidden;background:radial-gradient(circle,#4db5f52b,transparent 35%),linear-gradient(145deg,#0f2948bb,#030a15ee);box-shadow:0 25px 60px #0008}.heroArt .wm{position:absolute;width:270px;opacity:.09;left:50%;top:50%;transform:translate(-50%,-50%)}.heroArt .ship{position:absolute;inset:40px;display:grid;place-items:center;filter:drop-shadow(0 20px 17px #000)}.heroArt .ship svg{width:100%}.caption{position:absolute;left:20px;right:20px;bottom:18px;border-top:1px solid var(--line);padding-top:13px;display:flex;justify-content:space-between;font-size:.75rem}.caption b{color:var(--gold);letter-spacing:.12em}.caption span{color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:8px 0 55px}.stat{border:1px solid var(--line);background:#081629a8;border-radius:11px;padding:17px}.stat b{display:block;font-size:1.65rem}.stat span{color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.13em}
+.registry{padding:16px 0 75px}.head{display:flex;justify-content:space-between;align-items:end;gap:20px}.head h2{font-size:clamp(2rem,4vw,3rem);margin:5px 0 0}.head p{max-width:560px;color:var(--muted);line-height:1.6}.controls{display:grid;grid-template-columns:1fr auto;gap:12px;margin:26px 0 22px}.search{height:47px;border:1px solid var(--line);border-radius:8px;background:#061222cc;color:#fff;padding:0 14px;font-size:.95rem;outline:none}.filters{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.filter{border:1px solid #ffffff1a;background:#ffffff08;color:#b8c6d3;border-radius:7px;padding:9px 11px;cursor:pointer}.filter.active,.filter:hover{border-color:#5fc7ff77;background:#5fc7ff18;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.card{--accent:var(--blue);overflow:hidden;border:1px solid var(--line);border-radius:15px;background:linear-gradient(#0b1d35e8,#050f1ded);box-shadow:0 14px 34px #0005;transition:.22s;display:flex;flex-direction:column}.card:hover{transform:translateY(-5px);border-color:var(--accent)}.card:before{content:"";height:3px;background:linear-gradient(90deg,var(--accent),transparent 75%)}.visual{height:205px;position:relative;display:grid;place-items:center;background:radial-gradient(circle,#5fc7ff1b,transparent 52%);overflow:hidden}.watermark{position:absolute;width:175px;opacity:.07}.shipArt{position:relative;width:85%;height:75%;display:grid;place-items:center;filter:drop-shadow(0 17px 12px #000c)}.shipArt svg{width:100%;height:100%}.badge,.status{position:absolute;top:13px;padding:6px 8px;border-radius:6px;background:#030c18d9;font-size:.62rem;letter-spacing:.11em;text-transform:uppercase;border:1px solid #ffffff1a}.badge{left:13px;color:var(--accent)}.status{right:13px}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#62e8a4;margin-right:6px;box-shadow:0 0 9px #62e8a4}
+.body{padding:19px;display:flex;flex-direction:column;flex:1}.reg{color:var(--accent);font-size:.68rem;font-weight:800;letter-spacing:.14em}.body h3{font-size:1.48rem;margin:5px 0 3px}.class{color:#c1d1de;font-size:.84rem}.meta{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:16px 0}.meta div{padding:9px;border:1px solid #ffffff12;border-radius:7px;background:#ffffff06}.meta span{display:block;color:#70879b;font-size:.59rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}.meta b{font-size:.75rem}.body p{color:#93a8ba;font-size:.82rem;line-height:1.55}.foot{margin-top:auto;border-top:1px solid #ffffff12;padding-top:13px;display:flex;justify-content:space-between}.foot a{color:#fff;text-decoration:none;font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}.foot a:after{content:"  ›";color:var(--accent)}.doc{color:#60778d;font-size:.61rem}.empty{display:none;text-align:center;color:var(--muted);padding:50px;border:1px dashed var(--line);border-radius:12px}
+footer{border-top:1px solid var(--line);padding:31px 0 40px;color:#71869a;font-size:.75rem}.footerRow{display:flex;justify-content:space-between;gap:20px}.motto{color:var(--gold);letter-spacing:.13em;text-transform:uppercase}
+@media(max-width:1030px){.heroGrid{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.controls{grid-template-columns:1fr}.filters{justify-content:flex-start}}
+@media(max-width:700px){.links{display:none}.hero{padding-top:48px}.heroArt{height:310px}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.head,.footerRow{align-items:flex-start;flex-direction:column}.caption{flex-direction:column;gap:5px}}
+</style>
 </head>
 <body>
-  <div class="site-shell">
-    
+<header class="top"><nav class="wrap">
+<a class="brand" href="index.html"><span class="logo"><svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="43" stroke="#5fc7ff" stroke-width="3"/><path d="M50 14 59 43 83 53 59 61 50 87 41 61 17 53 41 43Z" stroke="#f1c767" stroke-width="3"/><circle cx="50" cy="52" r="7" fill="#5fc7ff"/></svg></span><span><b>VANGUARD FLEET</b><small>OPERATIONS NETWORK</small></span></a>
+<div class="links"><a href="index.html">Home</a><a class="active" href="ships.html">Registry</a><a href="awards.html">Awards</a><a href="vics.html">VICS</a><a href="academy.html">Academy</a></div>
+</nav></header>
 
-<header class="masthead command-header">
-  <a class="brand-mark" href="index.html" aria-label="Vanguard Fleet home">
-    <img src="vanguard-logo.png" alt="Vanguard Fleet emblem">
-  </a>
+<main>
+<section class="hero"><div class="wrap heroGrid">
+<div><div class="eyebrow">VFR-001 · Public Access</div><h1>Fleet <span>Registry</span></h1><p class="lead">Official registry of commissioned Vanguard Fleet vessels, support craft, and installations. Review operational status, mission assignments, technical classifications, and vessel dossiers.</p><div class="actions"><a class="btn" href="#registry">Browse Fleet Assets</a><a class="btn alt" href="uss-discovery.html">Flagship Dossier</a></div></div>
+<div class="heroArt">
+<svg class="wm" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="43" stroke="#5fc7ff" stroke-width="2"/><path d="M50 14 59 43 83 53 59 61 50 87 41 61 17 53 41 43Z" stroke="#f1c767" stroke-width="2"/></svg>
+<div class="ship"><svg viewBox="0 0 800 330" fill="none"><path d="M92 182 242 125 345 89 510 82 705 143 735 167 702 184 512 175 392 222 260 235 116 211Z" fill="#7e9cad" stroke="#9bd8ff" stroke-width="3"/><path d="M331 91 383 46 524 40 626 88 510 82Z" fill="#abc4d2" stroke="#b7e4ff" stroke-width="3"/><path d="M320 207 397 271 539 286 615 242 503 177 392 222Z" fill="#50697a" stroke="#8ccaf0" stroke-width="3"/><path d="M268 119 173 67 112 76 183 142Z" fill="#334c60" stroke="#7fc8f4" stroke-width="3"/><path d="M255 228 161 283 99 278 178 215Z" fill="#2d4354" stroke="#7fc8f4" stroke-width="3"/><circle cx="611" cy="147" r="8" fill="#f1c767"/></svg></div>
+<div class="caption"><b>USS DISCOVERY · NCC-78393-B</b><span>Prometheus-class Tactical Explorer</span></div></div>
+</div></section>
 
-  <div class="brand-copy">
-    <p class="system-label">United Federation of Planets • Starfleet Command</p>
-    <h1><span>Vanguard</span><span>Fleet</span></h1>
-    <p class="motto">Beyond the Frontier, We Endure.</p>
-  </div>
+<section class="wrap stats"><div class="stat"><b id="assetCount">7</b><span>Registered Assets</span></div><div class="stat"><b>6</b><span>Commissioned Vessels</span></div><div class="stat"><b>1</b><span>Fleet Installation</span></div><div class="stat"><b>4</b><span>Active Missions</span></div></section>
 
-  <section class="access-panel vics-panel">
-    <strong class="vics-title">VICS</strong>
-    <span class="vics-full-name">Vanguard Integrated<br>Computer System</span>
-    <span class="vics-status"><i></i> System Status: Online</span>
-    <button class="btn btn-blue vics-button" data-open="login">Enter VICS</button>
-    <small>Guest Clearance • Level 0</small>
-  </section>
-</header>
-
-
-<nav class="main-nav">
-  <button id="nav-toggle" class="nav-toggle" aria-expanded="false">☰ Menu</button>
-  <div id="nav-links" class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="about.html">The Fleet</a>
-    <a href="ships.html" class="active">Ships</a>
-    <a href="academy.html">Academy</a>
-    <a href="join.html">Join</a>
-    <a href="awards.html">Awards</a>
-    <a href="community.html">Community</a>
-    <a href="development.html">Development</a>
-  </div>
-</nav>
-
-
-    <main>
-<section class="page-hero"><p class="system-label">Starship Registry</p><h2>Active Commands</h2><p>Every vessel carries its own crew, traditions, mission profile and history.</p></section>
-<section class="ship-grid">
-  <article class="ship-card featured-card"><div class="ship-silhouette large"><span>USS</span></div><p class="system-label">VF-SHIP-001</p><h3>USS Discovery</h3><p>NCC-78393-B</p><strong>Prometheus-class Tactical Cruiser</strong><p>Flagship-ready multi-mission platform assigned to frontier defense, exploration and rapid-response operations.</p><button class="btn btn-blue" data-open="discovery">Open Registry Record</button></article>
-  <article class="ship-card"><p class="system-label">Future Command</p><h3>USS Horizon</h3><p>Exploration cruiser</p><span>Status: Planning</span></article>
-  <article class="ship-card"><p class="system-label">Future Command</p><h3>USS Valkyrie</h3><p>Rapid-response cruiser</p><span>Status: Planning</span></article>
-</section>
+<section class="registry" id="registry"><div class="wrap">
+<div class="head"><div><div class="eyebrow">Commissioned Assets</div><h2>Active Fleet Roster</h2></div><p>Search by vessel name, registry, class, or mission role. Use category filters to isolate operational groups.</p></div>
+<div class="controls"><input class="search" id="search" type="search" placeholder="Search ship, registry, class, or assignment..."><div class="filters" id="filters"></div></div>
+<div class="grid" id="grid"></div><div class="empty" id="empty">No fleet assets match the current search.</div>
+</div></section>
 </main>
-    
-<footer>
-  <strong>Vanguard Fleet Command</strong>
 
-  <p><strong>© 2026 Vanguard Fleet. All Rights Reserved.</strong></p>
+<footer><div class="wrap footerRow"><div><b>Vanguard Fleet Registry</b><br>Document VFR-001 · Revision 1.0 · Classification: Public</div><div class="motto">Explore with Purpose · Serve with Honor · Lead with Integrity</div></div></footer>
 
-  <p>Vanguard Fleet is an unofficial, non-commercial Star Trek-inspired roleplaying organization. Star Trek, the Starfleet insignia, the United Federation of Planets and all related names, logos, characters, ships and trademarks are the property of CBS Studios Inc., Paramount Global and their respective rights holders. Vanguard Fleet is not endorsed by, sponsored by, licensed by or affiliated with CBS Studios, Paramount or any Star Trek rights holder.</p>
+<script>
+const ships=[
+{name:"USS Discovery",reg:"NCC-78393-B",cls:"Prometheus-class Tactical Explorer",cat:["flagship","tactical"],badge:"Fleet Flagship",assignment:"Fleet Command",role:"Technology Demonstrator",desc:"Vanguard Fleet flagship and prototype platform for Projects AEGIS and ARGUS, with full Multi-Vector Assault Mode capability.",link:"uss-discovery.html",doc:"VFR-DIS-001",accent:"#5fc7ff",shape:"prometheus"},
+{name:"USS Endeavour",reg:"NCC-78401",cls:"Odyssey-class Explorer",cat:["exploration"],badge:"Exploration",assignment:"Deep-Space Group",role:"Long-Range Exploration",desc:"Heavy explorer assigned to extended-duration missions beyond established Federation survey corridors.",link:"uss-endeavour.html",doc:"VFR-END-001",accent:"#65cfff",shape:"saucer"},
+{name:"USS Pathfinder",reg:"NCC-78407",cls:"Intrepid-class Surveyor",cat:["exploration"],badge:"Exploration",assignment:"Outer Survey Line",role:"Pathfinding & Recon",desc:"Fast long-range survey vessel specializing in stellar cartography, anomaly response, and route assessment.",link:"uss-pathfinder.html",doc:"VFR-PAT-001",accent:"#74d5ff",shape:"saucer"},
+{name:"USS Valiant",reg:"NCC-78415",cls:"Sovereign-class Heavy Cruiser",cat:["tactical"],badge:"Tactical",assignment:"Fleet Defense Wing",role:"Strategic Defense",desc:"Front-line heavy cruiser tasked with fleet defense, deterrence patrols, and high-risk escort operations.",link:"uss-valiant.html",doc:"VFR-VAL-001",accent:"#ff9d74",shape:"saucer"},
+{name:"USS Galileo",reg:"NCC-78432",cls:"Nova-class Science Vessel",cat:["science"],badge:"Science",assignment:"Science Directorate",role:"Research & Analysis",desc:"Dedicated research vessel equipped for planetary science, stellar physics, and hazardous anomaly analysis.",link:"uss-galileo.html",doc:"VFR-GAL-001",accent:"#8be4cf",shape:"saucer"},
+{name:"USS Prosperity",reg:"NCC-78421",cls:"California-class Support Cruiser",cat:["support"],badge:"Support",assignment:"Logistics Command",role:"Supply & Relief",desc:"Multi-role support cruiser assigned to logistics, humanitarian relief, maintenance, and colony assistance.",link:"uss-prosperity.html",doc:"VFR-PRO-001",accent:"#f1c767",shape:"saucer"},
+{name:"Starbase Vanguard",reg:"SBV-01",cls:"Vanguard-class Fleet Installation",cat:["starbase","support"],badge:"Fleet Installation",assignment:"Fleet Headquarters",role:"Command & Support",desc:"Primary headquarters of Vanguard Fleet, supporting command, logistics, academy operations, and fleet coordination.",link:"starbase-vanguard.html",doc:"VFS-001",accent:"#b596ff",shape:"base"}];
 
-  <p>All original Vanguard Fleet artwork, graphics, medals, ribbons, website design, written content, lore and original intellectual property are © 2026 Vanguard Fleet unless otherwise noted. Unauthorized reproduction or redistribution of original Vanguard Fleet content without permission is prohibited.</p>
+const crest=`<svg class="watermark" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="43" stroke="#5fc7ff" stroke-width="2"/><path d="M50 14 59 43 83 53 59 61 50 87 41 61 17 53 41 43Z" stroke="#f1c767" stroke-width="2"/></svg>`;
+const art={
+prometheus:`<svg viewBox="0 0 800 330" fill="none"><path d="M92 182 242 125 345 89 510 82 705 143 735 167 702 184 512 175 392 222 260 235 116 211Z" fill="#7e9cad" stroke="#9bd8ff" stroke-width="3"/><path d="M331 91 383 46 524 40 626 88 510 82Z" fill="#abc4d2" stroke="#b7e4ff" stroke-width="3"/><path d="M320 207 397 271 539 286 615 242 503 177 392 222Z" fill="#50697a" stroke="#8ccaf0" stroke-width="3"/><path d="M268 119 173 67 112 76 183 142Z" fill="#334c60" stroke="#7fc8f4" stroke-width="3"/><path d="M255 228 161 283 99 278 178 215Z" fill="#2d4354" stroke="#7fc8f4" stroke-width="3"/></svg>`,
+saucer:`<svg viewBox="0 0 800 330" fill="none"><ellipse cx="480" cy="112" rx="205" ry="70" fill="#9fb8c8" stroke="#bce7ff" stroke-width="4"/><ellipse cx="480" cy="112" rx="115" ry="36" fill="#d6eaf4" opacity=".72"/><path d="M344 151 260 241 340 227 456 164Z" fill="#567487" stroke="#83cef7" stroke-width="4"/><path d="M610 151 694 241 614 227 498 164Z" fill="#567487" stroke="#83cef7" stroke-width="4"/><path d="M360 183 470 232 584 181 535 248 398 248Z" fill="#40596a" stroke="#83cef7" stroke-width="4"/><rect x="190" y="230" width="158" height="28" rx="14" fill="#284256" stroke="currentColor" stroke-width="4"/><rect x="605" y="230" width="158" height="28" rx="14" fill="#284256" stroke="currentColor" stroke-width="4"/></svg>`,
+base:`<svg viewBox="0 0 800 330" fill="none"><ellipse cx="400" cy="176" rx="225" ry="64" fill="#425d73" stroke="#a8dcff" stroke-width="4"/><ellipse cx="400" cy="176" rx="148" ry="40" fill="#7897aa" stroke="#c0e9ff" stroke-width="4"/><path d="M379 25H421L440 144H360Z" fill="#67879a" stroke="#b4e2ff" stroke-width="4"/><path d="M370 208H430L456 305H344Z" fill="#567487" stroke="#9bd8ff" stroke-width="4"/><ellipse cx="400" cy="176" rx="58" ry="58" fill="#9db7c4" stroke="#d5efff" stroke-width="4"/><circle cx="400" cy="176" r="27" fill="#2b4357" stroke="currentColor" stroke-width="4"/></svg>`};
 
-  <p class="footer-motto"><strong>Live Long. Write Boldly. Explore Together.</strong></p>
-</footer>
-
-  </div>
-  
-<dialog id="modal">
-  <form method="dialog">
-    <button class="modal-x" aria-label="Close">×</button>
-    <p class="system-label">VICS Database</p>
-    <h2 id="modal-title">System Record</h2>
-    <p id="modal-copy">This module is ready for integration.</p>
-    <button class="btn btn-blue">Acknowledge</button>
-  </form>
-</dialog>
-
-  <script src="app.js"></script>
-</body>
-</html>
+const grid=document.getElementById("grid"), filters=document.getElementById("filters"), search=document.getElementById("search"), empty=document.getElementById("empty"), count=document.getElementById("assetCount");
+let active="all";
+["all","flagship","exploration","science","tactical","support","starbase"].forEach((f,i)=>{const b=document.createElement("button");b.className="filter"+(i===0?" active":"");b.textContent=f==="all"?"All Assets":f==="starbase"?"Starbases":f[0].toUpperCase()+f.slice(1);b.onclick=()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");active=f;render()};filters.appendChild(b)});
+function render(){const q=search.value.toLowerCase().trim();const list=ships.filter(s=>(active==="all"||s.cat.includes(active))&&(!q||Object.values(s).flat().join(" ").toLowerCase().includes(q)));grid.innerHTML=list.map(s=>`<article class="card" style="--accent:${s.accent};color:${s.accent}"><div class="visual">${crest}<span class="badge">${s.badge}</span><span class="status"><i class="dot"></i>Operational</span><div class="shipArt">${art[s.shape]}</div></div><div class="body" style="color:var(--text)"><div class="reg" style="color:${s.accent}">${s.reg}</div><h3>${s.name}</h3><div class="class">${s.cls}</div><div class="meta"><div><span>Assignment</span><b>${s.assignment}</b></div><div><span>Role</span><b>${s.role}</b></div></div><p>${s.desc}</p><div class="foot"><a href="${s.link}">View Dossier</a><span class="doc">${s.doc}</span></div></div></article>`).join("");empty.style.display=list.length?"none":"block";count.textContent=list.length}
+search.addEventListener("input",render);render();
+</script>
+</body></html>
