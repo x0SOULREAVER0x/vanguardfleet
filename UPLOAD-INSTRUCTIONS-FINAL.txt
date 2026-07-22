@@ -1,0 +1,22 @@
+VANGUARD FLEET REGISTRY — FINAL REPLACEMENT
+
+The screenshot showed the OLD ships.html still deployed.
+
+On GitHub:
+1. Open the vanguardfleet repository.
+2. Open the existing ships.html.
+3. Replace that exact file with the ships.html in this package.
+4. Upload the included JPG files if they are not already present.
+5. Commit to the branch used by GitHub Pages.
+6. Wait for the Pages deployment to finish.
+7. Open the page in a private/incognito tab to bypass the phone cache.
+
+The final footer contains:
+- © 2026 Vanguard Fleet. All Rights Reserved.
+- The complete CBS Studios / Paramount disclaimer.
+- The original Vanguard Fleet content copyright notice.
+- Live Long. Write Boldly. Explore Together.
+
+Verification:
+View page source and search for:
+VANGUARD FLEET REGISTRY BUILD: LEGAL-FOOTER-FINAL
